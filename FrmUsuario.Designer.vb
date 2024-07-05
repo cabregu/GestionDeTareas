@@ -83,7 +83,7 @@ Partial Class FrmUsuario
         ' 
         ' BtnCrear
         ' 
-        BtnCrear.Location = New Point(41, 202)
+        BtnCrear.Location = New Point(41, 201)
         BtnCrear.Name = "BtnCrear"
         BtnCrear.Size = New Size(108, 39)
         BtnCrear.TabIndex = 6
@@ -92,7 +92,7 @@ Partial Class FrmUsuario
         ' 
         ' BtnCancelar
         ' 
-        BtnCancelar.Location = New Point(180, 202)
+        BtnCancelar.Location = New Point(180, 201)
         BtnCancelar.Name = "BtnCancelar"
         BtnCancelar.Size = New Size(106, 39)
         BtnCancelar.TabIndex = 7
