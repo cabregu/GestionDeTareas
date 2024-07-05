@@ -73,6 +73,7 @@ Partial Class FrmCrearCliente
         Controls.Add(BtnNombre)
         Controls.Add(TxtNombreCliente)
         Name = "FrmCrearCliente"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "Crear Cliente"
         ResumeLayout(False)
         PerformLayout()

@@ -90,6 +90,7 @@ Partial Class FrmModificarTarea
         Controls.Add(LblSeleccionarUnaOpcion)
         Controls.Add(DgvDatos)
         Name = "FrmModificarTarea"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "FrmModificarTarea"
         CType(DgvDatos, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)

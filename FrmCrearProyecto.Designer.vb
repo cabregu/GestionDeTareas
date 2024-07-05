@@ -153,6 +153,7 @@ Partial Class FrmCrearProyecto
         Controls.Add(RbNuevoProyecto)
         Controls.Add(RbProyectoExistente)
         Name = "FrmCrearProyecto"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "FrmCrearProyecto"
         CType(DgbTareas, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)

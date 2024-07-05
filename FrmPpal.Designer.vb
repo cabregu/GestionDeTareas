@@ -236,6 +236,7 @@ Partial Class FrmPpal
         Controls.Add(LblUsuario)
         Controls.Add(LblNombre)
         Name = "FrmPpal"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "Gestion de tareas"
         GpbTareas.ResumeLayout(False)
         GpbDatos.ResumeLayout(False)

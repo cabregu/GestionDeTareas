@@ -93,6 +93,7 @@ Partial Class FrmLogin
         Controls.Add(TxtContraseña)
         Controls.Add(TxtUsuario)
         Name = "FrmLogin"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "Login"
         ResumeLayout(False)
         PerformLayout()

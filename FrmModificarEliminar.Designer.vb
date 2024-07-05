@@ -120,6 +120,7 @@ Partial Class FrmModificarEliminar
         Controls.Add(BtnUsuarios)
         Controls.Add(BtnClientes)
         Name = "FrmModificarEliminar"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "FrmModificarEliminar"
         CType(DgvDatos, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)

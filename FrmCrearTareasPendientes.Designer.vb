@@ -222,6 +222,7 @@ Partial Class FrmCrearTareasPendientes
         Controls.Add(LblCliente)
         Controls.Add(CbmCliente)
         Name = "FrmCrearTareasPendientes"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "Crear Tareas Pendientes"
         ResumeLayout(False)
         PerformLayout()

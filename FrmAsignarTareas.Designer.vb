@@ -216,6 +216,7 @@ Partial Class FrmAsignarTareas
         Controls.Add(LblCodigo)
         Controls.Add(CmbCodigo)
         Name = "FrmAsignarTareas"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "FrmAsignarTareas"
         ResumeLayout(False)
         PerformLayout()

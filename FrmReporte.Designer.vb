@@ -128,6 +128,7 @@ Partial Class FrmReporte
         Controls.Add(DtpFechaFinal)
         Controls.Add(DtpFechaInicial)
         Name = "FrmReporte"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "FrmReporte"
         CType(DgvDatos, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)

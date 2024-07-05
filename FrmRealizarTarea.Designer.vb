@@ -298,6 +298,7 @@ Partial Class FrmRealizarTarea
         Controls.Add(LblUsuario)
         Controls.Add(TxtUsuario)
         Name = "FrmRealizarTarea"
+        StartPosition = FormStartPosition.CenterScreen
         Text = "Realizar"
         ResumeLayout(False)
         PerformLayout()
