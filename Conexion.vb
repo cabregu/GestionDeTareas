@@ -52,6 +52,73 @@ Public Class Conexion
 
     End Function
 
+    Public Shared Function ObtenerClientes(ByVal CadenaConexion As String) As String()
+        Dim clientes As New List(Of String)()
 
+        Dim sql As String = "SELECT cliente FROM clientes"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cn.Open()
+                Dim reader As MySqlDataReader = cmd.ExecuteReader()
+                While reader.Read()
+
+                    clientes.Add(reader.GetString("cliente"))
+                End While
+            End Using
+        End Using
+
+        Return clientes.ToArray()
+    End Function
+
+    Public Shared Function ObtenerProyectos(ByVal CadenaConexion As String) As String()
+        Dim proyecto As New List(Of String)()
+
+        Dim sql As String = "SELECT DISTINCT proyecto FROM proyectotareas"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cn.Open()
+                Dim reader As MySqlDataReader = cmd.ExecuteReader()
+                While reader.Read()
+
+                    proyecto.Add(reader.GetString("proyecto"))
+                End While
+            End Using
+        End Using
+
+        Return proyecto.ToArray()
+    End Function
+
+    Public Shared Function ObtenertareasPorProyecto(ByVal Proyecto As String, ByVal CadenaConexion As String) As String()
+        Dim tareas As New List(Of String)()
+        Dim sql As String = "SELECT DISTINCT tareas FROM proyectotareas where proyecto='" & Proyecto & "'"
+
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cn.Open()
+                Dim reader As MySqlDataReader = cmd.ExecuteReader()
+                While reader.Read()
+                    tareas.Add(reader.GetString("tareas"))
+                End While
+            End Using
+        End Using
+        Return tareas.ToArray()
+    End Function
+
+    Public Shared Function ObtenerUsuarios(ByVal CadenaConexion As String) As String()
+        Dim nick As New List(Of String)()
+
+        Dim sql As String = "SELECT nick FROM usuarios"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cn.Open()
+                Dim reader As MySqlDataReader = cmd.ExecuteReader()
+                While reader.Read()
+                    nick.Add(reader.GetString("nick"))
+                End While
+            End Using
+        End Using
+
+        Return nick.ToArray()
+    End Function
 
 End Class

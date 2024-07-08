@@ -27,7 +27,7 @@ Partial Class FrmPpal
         LblTipoCargo = New Label()
         LblCargo = New Label()
         GpbTareas = New GroupBox()
-        BrnModificarTarea = New Button()
+        BtnModificarTarea = New Button()
         BtnAsignarTarea = New Button()
         BtnRealizarTarea = New Button()
         BtnCrearTarea = New Button()
@@ -85,7 +85,7 @@ Partial Class FrmPpal
         ' GpbTareas
         ' 
         GpbTareas.BackColor = SystemColors.ControlDark
-        GpbTareas.Controls.Add(BrnModificarTarea)
+        GpbTareas.Controls.Add(BtnModificarTarea)
         GpbTareas.Controls.Add(BtnAsignarTarea)
         GpbTareas.Controls.Add(BtnRealizarTarea)
         GpbTareas.Controls.Add(BtnCrearTarea)
@@ -96,14 +96,14 @@ Partial Class FrmPpal
         GpbTareas.TabStop = False
         GpbTareas.Text = "Tareas Activas"
         ' 
-        ' BrnModificarTarea
+        ' BtnModificarTarea
         ' 
-        BrnModificarTarea.Location = New Point(497, 71)
-        BrnModificarTarea.Name = "BrnModificarTarea"
-        BrnModificarTarea.Size = New Size(150, 30)
-        BrnModificarTarea.TabIndex = 3
-        BrnModificarTarea.Text = "Modificar Tarea"
-        BrnModificarTarea.UseVisualStyleBackColor = True
+        BtnModificarTarea.Location = New Point(497, 71)
+        BtnModificarTarea.Name = "BtnModificarTarea"
+        BtnModificarTarea.Size = New Size(150, 30)
+        BtnModificarTarea.TabIndex = 3
+        BtnModificarTarea.Text = "Modificar Tarea"
+        BtnModificarTarea.UseVisualStyleBackColor = True
         ' 
         ' BtnAsignarTarea
         ' 
@@ -139,7 +139,7 @@ Partial Class FrmPpal
         GpbDatos.Controls.Add(BtnCrearCliente)
         GpbDatos.Controls.Add(BtnCrearProyecto)
         GpbDatos.Controls.Add(BtnCrearUsuario)
-        GpbDatos.Location = New Point(7, 205)
+        GpbDatos.Location = New Point(7, 223)
         GpbDatos.Name = "GpbDatos"
         GpbDatos.Size = New Size(695, 119)
         GpbDatos.TabIndex = 5
@@ -186,7 +186,7 @@ Partial Class FrmPpal
         ' 
         GpbReportes.BackColor = SystemColors.ControlDark
         GpbReportes.Controls.Add(BtnReporte)
-        GpbReportes.Location = New Point(7, 343)
+        GpbReportes.Location = New Point(7, 361)
         GpbReportes.Name = "GpbReportes"
         GpbReportes.Size = New Size(695, 119)
         GpbReportes.TabIndex = 6
@@ -204,7 +204,8 @@ Partial Class FrmPpal
         ' 
         ' BtnSalir
         ' 
-        BtnSalir.Location = New Point(552, 485)
+        BtnSalir.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
+        BtnSalir.Location = New Point(549, 507)
         BtnSalir.Name = "BtnSalir"
         BtnSalir.Size = New Size(150, 30)
         BtnSalir.TabIndex = 0
@@ -213,7 +214,8 @@ Partial Class FrmPpal
         ' 
         ' BtnConfiguracion
         ' 
-        BtnConfiguracion.Location = New Point(358, 485)
+        BtnConfiguracion.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
+        BtnConfiguracion.Location = New Point(370, 507)
         BtnConfiguracion.Name = "BtnConfiguracion"
         BtnConfiguracion.Size = New Size(150, 30)
         BtnConfiguracion.TabIndex = 1
@@ -225,7 +227,7 @@ Partial Class FrmPpal
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlDark
-        ClientSize = New Size(741, 538)
+        ClientSize = New Size(734, 549)
         Controls.Add(GpbReportes)
         Controls.Add(BtnConfiguracion)
         Controls.Add(GpbDatos)
@@ -250,7 +252,7 @@ Partial Class FrmPpal
     Friend WithEvents LblTipoCargo As Label
     Friend WithEvents LblCargo As Label
     Friend WithEvents GpbTareas As GroupBox
-    Friend WithEvents BrnModificarTarea As Button
+    Friend WithEvents BtnModificarTarea As Button
     Friend WithEvents BtnAsignarTarea As Button
     Friend WithEvents BtnRealizarTarea As Button
     Friend WithEvents BtnCrearTarea As Button

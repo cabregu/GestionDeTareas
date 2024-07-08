@@ -22,12 +22,12 @@ Partial Class FrmCrearTareasPendientes
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        CbmCliente = New ComboBox()
+        CmbCliente = New ComboBox()
         LblCliente = New Label()
         LblProyecto = New Label()
         CmbProyecto = New ComboBox()
-        LblTarea = New Label()
-        CmbTarea = New ComboBox()
+        LblTareas = New Label()
+        CmbTareas = New ComboBox()
         LblNivleDePrioridad = New Label()
         CmbPrioridad = New ComboBox()
         DtpFechaLimite = New DateTimePicker()
@@ -40,15 +40,16 @@ Partial Class FrmCrearTareasPendientes
         LblUsuario = New Label()
         LblNombre = New Label()
         LblComenteario = New Label()
+        BtnClear = New Button()
         SuspendLayout()
         ' 
-        ' CbmCliente
+        ' CmbCliente
         ' 
-        CbmCliente.FormattingEnabled = True
-        CbmCliente.Location = New Point(269, 32)
-        CbmCliente.Name = "CbmCliente"
-        CbmCliente.Size = New Size(185, 23)
-        CbmCliente.TabIndex = 2
+        CmbCliente.FormattingEnabled = True
+        CmbCliente.Location = New Point(269, 32)
+        CmbCliente.Name = "CmbCliente"
+        CmbCliente.Size = New Size(185, 23)
+        CmbCliente.TabIndex = 2
         ' 
         ' LblCliente
         ' 
@@ -76,22 +77,22 @@ Partial Class FrmCrearTareasPendientes
         CmbProyecto.Size = New Size(185, 23)
         CmbProyecto.TabIndex = 4
         ' 
-        ' LblTarea
+        ' LblTareas
         ' 
-        LblTarea.AutoSize = True
-        LblTarea.Location = New Point(337, 139)
-        LblTarea.Name = "LblTarea"
-        LblTarea.Size = New Size(34, 15)
-        LblTarea.TabIndex = 7
-        LblTarea.Text = "Tarea"
+        LblTareas.AutoSize = True
+        LblTareas.Location = New Point(337, 139)
+        LblTareas.Name = "LblTareas"
+        LblTareas.Size = New Size(39, 15)
+        LblTareas.TabIndex = 7
+        LblTareas.Text = "Tareas"
         ' 
-        ' CmbTarea
+        ' CmbTareas
         ' 
-        CmbTarea.FormattingEnabled = True
-        CmbTarea.Location = New Point(269, 157)
-        CmbTarea.Name = "CmbTarea"
-        CmbTarea.Size = New Size(185, 23)
-        CmbTarea.TabIndex = 6
+        CmbTareas.FormattingEnabled = True
+        CmbTareas.Location = New Point(269, 157)
+        CmbTareas.Name = "CmbTareas"
+        CmbTareas.Size = New Size(185, 23)
+        CmbTareas.TabIndex = 6
         ' 
         ' LblNivleDePrioridad
         ' 
@@ -105,6 +106,7 @@ Partial Class FrmCrearTareasPendientes
         ' CmbPrioridad
         ' 
         CmbPrioridad.FormattingEnabled = True
+        CmbPrioridad.Items.AddRange(New Object() {"Bajo", "Medio", "Alto", "Inmediato"})
         CmbPrioridad.Location = New Point(23, 157)
         CmbPrioridad.Name = "CmbPrioridad"
         CmbPrioridad.Size = New Size(185, 23)
@@ -197,12 +199,22 @@ Partial Class FrmCrearTareasPendientes
         LblComenteario.TabIndex = 19
         LblComenteario.Text = "Comentario"
         ' 
+        ' BtnClear
+        ' 
+        BtnClear.Location = New Point(214, 363)
+        BtnClear.Name = "BtnClear"
+        BtnClear.Size = New Size(45, 23)
+        BtnClear.TabIndex = 20
+        BtnClear.Text = "Clear"
+        BtnClear.UseVisualStyleBackColor = True
+        ' 
         ' FrmCrearTareasPendientes
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlDark
         ClientSize = New Size(466, 478)
+        Controls.Add(BtnClear)
         Controls.Add(LblComenteario)
         Controls.Add(LblUsuario)
         Controls.Add(LblNombre)
@@ -215,24 +227,24 @@ Partial Class FrmCrearTareasPendientes
         Controls.Add(DtpFechaLimite)
         Controls.Add(LblNivleDePrioridad)
         Controls.Add(CmbPrioridad)
-        Controls.Add(LblTarea)
-        Controls.Add(CmbTarea)
+        Controls.Add(LblTareas)
+        Controls.Add(CmbTareas)
         Controls.Add(LblProyecto)
         Controls.Add(CmbProyecto)
         Controls.Add(LblCliente)
-        Controls.Add(CbmCliente)
+        Controls.Add(CmbCliente)
         Name = "FrmCrearTareasPendientes"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Crear Tareas Pendientes"
         ResumeLayout(False)
         PerformLayout()
     End Sub
-    Friend WithEvents CbmCliente As ComboBox
+    Friend WithEvents CmbCliente As ComboBox
     Friend WithEvents LblCliente As Label
     Friend WithEvents LblProyecto As Label
     Friend WithEvents CmbProyecto As ComboBox
-    Friend WithEvents LblTarea As Label
-    Friend WithEvents CmbTarea As ComboBox
+    Friend WithEvents LblTareas As Label
+    Friend WithEvents CmbTareas As ComboBox
     Friend WithEvents LblNivleDePrioridad As Label
     Friend WithEvents CmbPrioridad As ComboBox
     Friend WithEvents DtpFechaLimite As DateTimePicker
@@ -245,4 +257,5 @@ Partial Class FrmCrearTareasPendientes
     Friend WithEvents LblUsuario As Label
     Friend WithEvents LblNombre As Label
     Friend WithEvents LblComenteario As Label
+    Friend WithEvents BtnClear As Button
 End Class
