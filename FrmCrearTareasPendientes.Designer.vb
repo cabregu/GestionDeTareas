@@ -37,8 +37,8 @@ Partial Class FrmCrearTareasPendientes
         CmbAsignar = New ComboBox()
         BtnCrearTarea = New Button()
         BtnCrearTareaysalir = New Button()
-        LblUsuario = New Label()
-        LblNombre = New Label()
+        LblCodigo = New Label()
+        LblDescripcionCodigo = New Label()
         LblComenteario = New Label()
         BtnClear = New Button()
         SuspendLayout()
@@ -172,23 +172,23 @@ Partial Class FrmCrearTareasPendientes
         BtnCrearTareaysalir.Text = "Crear y Cerrar"
         BtnCrearTareaysalir.UseVisualStyleBackColor = True
         ' 
-        ' LblUsuario
+        ' LblCodigo
         ' 
-        LblUsuario.AutoSize = True
-        LblUsuario.Location = New Point(89, 32)
-        LblUsuario.Name = "LblUsuario"
-        LblUsuario.Size = New Size(14, 15)
-        LblUsuario.TabIndex = 18
-        LblUsuario.Text = "X"
+        LblCodigo.AutoSize = True
+        LblCodigo.Location = New Point(89, 32)
+        LblCodigo.Name = "LblCodigo"
+        LblCodigo.Size = New Size(46, 15)
+        LblCodigo.TabIndex = 18
+        LblCodigo.Text = "Codigo"
         ' 
-        ' LblNombre
+        ' LblDescripcionCodigo
         ' 
-        LblNombre.AutoSize = True
-        LblNombre.Location = New Point(23, 32)
-        LblNombre.Name = "LblNombre"
-        LblNombre.Size = New Size(50, 15)
-        LblNombre.TabIndex = 17
-        LblNombre.Text = "Usuario:"
+        LblDescripcionCodigo.AutoSize = True
+        LblDescripcionCodigo.Location = New Point(23, 32)
+        LblDescripcionCodigo.Name = "LblDescripcionCodigo"
+        LblDescripcionCodigo.Size = New Size(50, 15)
+        LblDescripcionCodigo.TabIndex = 17
+        LblDescripcionCodigo.Text = "Usuario:"
         ' 
         ' LblComenteario
         ' 
@@ -216,8 +216,8 @@ Partial Class FrmCrearTareasPendientes
         ClientSize = New Size(466, 478)
         Controls.Add(BtnClear)
         Controls.Add(LblComenteario)
-        Controls.Add(LblUsuario)
-        Controls.Add(LblNombre)
+        Controls.Add(LblCodigo)
+        Controls.Add(LblDescripcionCodigo)
         Controls.Add(BtnCrearTareaysalir)
         Controls.Add(BtnCrearTarea)
         Controls.Add(LblAsignar)
@@ -254,8 +254,8 @@ Partial Class FrmCrearTareasPendientes
     Friend WithEvents CmbAsignar As ComboBox
     Friend WithEvents BtnCrearTarea As Button
     Friend WithEvents BtnCrearTareaysalir As Button
-    Friend WithEvents LblUsuario As Label
-    Friend WithEvents LblNombre As Label
+    Friend WithEvents LblCodigo As Label
+    Friend WithEvents LblDescripcionCodigo As Label
     Friend WithEvents LblComenteario As Label
     Friend WithEvents BtnClear As Button
 End Class

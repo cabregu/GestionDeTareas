@@ -121,4 +121,66 @@ Public Class Conexion
         Return nick.ToArray()
     End Function
 
+
+
+
+    Public Shared Function ObtenerEstadodeCodigo(ByVal CadenaConexion As String) As String
+        Dim valortxt As String = ""
+
+        Dim sql As String = "SELECT valortxt FROM configuracion WHERE descripcion = 'estado'"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cn.Open()
+                Dim reader As MySqlDataReader = cmd.ExecuteReader()
+                If reader.Read() Then
+                    valortxt = reader.GetString("valortxt")
+                End If
+            End Using
+        End Using
+
+        Return valortxt
+    End Function
+
+    Public Shared Sub ActualizarEstadodeCodigoTemporalmente(ByVal CadenaConexion As String, ByVal nuevoValorTxt As String)
+        Dim sql As String = "UPDATE configuracion SET valortxt = @valortxt WHERE descripcion = 'estado'"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@valortxt", nuevoValorTxt)
+                cn.Open()
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+    End Sub
+
+    Public Shared Function ObtenerCodigo(ByVal CadenaConexion As String) As Integer
+        Dim valor As Integer = 0
+
+        Dim sql As String = "SELECT valor FROM configuracion WHERE descripcion = 'codigo'"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cn.Open()
+                Dim reader As MySqlDataReader = cmd.ExecuteReader()
+                If reader.Read() Then
+                    valor = reader.GetInt32("valor")
+                End If
+            End Using
+        End Using
+
+        Return valor
+    End Function
+
+    Public Shared Sub ActualizarCodigo(ByVal CadenaConexion As String, ByVal codigoactual As Integer)
+        Dim valor As Integer = codigoactual + 1
+
+        Dim sql As String = "UPDATE configuracion SET valor = @valor WHERE descripcion = 'codigo'"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@valor", valor)
+                cn.Open()
+                cmd.ExecuteNonQuery()
+            End Using
+        End Using
+    End Sub
+
+
 End Class

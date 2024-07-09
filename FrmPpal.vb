@@ -10,10 +10,23 @@ Public Class FrmPpal
     End Sub
     Private Sub BtnCrearTarea_Click(sender As Object, e As EventArgs) Handles BtnCrearTarea.Click
         Dim formulario As New FrmCrearTareasPendientes()
-        formulario.LblUsuario.Text = LblUsuario.Text
-        formulario.CadenaDeConexion = Cadenadeconexion
-        formulario.Show()
-        Me.Hide()
+
+        Dim Estado As String = Conexion.ObtenerEstadodeCodigo(Cadenadeconexion)
+
+        If Estado = "Libre" Then
+            Conexion.ActualizarEstadodeCodigoTemporalmente(Cadenadeconexion, "obteniendo")
+            Dim Codigo As Integer = Conexion.ObtenerCodigo(Cadenadeconexion)
+            formulario.LblCodigo.Text = Codigo
+            formulario.CadenaDeConexion = Cadenadeconexion
+            formulario.Show()
+            Me.Hide()
+        Else
+            MsgBox("El usuario: " & LblUsuario.Text & " Esta creando una tarea aguarde")
+
+        End If
+
+
+
     End Sub
 
     Private Sub BtnAsignarTarea_Click(sender As Object, e As EventArgs) Handles BtnAsignarTarea.Click
