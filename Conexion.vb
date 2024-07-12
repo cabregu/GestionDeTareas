@@ -124,34 +124,6 @@ Public Class Conexion
 
 
 
-    Public Shared Function ObtenerEstadodeCodigo(ByVal CadenaConexion As String) As String
-        Dim valortxt As String = ""
-
-        Dim sql As String = "SELECT valortxt FROM configuracion WHERE descripcion = 'estado'"
-        Using cn As New MySqlConnection(CadenaConexion)
-            Using cmd As New MySqlCommand(sql, cn)
-                cn.Open()
-                Dim reader As MySqlDataReader = cmd.ExecuteReader()
-                If reader.Read() Then
-                    valortxt = reader.GetString("valortxt")
-                End If
-            End Using
-        End Using
-
-        Return valortxt
-    End Function
-
-    Public Shared Sub ActualizarEstadodeCodigoTemporalmente(ByVal CadenaConexion As String, ByVal nuevoValorTxt As String)
-        Dim sql As String = "UPDATE configuracion SET valortxt = @valortxt WHERE descripcion = 'estado'"
-        Using cn As New MySqlConnection(CadenaConexion)
-            Using cmd As New MySqlCommand(sql, cn)
-                cmd.Parameters.AddWithValue("@valortxt", nuevoValorTxt)
-                cn.Open()
-                cmd.ExecuteNonQuery()
-            End Using
-        End Using
-    End Sub
-
     Public Shared Function ObtenerCodigo(ByVal CadenaConexion As String) As Integer
         Dim valor As Integer = 0
 
@@ -181,6 +153,62 @@ Public Class Conexion
             End Using
         End Using
     End Sub
+
+
+
+    Public Shared Function InsertarKanba(
+    ByVal CadenaConexion As String,
+    ByVal codigo As Integer,
+    ByVal cliente As String,
+    ByVal proyecto As String,
+    ByVal tarea As String,
+    ByVal niveldeprioridad As String,
+    ByVal usuario As String,
+    ByVal fechalimite As Date,
+    ByVal estado As String,
+    Optional ByVal fechadeinicio As DateTime? = Nothing,
+    Optional ByVal tiempo As String = Nothing,
+    Optional ByVal comentario As String = Nothing) As Boolean
+
+        Dim sqlCheck As String = "SELECT COUNT(*) FROM kanbas WHERE codigo = @codigo"
+        Dim sqlInsert As String = "INSERT INTO kanbas (codigo, cliente, proyecto, tarea, niveldeprioridad, usuario, fechalimite, estado, fechadeinicio, tiempo, comentario) VALUES (@codigo, @cliente, @proyecto, @tarea, @niveldeprioridad, @usuario, @fechalimite, @estado, @fechadeinicio, @tiempo, @comentario)"
+
+        Using cn As New MySqlConnection(CadenaConexion)
+            cn.Open()
+
+            ' Verificar si el código ya existe
+            Using cmdCheck As New MySqlCommand(sqlCheck, cn)
+                cmdCheck.Parameters.AddWithValue("@codigo", codigo)
+                Dim count As Integer = Convert.ToInt32(cmdCheck.ExecuteScalar())
+
+                If count > 0 Then
+                    ' El código ya existe
+                    Return False
+                End If
+            End Using
+
+            ' Insertar el nuevo registro
+            Using cmdInsert As New MySqlCommand(sqlInsert, cn)
+                cmdInsert.Parameters.AddWithValue("@codigo", codigo)
+                cmdInsert.Parameters.AddWithValue("@cliente", cliente)
+                cmdInsert.Parameters.AddWithValue("@proyecto", proyecto)
+                cmdInsert.Parameters.AddWithValue("@tarea", tarea)
+                cmdInsert.Parameters.AddWithValue("@niveldeprioridad", niveldeprioridad)
+                cmdInsert.Parameters.AddWithValue("@usuario", usuario)
+                cmdInsert.Parameters.AddWithValue("@fechalimite", fechalimite)
+                cmdInsert.Parameters.AddWithValue("@estado", estado)
+                cmdInsert.Parameters.AddWithValue("@fechadeinicio", If(fechadeinicio.HasValue, fechadeinicio, DBNull.Value))
+                cmdInsert.Parameters.AddWithValue("@tiempo", If(String.IsNullOrEmpty(tiempo), DBNull.Value, tiempo))
+                cmdInsert.Parameters.AddWithValue("@comentario", If(String.IsNullOrEmpty(comentario), DBNull.Value, comentario))
+
+                cmdInsert.ExecuteNonQuery()
+            End Using
+        End Using
+
+        ' El registro se insertó correctamente
+        Return True
+    End Function
+
 
 
 End Class

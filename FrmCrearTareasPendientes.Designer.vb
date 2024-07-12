@@ -156,6 +156,7 @@ Partial Class FrmCrearTareasPendientes
         ' 
         ' BtnCrearTarea
         ' 
+        BtnCrearTarea.Enabled = False
         BtnCrearTarea.Location = New Point(23, 428)
         BtnCrearTarea.Name = "BtnCrearTarea"
         BtnCrearTarea.Size = New Size(150, 30)
@@ -165,6 +166,7 @@ Partial Class FrmCrearTareasPendientes
         ' 
         ' BtnCrearTareaysalir
         ' 
+        BtnCrearTareaysalir.Enabled = False
         BtnCrearTareaysalir.Location = New Point(304, 428)
         BtnCrearTareaysalir.Name = "BtnCrearTareaysalir"
         BtnCrearTareaysalir.Size = New Size(150, 30)
