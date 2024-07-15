@@ -159,6 +159,34 @@ Public Class Conexion
         Return valor
     End Function
 
+    Public Shared Function ObtenertareasPendientes(ByVal CadenaConexion As String, ByVal codigo As String) As List(Of Tarea)
+        Dim tareas As New List(Of Tarea)()
+        Dim sql As String = "SELECT * FROM Kanbas WHERE Estado='Pendiente' AND codigo = @codigo"
+
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@codigo", codigo)
+                cn.Open()
+                Dim reader As MySqlDataReader = cmd.ExecuteReader()
+                While reader.Read()
+                    Dim tarea As New Tarea()
+                    tarea.codigo = reader("codigo").ToString()
+                    tarea.cliente = reader("cliente").ToString()
+                    tarea.proyecto = reader("proyecto").ToString()
+                    tarea.tarea = reader("tarea").ToString()
+                    tarea.niveldeprioridad = reader("niveldeprioridad").ToString()
+                    tarea.fechalimite = reader.GetDateTime("fechalimite")
+                    tarea.comentario = reader("comentario").ToString()
+                    tareas.Add(tarea)
+                End While
+            End Using
+        End Using
+        Return tareas
+    End Function
+
+
+
+
     Public Shared Sub ActualizarCodigo(ByVal CadenaConexion As String, ByVal codigoactual As String)
         Dim valor As Integer = codigoactual + 1
 

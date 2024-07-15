@@ -25,6 +25,8 @@ Public Class FrmPpal
             Dim formulario As New FrmAsignarTareas()
             For Each tarea As String In tareasPendientes
                 formulario.CmbCodigo.Items.Add(tarea)
+                formulario.CadenaDeConexion = Cadenadeconexion
+
             Next
             formulario.Show()
             Me.Hide()
@@ -78,9 +80,9 @@ Public Class FrmPpal
 
     Private Sub BtnConfiguracion_Click(sender As Object, e As EventArgs) Handles BtnConfiguracion.Click
 
-        Dim columnasAImportar As String() = {"proyecto", "tareas"}
-        TransferirDatos("proyecto_tareas", "proyectotareas", columnasAImportar)
-
+        Dim formulario As New FrmConfiguracion
+        formulario.Show()
+        Me.Hide()
     End Sub
 
     Private Sub BtnSalir_Click(sender As Object, e As EventArgs) Handles BtnSalir.Click
