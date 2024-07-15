@@ -16,9 +16,22 @@ Public Class FrmPpal
     End Sub
 
     Private Sub BtnAsignarTarea_Click(sender As Object, e As EventArgs) Handles BtnAsignarTarea.Click
-        Dim formulario As New FrmAsignarTareas()
-        formulario.Show()
-        Me.Hide()
+
+        Dim tareasPendientes As String() = Conexion.ObtenertareasPendientes(Cadenadeconexion)
+
+        If tareasPendientes.Length = 0 Then
+            MessageBox.Show("No hay tareas pendientes.")
+        Else
+            Dim formulario As New FrmAsignarTareas()
+            For Each tarea As String In tareasPendientes
+                formulario.CmbCodigo.Items.Add(tarea)
+            Next
+            formulario.Show()
+            Me.Hide()
+        End If
+
+
+
     End Sub
 
     Private Sub BtnRealizarTarea_Click(sender As Object, e As EventArgs) Handles BtnRealizarTarea.Click

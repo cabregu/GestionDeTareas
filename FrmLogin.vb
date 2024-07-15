@@ -2,6 +2,23 @@
 
 
     Private Sub BtnIngresar_Click(sender As Object, e As EventArgs) Handles BtnIngresar.Click
+        ingresar()
+    End Sub
+
+
+    Private Sub BtnSalir_Click(sender As Object, e As EventArgs) Handles BtnSalir.Click
+        Me.Close()
+    End Sub
+
+    Private Sub TxtContraseña_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtContraseña.KeyPress
+        If e.KeyChar = ChrW(Keys.Enter) Then
+            ingresar()
+            e.Handled = True
+        End If
+
+    End Sub
+
+    Private Sub ingresar()
         Dim Cadena As String = Conexion.ObtenerBaseDeDatosDeAccess()
 
         Dim Cargo As String = Conexion.ValidarUsuario(TxtUsuario.Text, TxtContraseña.Text, Cadena)
@@ -23,11 +40,5 @@
             MsgBox("Verifique su usuario o contraseña")
         End If
     End Sub
-
-
-    Private Sub BtnSalir_Click(sender As Object, e As EventArgs) Handles BtnSalir.Click
-        Me.Close()
-    End Sub
-
 
 End Class

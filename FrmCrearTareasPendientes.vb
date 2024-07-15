@@ -34,6 +34,18 @@
 
 
     Private Sub BtnCrearTarea_Click(sender As Object, e As EventArgs) Handles BtnCrearTarea.Click
+
+        If CmbAsignar.Text = "" Then
+            Creartarea()
+        Else
+            Creartarea("Asignada")
+        End If
+
+    End Sub
+
+
+    Private Sub Creartarea(Optional ByVal Estado As String = "Pendiente")
+
         ' Validar los campos obligatorios
         If String.IsNullOrEmpty(LblCodigo.Text) OrElse
        String.IsNullOrEmpty(CmbCliente.Text) OrElse
@@ -46,34 +58,44 @@
             Exit Sub
         End If
 
-
-        Dim codigo As Integer = LblCodigo.Text
+        Dim codigo As Integer = Integer.Parse(LblCodigo.Text)
         Dim cliente As String = CmbCliente.Text
         Dim proyecto As String = CmbProyecto.Text
         Dim tarea As String = CmbTareas.Text
         Dim nivelDePrioridad As String = CmbPrioridad.Text
         Dim fechaLimite As Date = DtpFechaLimite.Value
         Dim comentario As String = TxtComentario.Text
-        Dim estado As String = "Pendiente"
         Dim usuario As String = CmbAsignar.Text
         Dim fechaDeInicio As DateTime? = Nothing
         Dim tiempo As String = Nothing
 
         ' Intentar insertar el registro
-        Dim resultado As Boolean = Conexion.InsertarKanba(CadenaDeConexion, codigo, cliente, proyecto, tarea, nivelDePrioridad, usuario, fechaLimite, estado, fechaDeInicio, tiempo, comentario)
+        Dim resultado As Boolean = Conexion.InsertarKanba(CadenaDeConexion, codigo, cliente, proyecto, tarea, nivelDePrioridad, usuario, fechaLimite, Estado, fechaDeInicio, tiempo, comentario)
 
         ' Mostrar resultado
         If resultado Then
-            'MsgBox("El registro se insertó correctamente.")
+            MsgBox("El registro se insertó correctamente.")
+
+            ' Limpiar los campos del formulario
+            CmbCliente.Text = ""
+            CmbProyecto.Text = ""
+            CmbTareas.Text = ""
+            CmbPrioridad.Text = ""
+            TxtComentario.Text = ""
+            CmbAsignar.Text = ""
+
+            ' Actualizar el código
+            Conexion.ActualizarCodigo(CadenaDeConexion, LblCodigo.Text)
+
+            ' Obtener el nuevo código desde la base de datos
+            Dim Codigonuevo As Integer = Conexion.ObtenerCodigo(CadenaDeConexion)
+            LblCodigo.Text = Codigonuevo
 
         Else
             MsgBox("El código ya existe en la tabla se actualizo el nuevo codigo.")
             LblCodigo.Text = Conexion.ObtenerCodigo(CadenaDeConexion)
-
         End If
     End Sub
-
-
 
 
     Private Sub CargarProyecto()
