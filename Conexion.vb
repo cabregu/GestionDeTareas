@@ -2,6 +2,8 @@
 Imports System.Data.OleDb
 
 Public Class Conexion
+
+    'funciones de obtener
     Public Shared Function ObtenerBaseDeDatosDeAccess() As String
         Dim resultado As String = String.Empty
         Dim carpeta As String = "Externos"
@@ -187,6 +189,7 @@ Public Class Conexion
 
 
 
+    'funciones de actualizar
     Public Shared Sub ActualizarCodigo(ByVal CadenaConexion As String, ByVal codigoactual As String)
         Dim valor As Integer = codigoactual + 1
 
@@ -200,8 +203,25 @@ Public Class Conexion
         End Using
     End Sub
 
+    Public Shared Function ActualizarUsuarioPorCodigo(ByVal CadenaConexion As String, ByVal codigo As String, ByVal usuarioNuevo As String) As Boolean
+        Dim sql As String = "UPDATE kanbas SET usuario = @usuarioNuevo, estado = 'Asignada' WHERE codigo = @codigo"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@usuarioNuevo", usuarioNuevo)
+                cmd.Parameters.AddWithValue("@codigo", codigo)
+                Try
+                    cn.Open()
+                    Dim filasAfectadas As Integer = cmd.ExecuteNonQuery()
+                    Return filasAfectadas > 0
+                Catch ex As Exception
+                    Return False
+                End Try
+            End Using
+        End Using
+    End Function
 
 
+    'funcioneas de insertar
     Public Shared Function InsertarKanba(
     ByVal CadenaConexion As String,
     ByVal codigo As Integer,

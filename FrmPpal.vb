@@ -23,8 +23,8 @@ Public Class FrmPpal
             MessageBox.Show("No hay tareas pendientes.")
         Else
             Dim formulario As New FrmAsignarTareas()
-            For Each tarea As String In tareasPendientes
-                formulario.CmbCodigo.Items.Add(tarea)
+            For Each codigo As String In tareasPendientes
+                formulario.CmbCodigo.Items.Add(codigo)
                 formulario.CadenaDeConexion = Cadenadeconexion
 
             Next
