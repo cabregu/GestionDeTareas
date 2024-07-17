@@ -22,8 +22,7 @@ Partial Class FrmRealizarTarea
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        TxtUsuario = New TextBox()
-        LblUsuario = New Label()
+        LblDescUsuario = New Label()
         CmbCodigo = New ComboBox()
         LblCodigo = New Label()
         LblFechaLimite = New Label()
@@ -31,7 +30,7 @@ Partial Class FrmRealizarTarea
         LblCliente = New Label()
         TxtCliente = New TextBox()
         LblPrioridad = New Label()
-        TxtPrioridad = New TextBox()
+        TxtNiveldePrioridad = New TextBox()
         LblProyecto = New Label()
         TxtProyecto = New TextBox()
         LblFechaInicio = New Label()
@@ -48,23 +47,17 @@ Partial Class FrmRealizarTarea
         BtnPausar = New Button()
         BtnRetomar = New Button()
         FtnFinalizar = New Button()
+        LblUsuario = New Label()
         SuspendLayout()
         ' 
-        ' TxtUsuario
+        ' LblDescUsuario
         ' 
-        TxtUsuario.Location = New Point(20, 38)
-        TxtUsuario.Name = "TxtUsuario"
-        TxtUsuario.Size = New Size(180, 23)
-        TxtUsuario.TabIndex = 0
-        ' 
-        ' LblUsuario
-        ' 
-        LblUsuario.AutoSize = True
-        LblUsuario.Location = New Point(79, 20)
-        LblUsuario.Name = "LblUsuario"
-        LblUsuario.Size = New Size(47, 15)
-        LblUsuario.TabIndex = 1
-        LblUsuario.Text = "Usuario"
+        LblDescUsuario.AutoSize = True
+        LblDescUsuario.Location = New Point(67, 20)
+        LblDescUsuario.Name = "LblDescUsuario"
+        LblDescUsuario.Size = New Size(47, 15)
+        LblDescUsuario.TabIndex = 1
+        LblDescUsuario.Text = "Usuario"
         ' 
         ' CmbCodigo
         ' 
@@ -124,12 +117,12 @@ Partial Class FrmRealizarTarea
         LblPrioridad.TabIndex = 9
         LblPrioridad.Text = "Prioridad"
         ' 
-        ' TxtPrioridad
+        ' TxtNiveldePrioridad
         ' 
-        TxtPrioridad.Location = New Point(20, 174)
-        TxtPrioridad.Name = "TxtPrioridad"
-        TxtPrioridad.Size = New Size(180, 23)
-        TxtPrioridad.TabIndex = 8
+        TxtNiveldePrioridad.Location = New Point(20, 174)
+        TxtNiveldePrioridad.Name = "TxtNiveldePrioridad"
+        TxtNiveldePrioridad.Size = New Size(180, 23)
+        TxtNiveldePrioridad.TabIndex = 8
         ' 
         ' LblProyecto
         ' 
@@ -265,12 +258,22 @@ Partial Class FrmRealizarTarea
         FtnFinalizar.Text = "Finalizar"
         FtnFinalizar.UseVisualStyleBackColor = True
         ' 
+        ' LblUsuario
+        ' 
+        LblUsuario.AutoSize = True
+        LblUsuario.Location = New Point(67, 41)
+        LblUsuario.Name = "LblUsuario"
+        LblUsuario.Size = New Size(47, 15)
+        LblUsuario.TabIndex = 26
+        LblUsuario.Text = "Usuario"
+        ' 
         ' FrmRealizarTarea
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlDark
         ClientSize = New Size(506, 684)
+        Controls.Add(LblUsuario)
         Controls.Add(FtnFinalizar)
         Controls.Add(BtnRetomar)
         Controls.Add(BtnPausar)
@@ -288,15 +291,14 @@ Partial Class FrmRealizarTarea
         Controls.Add(LblProyecto)
         Controls.Add(TxtProyecto)
         Controls.Add(LblPrioridad)
-        Controls.Add(TxtPrioridad)
+        Controls.Add(TxtNiveldePrioridad)
         Controls.Add(LblCliente)
         Controls.Add(TxtCliente)
         Controls.Add(LblFechaLimite)
         Controls.Add(TxtFechaLimite)
         Controls.Add(LblCodigo)
         Controls.Add(CmbCodigo)
-        Controls.Add(LblUsuario)
-        Controls.Add(TxtUsuario)
+        Controls.Add(LblDescUsuario)
         Name = "FrmRealizarTarea"
         StartPosition = FormStartPosition.CenterScreen
         Text = "Realizar"
@@ -305,7 +307,7 @@ Partial Class FrmRealizarTarea
     End Sub
 
     Friend WithEvents TxtUsuario As TextBox
-    Friend WithEvents LblUsuario As Label
+    Friend WithEvents LblDescUsuario As Label
     Friend WithEvents CmbCodigo As ComboBox
     Friend WithEvents LblCodigo As Label
     Friend WithEvents LblFechaLimite As Label
@@ -313,7 +315,7 @@ Partial Class FrmRealizarTarea
     Friend WithEvents LblCliente As Label
     Friend WithEvents TxtCliente As TextBox
     Friend WithEvents LblPrioridad As Label
-    Friend WithEvents TxtPrioridad As TextBox
+    Friend WithEvents TxtNiveldePrioridad As TextBox
     Friend WithEvents LblProyecto As Label
     Friend WithEvents TxtProyecto As TextBox
     Friend WithEvents LblFechaInicio As Label
@@ -330,4 +332,5 @@ Partial Class FrmRealizarTarea
     Friend WithEvents BtnPausar As Button
     Friend WithEvents BtnRetomar As Button
     Friend WithEvents FtnFinalizar As Button
+    Friend WithEvents LblUsuario As Label
 End Class

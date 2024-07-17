@@ -38,6 +38,8 @@ Public Class FrmPpal
 
     Private Sub BtnRealizarTarea_Click(sender As Object, e As EventArgs) Handles BtnRealizarTarea.Click
         Dim formulario As New FrmRealizarTarea()
+        formulario.CadenaDeConexion = Cadenadeconexion
+        formulario.LblUsuario.Text = LblUsuario.Text
         formulario.Show()
         Me.Hide()
     End Sub

@@ -5,5 +5,7 @@
     Public Property tarea As String
     Public Property niveldeprioridad As String
     Public Property fechalimite As Date
+    Public Property fechadeinicio As Date
+    Public Property estado As String
     Public Property comentario As String
 End Class

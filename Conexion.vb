@@ -185,7 +185,76 @@ Public Class Conexion
         End Using
         Return tareas
     End Function
+    Public Shared Function ObtenertareasPendientesdeUsuario(ByVal CadenaConexion As String, ByVal codigo As String) As List(Of Tarea)
+        Dim tareas As New List(Of Tarea)()
+        Dim sql As String = "SELECT * FROM Kanbas WHERE codigo = @codigo"
 
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@codigo", codigo)
+                cn.Open()
+                Dim reader As MySqlDataReader = cmd.ExecuteReader()
+                While reader.Read()
+                    Dim tarea As New Tarea()
+                    tarea.codigo = reader("codigo").ToString()
+                    tarea.cliente = reader("cliente").ToString()
+                    tarea.proyecto = reader("proyecto").ToString()
+                    tarea.tarea = reader("tarea").ToString()
+                    tarea.niveldeprioridad = reader("niveldeprioridad").ToString()
+                    tarea.fechalimite = reader.GetDateTime("fechalimite")
+                    tarea.comentario = reader("comentario").ToString()
+                    tarea.estado = reader("estado").ToString()
+
+                    ' Verificar si fechadeinicio es DBNull o nulo
+                    If Not reader.IsDBNull(reader.GetOrdinal("fechadeinicio")) Then
+                        tarea.fechadeinicio = reader.GetDateTime("fechadeinicio")
+                    Else
+                        tarea.fechadeinicio = Nothing ' o cualquier valor por defecto que desees usar
+                    End If
+
+                    tareas.Add(tarea)
+                End While
+            End Using
+        End Using
+        Return tareas
+    End Function
+
+    Public Shared Function ObtenerCodigoPorUsuario(ByVal CadenaConexion As String, ByVal Usuario As String) As String()
+        Dim codigousuario As New List(Of String)()
+
+        Dim sql As String = "SELECT codigo FROM kanbas WHERE usuario=@usuario"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@usuario", Usuario)
+                cn.Open()
+                Dim reader As MySqlDataReader = cmd.ExecuteReader()
+                While reader.Read()
+                    codigousuario.Add(reader("codigo").ToString())
+                End While
+            End Using
+        End Using
+
+        Return codigousuario.ToArray()
+    End Function
+
+    Public Shared Function ObtenerFechaHoraServidor(ByVal CadenaConexion As String) As DateTime
+        Dim sql As String = "SELECT NOW()"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                Try
+                    cn.Open()
+                    Dim resultado As Object = cmd.ExecuteScalar()
+                    If resultado IsNot Nothing AndAlso Not IsDBNull(resultado) Then
+                        Return Convert.ToDateTime(resultado)
+                    Else
+                        Throw New Exception("No se pudo obtener la fecha y hora del servidor MySQL.")
+                    End If
+                Catch ex As Exception
+                    Throw New Exception("Error al obtener la fecha y hora del servidor MySQL: " & ex.Message)
+                End Try
+            End Using
+        End Using
+    End Function
 
 
 
@@ -208,6 +277,23 @@ Public Class Conexion
         Using cn As New MySqlConnection(CadenaConexion)
             Using cmd As New MySqlCommand(sql, cn)
                 cmd.Parameters.AddWithValue("@usuarioNuevo", usuarioNuevo)
+                cmd.Parameters.AddWithValue("@codigo", codigo)
+                Try
+                    cn.Open()
+                    Dim filasAfectadas As Integer = cmd.ExecuteNonQuery()
+                    Return filasAfectadas > 0
+                Catch ex As Exception
+                    Return False
+                End Try
+            End Using
+        End Using
+    End Function
+
+    Public Shared Function ActualizarFechaInicioPorCodigo(ByVal CadenaConexion As String, ByVal codigo As String, ByVal fechaDeInicio As DateTime) As Boolean
+        Dim sql As String = "UPDATE kanbas SET fechadeinicio = @fechaDeInicio WHERE codigo = @codigo"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@fechaDeInicio", fechaDeInicio.ToString("yyyy-MM-dd HH:mm"))
                 cmd.Parameters.AddWithValue("@codigo", codigo)
                 Try
                     cn.Open()
