@@ -51,11 +51,31 @@
     Private Sub BtnIniciar_Click(sender As Object, e As EventArgs) Handles BtnIniciar.Click
 
         Dim FechaHoraServer As DateTime = Conexion.ObtenerFechaHoraServidor(CadenaDeConexion)
-        If Conexion.ActualizarFechaInicioPorCodigo(CadenaDeConexion, CmbCodigo.Text, FechaHoraServer) = True Then
-            MsgBox("Tarea iniciada")
+        If Conexion.ActualizarFechaInicioYCalcularPorCodigo(CadenaDeConexion, CmbCodigo.Text, FechaHoraServer) = True Then
+            CargarTareasPorCodigo()
 
         End If
 
+    End Sub
+
+    Private Sub BtnRetomar_Click(sender As Object, e As EventArgs) Handles BtnRetomar.Click
+
+
+
+    End Sub
+
+    Private Sub BtnPausar_Click(sender As Object, e As EventArgs) Handles BtnPausar.Click
+
+        Dim FechaHoraServer As DateTime = Conexion.ObtenerFechaHoraServidor(CadenaDeConexion)
+        Dim TiempoObtenido As String = Conexion.ObtenerTiempo(CadenaDeConexion, CmbCodigo.Text) 'Tiempo desde la tabla kanbas se va sumando
+        Dim TiempoTranscurridoDesdeFechaParaCalcular As String = Conexion.ObtenerYCalcularTiempoTranscurrido(CadenaDeConexion, CmbCodigo.Text, FechaHoraServer)
+        Dim TiempoAcumulado As String = Conexion.SumarTiempos(TiempoObtenido, TiempoTranscurridoDesdeFechaParaCalcular)
+        Dim NuevoTiempo As TimeSpan = TimeSpan.Parse(TiempoAcumulado)
+
+        Conexion.ActualizarTiempo(CadenaDeConexion, CmbCodigo.Text, NuevoTiempo)
+        Conexion.ActualizarFechaYEstado(CadenaDeConexion, CmbCodigo.Text, FechaHoraServer, "Pausada")
+
+        MsgBox(TiempoAcumulado)
     End Sub
 
 

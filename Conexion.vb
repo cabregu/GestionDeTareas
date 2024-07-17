@@ -256,6 +256,56 @@ Public Class Conexion
         End Using
     End Function
 
+    Public Shared Function ObtenerYCalcularTiempoTranscurrido(ByVal CadenaConexion As String, ByVal codigo As String, ByVal fechaInicio As DateTime) As String
+        Dim sql As String = "SELECT fechaparacalcular FROM kanbas WHERE codigo = @codigo"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@codigo", codigo)
+                Try
+                    cn.Open()
+                    Dim resultado As Object = cmd.ExecuteScalar()
+                    If resultado IsNot Nothing AndAlso Not DBNull.Value.Equals(resultado) Then
+                        Dim fechaParaCalcular As DateTime = Convert.ToDateTime(resultado)
+                        Dim tiempoTranscurrido As TimeSpan = fechaInicio - fechaParaCalcular
+                        Dim tiempoFormateado As String = $"{tiempoTranscurrido.Hours:00}:{tiempoTranscurrido.Minutes:00}:{tiempoTranscurrido.Seconds:00}"
+                        Return tiempoFormateado
+                    Else
+                        Return "No se encontró una fecha para calcular para el código proporcionado."
+                    End If
+                Catch ex As Exception
+                    Return "Error al intentar obtener y calcular el tiempo transcurrido."
+                End Try
+            End Using
+        End Using
+    End Function
+
+    Public Shared Function ObtenerTiempo(ByVal CadenaConexion As String, ByVal codigo As String) As String
+        Dim tiempo As String = "00:00:00"
+        Dim sql As String = "SELECT Tiempo FROM Kanbas WHERE codigo = @codigo"
+
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@codigo", codigo)
+                Try
+                    cn.Open()
+                    Dim resultado As Object = cmd.ExecuteScalar()
+                    If resultado IsNot Nothing AndAlso Not DBNull.Value.Equals(resultado) Then
+                        tiempo = resultado.ToString()
+                        If String.IsNullOrEmpty(tiempo) Then
+                            tiempo = "00:00:00"
+                        End If
+                    End If
+                Catch ex As Exception
+                    ' Manejar el error según sea necesario
+                    tiempo = "Error al obtener el tiempo."
+                End Try
+            End Using
+        End Using
+
+        Return tiempo
+    End Function
+
+
 
 
     'funciones de actualizar
@@ -289,8 +339,8 @@ Public Class Conexion
         End Using
     End Function
 
-    Public Shared Function ActualizarFechaInicioPorCodigo(ByVal CadenaConexion As String, ByVal codigo As String, ByVal fechaDeInicio As DateTime) As Boolean
-        Dim sql As String = "UPDATE kanbas SET fechadeinicio = @fechaDeInicio WHERE codigo = @codigo"
+    Public Shared Function ActualizarFechaInicioYCalcularPorCodigo(ByVal CadenaConexion As String, ByVal codigo As String, ByVal fechaDeInicio As DateTime) As Boolean
+        Dim sql As String = "UPDATE kanbas SET fechadeinicio = @fechaDeInicio, fechaparacalcular = @fechaDeInicio, estado = 'Ejecutando' WHERE codigo = @codigo"
         Using cn As New MySqlConnection(CadenaConexion)
             Using cmd As New MySqlCommand(sql, cn)
                 cmd.Parameters.AddWithValue("@fechaDeInicio", fechaDeInicio.ToString("yyyy-MM-dd HH:mm"))
@@ -305,6 +355,44 @@ Public Class Conexion
             End Using
         End Using
     End Function
+    Public Shared Sub ActualizarTiempo(ByVal CadenaConexion As String, ByVal codigo As String, ByVal nuevoTiempo As TimeSpan)
+        Dim tiempoFormateado As String = nuevoTiempo.ToString("hh\:mm\:ss") ' Formatear el TimeSpan a HH:mm:ss
+
+        Dim sql As String = "UPDATE kanbas SET tiempo = @tiempo WHERE codigo = @codigo"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@tiempo", tiempoFormateado)
+                cmd.Parameters.AddWithValue("@codigo", codigo)
+                Try
+                    cn.Open()
+                    cmd.ExecuteNonQuery()
+                Catch ex As Exception
+                    ' Manejar el error según sea necesario
+                End Try
+            End Using
+        End Using
+    End Sub
+
+    Public Shared Function ActualizarFechaYEstado(ByVal CadenaConexion As String, ByVal codigo As String, ByVal nuevaFechaParaCalcular As DateTime, ByVal nuevoEstado As String) As Boolean
+        Dim sql As String = "UPDATE kanbas SET fechaparacalcular = @nuevaFecha, estado = @nuevoEstado WHERE codigo = @codigo"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@nuevaFecha", nuevaFechaParaCalcular)
+                cmd.Parameters.AddWithValue("@nuevoEstado", nuevoEstado)
+                cmd.Parameters.AddWithValue("@codigo", codigo)
+                Try
+                    cn.Open()
+                    Dim filasAfectadas As Integer = cmd.ExecuteNonQuery()
+                    Return filasAfectadas > 0
+                Catch ex As Exception
+                    Return False
+                End Try
+            End Using
+        End Using
+    End Function
+
+
+
 
 
     'funcioneas de insertar
@@ -359,6 +447,22 @@ Public Class Conexion
 
         ' El registro se insertó correctamente
         Return True
+    End Function
+
+
+    'Tarea Sin conexion
+    Public Shared Function SumarTiempos(ByVal ValorBaseDeDatos As String, ByVal ValorDesdeFechaParaCalcular As String) As String
+        Try
+            Dim ts1 As TimeSpan = TimeSpan.ParseExact(ValorBaseDeDatos, "hh\:mm\:ss", Nothing)
+            Dim ts2 As TimeSpan = TimeSpan.ParseExact(ValorDesdeFechaParaCalcular, "hh\:mm\:ss", Nothing)
+
+            Dim tiempoTotal As TimeSpan = ts1 + ts2
+
+            Dim tiempoFormateado As String = $"{tiempoTotal.Hours:00}:{tiempoTotal.Minutes:00}:{tiempoTotal.Seconds:00}"
+            Return tiempoFormateado
+        Catch ex As Exception
+            Return "Error al sumar los tiempos transcurridos."
+        End Try
     End Function
 
 
