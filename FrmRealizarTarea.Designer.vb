@@ -224,39 +224,47 @@ Partial Class FrmRealizarTarea
         ' 
         ' BtnIniciar
         ' 
+        BtnIniciar.BackColor = Color.Aqua
+        BtnIniciar.Enabled = False
         BtnIniciar.Location = New Point(53, 573)
         BtnIniciar.Name = "BtnIniciar"
         BtnIniciar.Size = New Size(172, 40)
         BtnIniciar.TabIndex = 22
         BtnIniciar.Text = "Iniciar"
-        BtnIniciar.UseVisualStyleBackColor = True
+        BtnIniciar.UseVisualStyleBackColor = False
         ' 
         ' BtnPausar
         ' 
+        BtnPausar.BackColor = Color.Aqua
+        BtnPausar.Enabled = False
         BtnPausar.Location = New Point(285, 573)
         BtnPausar.Name = "BtnPausar"
         BtnPausar.Size = New Size(172, 40)
         BtnPausar.TabIndex = 23
         BtnPausar.Text = "Pausar"
-        BtnPausar.UseVisualStyleBackColor = True
+        BtnPausar.UseVisualStyleBackColor = False
         ' 
         ' BtnRetomar
         ' 
+        BtnRetomar.BackColor = Color.Aqua
+        BtnRetomar.Enabled = False
         BtnRetomar.Location = New Point(53, 619)
         BtnRetomar.Name = "BtnRetomar"
         BtnRetomar.Size = New Size(172, 40)
         BtnRetomar.TabIndex = 24
         BtnRetomar.Text = "Retomar"
-        BtnRetomar.UseVisualStyleBackColor = True
+        BtnRetomar.UseVisualStyleBackColor = False
         ' 
         ' FtnFinalizar
         ' 
+        FtnFinalizar.BackColor = Color.Aqua
+        FtnFinalizar.Enabled = False
         FtnFinalizar.Location = New Point(285, 619)
         FtnFinalizar.Name = "FtnFinalizar"
         FtnFinalizar.Size = New Size(172, 40)
         FtnFinalizar.TabIndex = 25
         FtnFinalizar.Text = "Finalizar"
-        FtnFinalizar.UseVisualStyleBackColor = True
+        FtnFinalizar.UseVisualStyleBackColor = False
         ' 
         ' LblUsuario
         ' 
