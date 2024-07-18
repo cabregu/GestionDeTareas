@@ -185,6 +185,7 @@ Public Class Conexion
         End Using
         Return tareas
     End Function
+
     Public Shared Function ObtenertareasPendientesdeUsuario(ByVal CadenaConexion As String, ByVal codigo As String) As List(Of Tarea)
         Dim tareas As New List(Of Tarea)()
         Dim sql As String = "SELECT * FROM Kanbas WHERE codigo = @codigo"
@@ -217,6 +218,27 @@ Public Class Conexion
             End Using
         End Using
         Return tareas
+    End Function
+
+    Public Shared Function ObtenertareasEjecutandoPorUsuario(ByVal CadenaConexion As String, ByVal Usuario As String) As String()
+        Dim tareas As New List(Of String)()
+        Dim sql As String = "SELECT * FROM Kanbas WHERE Estado='Ejecutando' And Usuario = '" & Usuario & "'"
+
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cn.Open()
+                Dim reader As MySqlDataReader = cmd.ExecuteReader()
+                While reader.Read()
+                    ' Verificar el tipo de dato y convertir adecuadamente
+                    If TypeOf reader("codigo") Is String Then
+                        tareas.Add(reader.GetString("codigo"))
+                    Else
+                        tareas.Add(reader("codigo").ToString())
+                    End If
+                End While
+            End Using
+        End Using
+        Return tareas.ToArray()
     End Function
 
     Public Shared Function ObtenerCodigoPorUsuario(ByVal CadenaConexion As String, ByVal Usuario As String) As String()

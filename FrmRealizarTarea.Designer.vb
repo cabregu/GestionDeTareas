@@ -46,7 +46,7 @@ Partial Class FrmRealizarTarea
         BtnIniciar = New Button()
         BtnPausar = New Button()
         BtnRetomar = New Button()
-        FtnFinalizar = New Button()
+        BtnFinalizar = New Button()
         LblUsuario = New Label()
         SuspendLayout()
         ' 
@@ -87,6 +87,7 @@ Partial Class FrmRealizarTarea
         ' 
         ' TxtFechaLimite
         ' 
+        TxtFechaLimite.Enabled = False
         TxtFechaLimite.Location = New Point(20, 101)
         TxtFechaLimite.Name = "TxtFechaLimite"
         TxtFechaLimite.Size = New Size(180, 23)
@@ -103,6 +104,7 @@ Partial Class FrmRealizarTarea
         ' 
         ' TxtCliente
         ' 
+        TxtCliente.Enabled = False
         TxtCliente.Location = New Point(307, 101)
         TxtCliente.Name = "TxtCliente"
         TxtCliente.Size = New Size(180, 23)
@@ -119,6 +121,7 @@ Partial Class FrmRealizarTarea
         ' 
         ' TxtNiveldePrioridad
         ' 
+        TxtNiveldePrioridad.Enabled = False
         TxtNiveldePrioridad.Location = New Point(20, 174)
         TxtNiveldePrioridad.Name = "TxtNiveldePrioridad"
         TxtNiveldePrioridad.Size = New Size(180, 23)
@@ -135,6 +138,7 @@ Partial Class FrmRealizarTarea
         ' 
         ' TxtProyecto
         ' 
+        TxtProyecto.Enabled = False
         TxtProyecto.Location = New Point(307, 174)
         TxtProyecto.Name = "TxtProyecto"
         TxtProyecto.Size = New Size(180, 23)
@@ -151,6 +155,7 @@ Partial Class FrmRealizarTarea
         ' 
         ' TxtFechaInicio
         ' 
+        TxtFechaInicio.Enabled = False
         TxtFechaInicio.Location = New Point(20, 243)
         TxtFechaInicio.Name = "TxtFechaInicio"
         TxtFechaInicio.Size = New Size(180, 23)
@@ -167,6 +172,7 @@ Partial Class FrmRealizarTarea
         ' 
         ' TxtTarea
         ' 
+        TxtTarea.Enabled = False
         TxtTarea.Location = New Point(307, 243)
         TxtTarea.Name = "TxtTarea"
         TxtTarea.Size = New Size(180, 23)
@@ -183,6 +189,7 @@ Partial Class FrmRealizarTarea
         ' 
         ' TxtComentario
         ' 
+        TxtComentario.Enabled = False
         TxtComentario.Location = New Point(20, 314)
         TxtComentario.Multiline = True
         TxtComentario.Name = "TxtComentario"
@@ -255,16 +262,16 @@ Partial Class FrmRealizarTarea
         BtnRetomar.Text = "Retomar"
         BtnRetomar.UseVisualStyleBackColor = False
         ' 
-        ' FtnFinalizar
+        ' BtnFinalizar
         ' 
-        FtnFinalizar.BackColor = Color.Aqua
-        FtnFinalizar.Enabled = False
-        FtnFinalizar.Location = New Point(285, 619)
-        FtnFinalizar.Name = "FtnFinalizar"
-        FtnFinalizar.Size = New Size(172, 40)
-        FtnFinalizar.TabIndex = 25
-        FtnFinalizar.Text = "Finalizar"
-        FtnFinalizar.UseVisualStyleBackColor = False
+        BtnFinalizar.BackColor = Color.Aqua
+        BtnFinalizar.Enabled = False
+        BtnFinalizar.Location = New Point(285, 619)
+        BtnFinalizar.Name = "BtnFinalizar"
+        BtnFinalizar.Size = New Size(172, 40)
+        BtnFinalizar.TabIndex = 25
+        BtnFinalizar.Text = "Finalizar"
+        BtnFinalizar.UseVisualStyleBackColor = False
         ' 
         ' LblUsuario
         ' 
@@ -282,7 +289,7 @@ Partial Class FrmRealizarTarea
         BackColor = SystemColors.ControlDark
         ClientSize = New Size(506, 684)
         Controls.Add(LblUsuario)
-        Controls.Add(FtnFinalizar)
+        Controls.Add(BtnFinalizar)
         Controls.Add(BtnRetomar)
         Controls.Add(BtnPausar)
         Controls.Add(BtnIniciar)
@@ -339,6 +346,6 @@ Partial Class FrmRealizarTarea
     Friend WithEvents BtnIniciar As Button
     Friend WithEvents BtnPausar As Button
     Friend WithEvents BtnRetomar As Button
-    Friend WithEvents FtnFinalizar As Button
+    Friend WithEvents BtnFinalizar As Button
     Friend WithEvents LblUsuario As Label
 End Class

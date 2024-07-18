@@ -65,6 +65,42 @@
     End Sub
 
     Private Sub BtnPausar_Click(sender As Object, e As EventArgs) Handles BtnPausar.Click
+        PausarTareas()
+    End Sub
+
+    Private Sub FtnFinalizar_Click(sender As Object, e As EventArgs) Handles BtnFinalizar.Click
+
+
+        Me.Close()
+
+    End Sub
+
+    Private Sub TxtEstado_TextChanged(sender As Object, e As EventArgs) Handles TxtEstado.TextChanged
+
+        If TxtEstado.Text = "Asignada" Then
+            BtnIniciar.Enabled = True
+        Else
+            BtnIniciar.Enabled = False
+        End If
+
+        If TxtEstado.Text = "Pausada" Then
+            BtnRetomar.Enabled = True
+            BtnFinalizar.Enabled = False
+            BtnPausar.Enabled = False
+        End If
+
+        If TxtEstado.Text = "Ejecutando" Then
+            BtnPausar.Enabled = True
+            BtnFinalizar.Enabled = True
+            BtnRetomar.Enabled = False
+
+        End If
+        CargarTareasPorCodigo()
+    End Sub
+
+
+
+    Private Sub PausarTareas()
 
         Dim FechaHoraServer As DateTime = Conexion.ObtenerFechaHoraServidor(CadenaDeConexion)
 
@@ -91,14 +127,6 @@
 
         CargarTareasPorCodigo()
 
-
-    End Sub
-
-    Private Sub FtnFinalizar_Click(sender As Object, e As EventArgs) Handles FtnFinalizar.Click
-
-    End Sub
-
-    Private Sub TxtEstado_TextChanged(sender As Object, e As EventArgs) Handles TxtEstado.TextChanged
 
     End Sub
 End Class

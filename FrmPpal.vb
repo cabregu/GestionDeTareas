@@ -6,7 +6,14 @@ Public Class FrmPpal
     Public Cadenadeconexion As String = ""
 
     Private Sub FrmPpal_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+
+        PausarTareas()
+        MsgBox("Se Pausaron todas las tareas")
+
         Application.Exit()
+
+
+
     End Sub
     Private Sub BtnCrearTarea_Click(sender As Object, e As EventArgs) Handles BtnCrearTarea.Click
         Dim formulario As New FrmCrearTareasPendientes()
@@ -133,6 +140,32 @@ Public Class FrmPpal
     End Sub
 
 
+    Private Sub PausarTareas()
+        Dim FechaHoraServer As DateTime = Conexion.ObtenerFechaHoraServidor(Cadenadeconexion)
+        Dim tareasPendientes As String() = Conexion.ObtenertareasejecutandoPorUsuario(Cadenadeconexion, LblUsuario.Text)
+
+        If tareasPendientes.Length = 0 Then
+            'MessageBox.Show("No hay tareas pendientes.")
+        Else
+
+
+
+            Dim formulario As New FrmAsignarTareas()
+            For Each codigo As String In tareasPendientes
+
+                Dim TiempoObtenido As String = Conexion.ObtenerTiempo(Cadenadeconexion, codigo)
+                Dim TiempoTranscurridoDesdeFechaParaCalcular As String = Conexion.ObtenerYCalcularTiempoTranscurrido(Cadenadeconexion, codigo, FechaHoraServer)
+                Dim TiempoAcumulado As String = Conexion.SumarTiempos(TiempoObtenido, TiempoTranscurridoDesdeFechaParaCalcular)
+                Dim NuevoTiempo As TimeSpan = TimeSpan.Parse(TiempoAcumulado)
+                Conexion.ActualizarTiempo(Cadenadeconexion, codigo, NuevoTiempo)
+                Conexion.ActualizarFechaYEstado(Cadenadeconexion, codigo, FechaHoraServer, "Pausada")
+
+
+            Next
+        End If
+
+
+    End Sub
 
 
 End Class
