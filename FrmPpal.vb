@@ -8,11 +8,9 @@ Public Class FrmPpal
     Private Sub FrmPpal_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
 
         PausarTareas()
-        MsgBox("Se Pausaron todas las tareas")
+        MsgBox("Si hay tareas ejecutando seran pausadas")
 
         Application.Exit()
-
-
 
     End Sub
     Private Sub BtnCrearTarea_Click(sender As Object, e As EventArgs) Handles BtnCrearTarea.Click

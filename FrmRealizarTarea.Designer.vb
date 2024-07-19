@@ -231,7 +231,7 @@ Partial Class FrmRealizarTarea
         ' 
         ' BtnIniciar
         ' 
-        BtnIniciar.BackColor = Color.Aqua
+        BtnIniciar.BackColor = Color.Bisque
         BtnIniciar.Enabled = False
         BtnIniciar.Location = New Point(53, 573)
         BtnIniciar.Name = "BtnIniciar"
@@ -242,7 +242,7 @@ Partial Class FrmRealizarTarea
         ' 
         ' BtnPausar
         ' 
-        BtnPausar.BackColor = Color.Aqua
+        BtnPausar.BackColor = Color.Bisque
         BtnPausar.Enabled = False
         BtnPausar.Location = New Point(285, 573)
         BtnPausar.Name = "BtnPausar"
@@ -253,7 +253,7 @@ Partial Class FrmRealizarTarea
         ' 
         ' BtnRetomar
         ' 
-        BtnRetomar.BackColor = Color.Aqua
+        BtnRetomar.BackColor = Color.Bisque
         BtnRetomar.Enabled = False
         BtnRetomar.Location = New Point(53, 619)
         BtnRetomar.Name = "BtnRetomar"
@@ -264,7 +264,7 @@ Partial Class FrmRealizarTarea
         ' 
         ' BtnFinalizar
         ' 
-        BtnFinalizar.BackColor = Color.Aqua
+        BtnFinalizar.BackColor = Color.Bisque
         BtnFinalizar.Enabled = False
         BtnFinalizar.Location = New Point(285, 619)
         BtnFinalizar.Name = "BtnFinalizar"

@@ -244,7 +244,7 @@ Public Class Conexion
     Public Shared Function ObtenerCodigoPorUsuario(ByVal CadenaConexion As String, ByVal Usuario As String) As String()
         Dim codigousuario As New List(Of String)()
 
-        Dim sql As String = "SELECT codigo FROM kanbas WHERE usuario=@usuario"
+        Dim sql As String = "SELECT codigo FROM kanbas WHERE usuario=@usuario And estado <> 'Finalizada'"
         Using cn As New MySqlConnection(CadenaConexion)
             Using cmd As New MySqlCommand(sql, cn)
                 cmd.Parameters.AddWithValue("@usuario", Usuario)
@@ -414,6 +414,19 @@ Public Class Conexion
     End Function
 
 
+    Public Shared Function ActualizarEstadoKanbas(ByVal CadenaConexion As String, ByVal CodigoUsuario As String, ByVal NuevoEstado As String, ByVal Comentariofinal As String) As Boolean
+        Dim sql As String = "UPDATE kanbas SET estado=@nuevoestado, comentariofinal =  @Comentariofinal WHERE codigo=@codigousuario"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@nuevoestado", NuevoEstado)
+                cmd.Parameters.AddWithValue("@codigousuario", CodigoUsuario)
+                cmd.Parameters.AddWithValue("@Comentariofinal", Comentariofinal)
+                cn.Open()
+                Dim filasAfectadas As Integer = cmd.ExecuteNonQuery()
+                Return filasAfectadas > 0
+            End Using
+        End Using
+    End Function
 
 
 
