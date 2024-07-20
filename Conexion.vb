@@ -327,6 +327,23 @@ Public Class Conexion
         Return tiempo
     End Function
 
+    Public Shared Function ObtenerTareasNoFinalizadas(ByVal CadenaConexion As String) As DataTable
+        Dim dtTareas As New DataTable()
+
+        Dim sql As String = "SELECT * FROM Kanbas WHERE estado <> 'Finalizada'"
+
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cn.Open()
+                Using reader As MySqlDataReader = cmd.ExecuteReader()
+                    dtTareas.Load(reader)
+                End Using
+            End Using
+        End Using
+
+        Return dtTareas
+    End Function
+
 
 
 
@@ -412,7 +429,6 @@ Public Class Conexion
             End Using
         End Using
     End Function
-
 
     Public Shared Function ActualizarEstadoKanbas(ByVal CadenaConexion As String, ByVal CodigoUsuario As String, ByVal NuevoEstado As String, ByVal Comentariofinal As String) As Boolean
         Dim sql As String = "UPDATE kanbas SET estado=@nuevoestado, comentariofinal =  @Comentariofinal WHERE codigo=@codigousuario"

@@ -39,7 +39,7 @@ Partial Class FrmModificarTarea
         DgvDatos.Name = "DgvDatos"
         DgvDatos.ReadOnly = True
         DgvDatos.RowTemplate.Height = 25
-        DgvDatos.Size = New Size(1158, 286)
+        DgvDatos.Size = New Size(1158, 404)
         DgvDatos.TabIndex = 0
         ' 
         ' LblSeleccionarUnaOpcion
@@ -83,7 +83,7 @@ Partial Class FrmModificarTarea
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlDark
-        ClientSize = New Size(1185, 377)
+        ClientSize = New Size(1191, 495)
         Controls.Add(BtnCancelar)
         Controls.Add(BtnEliminar)
         Controls.Add(BtnModificar)
