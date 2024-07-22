@@ -67,6 +67,7 @@ Partial Class FrmUsuario
         ' CmbCrearComo
         ' 
         CmbCrearComo.FormattingEnabled = True
+        CmbCrearComo.Items.AddRange(New Object() {"Administrador", "Creador de Contenido", "Usuario"})
         CmbCrearComo.Location = New Point(41, 140)
         CmbCrearComo.Name = "CmbCrearComo"
         CmbCrearComo.Size = New Size(245, 23)
