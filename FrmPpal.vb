@@ -165,7 +165,9 @@ Public Class FrmPpal
 
     End Sub
 
+    Private Sub FrmPpal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+    End Sub
 End Class
 
 

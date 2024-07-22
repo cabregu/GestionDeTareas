@@ -545,6 +545,24 @@ Public Class Conexion
     End Function
 
 
+
+    'funcion eliminar
+    Public Shared Function EliminarKanbasPorCodigo(ByVal CadenaConexion As String, ByVal CodigoUsuario As String) As Boolean
+        Dim sql As String = "DELETE FROM kanbas WHERE codigo=@codigousuario"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@codigousuario", CodigoUsuario)
+                cn.Open()
+                Dim filasAfectadas As Integer = cmd.ExecuteNonQuery()
+                Return filasAfectadas > 0
+            End Using
+        End Using
+    End Function
+
+
+
+
+
     'Tarea Sin conexion
     Public Shared Function SumarTiempos(ByVal ValorBaseDeDatos As String, ByVal ValorDesdeFechaParaCalcular As String) As String
         Try

@@ -84,5 +84,19 @@
         FrmModificarTarea.ObtenerLasTareasModificables(CadenaDeConexion)
         FrmModificarTarea.Refresh()
     End Sub
+    Private Sub BtnEliminar_Click(sender As Object, e As EventArgs) Handles BtnEliminar.Click
+
+        Dim result As DialogResult = MessageBox.Show("¿Estás seguro de que deseas eliminar este registro?", "Confirmar eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning)
+
+        If result = DialogResult.Yes Then
+            If Conexion.EliminarKanbasPorCodigo(CadenaDeConexion, codigo) = True Then
+                MsgBox("Se eliminó el registro correctamente")
+                Me.Close()
+            Else
+                MsgBox("No se pudo eliminar el registro")
+            End If
+        End If
+    End Sub
+
 
 End Class
