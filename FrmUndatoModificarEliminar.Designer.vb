@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class FrmModificarEliminarElemento
+Partial Class FrmUndatoModificarEliminar
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
@@ -22,6 +22,15 @@ Partial Class FrmModificarEliminarElemento
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        LblUsuario = New Label()
+        LblEstado = New Label()
+        TxtEstadoActual = New TextBox()
+        DtpFechaLimite = New DateTimePicker()
+        CmbPrioridad = New ComboBox()
+        CmbTarea = New ComboBox()
+        CmbProyecto = New ComboBox()
+        CmbCliente = New ComboBox()
+        TxtCodigo = New TextBox()
         BtnEliminar = New Button()
         BtnModifica = New Button()
         CmbUsuario = New ComboBox()
@@ -33,192 +42,186 @@ Partial Class FrmModificarEliminarElemento
         LblFechaLimite = New Label()
         LblCliente = New Label()
         LblCodigo = New Label()
-        TxtCodigo = New TextBox()
-        CmbCliente = New ComboBox()
-        CmbProyecto = New ComboBox()
-        CmbTarea = New ComboBox()
-        CmbPrioridad = New ComboBox()
-        DtpFechaLimite = New DateTimePicker()
-        TxtEstadoActual = New TextBox()
-        LblEstado = New Label()
-        LblUsuario = New Label()
         SuspendLayout()
+        ' 
+        ' LblUsuario
+        ' 
+        LblUsuario.AutoSize = True
+        LblUsuario.Location = New Point(187, 168)
+        LblUsuario.Name = "LblUsuario"
+        LblUsuario.Size = New Size(47, 15)
+        LblUsuario.TabIndex = 71
+        LblUsuario.Text = "Usuario"
+        ' 
+        ' LblEstado
+        ' 
+        LblEstado.AutoSize = True
+        LblEstado.Location = New Point(15, 169)
+        LblEstado.Name = "LblEstado"
+        LblEstado.Size = New Size(42, 15)
+        LblEstado.TabIndex = 70
+        LblEstado.Text = "Estado"
+        ' 
+        ' TxtEstadoActual
+        ' 
+        TxtEstadoActual.Enabled = False
+        TxtEstadoActual.Location = New Point(12, 187)
+        TxtEstadoActual.Name = "TxtEstadoActual"
+        TxtEstadoActual.Size = New Size(154, 23)
+        TxtEstadoActual.TabIndex = 69
+        ' 
+        ' DtpFechaLimite
+        ' 
+        DtpFechaLimite.Format = DateTimePickerFormat.Short
+        DtpFechaLimite.Location = New Point(12, 80)
+        DtpFechaLimite.Name = "DtpFechaLimite"
+        DtpFechaLimite.Size = New Size(152, 23)
+        DtpFechaLimite.TabIndex = 68
+        ' 
+        ' CmbPrioridad
+        ' 
+        CmbPrioridad.FormattingEnabled = True
+        CmbPrioridad.Items.AddRange(New Object() {"Bajo", "Medio", "Alto", "Inmediato"})
+        CmbPrioridad.Location = New Point(12, 131)
+        CmbPrioridad.Name = "CmbPrioridad"
+        CmbPrioridad.Size = New Size(152, 23)
+        CmbPrioridad.TabIndex = 67
+        ' 
+        ' CmbTarea
+        ' 
+        CmbTarea.FormattingEnabled = True
+        CmbTarea.Location = New Point(186, 131)
+        CmbTarea.Name = "CmbTarea"
+        CmbTarea.Size = New Size(235, 23)
+        CmbTarea.TabIndex = 66
+        ' 
+        ' CmbProyecto
+        ' 
+        CmbProyecto.FormattingEnabled = True
+        CmbProyecto.Location = New Point(186, 80)
+        CmbProyecto.Name = "CmbProyecto"
+        CmbProyecto.Size = New Size(235, 23)
+        CmbProyecto.TabIndex = 65
+        ' 
+        ' CmbCliente
+        ' 
+        CmbCliente.FormattingEnabled = True
+        CmbCliente.Location = New Point(186, 27)
+        CmbCliente.Name = "CmbCliente"
+        CmbCliente.Size = New Size(235, 23)
+        CmbCliente.TabIndex = 64
+        ' 
+        ' TxtCodigo
+        ' 
+        TxtCodigo.Enabled = False
+        TxtCodigo.Location = New Point(12, 27)
+        TxtCodigo.Name = "TxtCodigo"
+        TxtCodigo.Size = New Size(154, 23)
+        TxtCodigo.TabIndex = 63
         ' 
         ' BtnEliminar
         ' 
-        BtnEliminar.Location = New Point(273, 345)
+        BtnEliminar.Location = New Point(271, 353)
         BtnEliminar.Name = "BtnEliminar"
         BtnEliminar.Size = New Size(150, 40)
-        BtnEliminar.TabIndex = 35
+        BtnEliminar.TabIndex = 62
         BtnEliminar.Text = "Eliminar"
         BtnEliminar.UseVisualStyleBackColor = True
         ' 
         ' BtnModifica
         ' 
-        BtnModifica.Location = New Point(12, 345)
+        BtnModifica.Location = New Point(10, 353)
         BtnModifica.Name = "BtnModifica"
         BtnModifica.Size = New Size(150, 40)
-        BtnModifica.TabIndex = 34
+        BtnModifica.TabIndex = 61
         BtnModifica.Text = "Modificar"
         BtnModifica.UseVisualStyleBackColor = True
         ' 
         ' CmbUsuario
         ' 
         CmbUsuario.FormattingEnabled = True
-        CmbUsuario.Location = New Point(188, 193)
+        CmbUsuario.Location = New Point(186, 186)
         CmbUsuario.Name = "CmbUsuario"
         CmbUsuario.Size = New Size(235, 23)
-        CmbUsuario.TabIndex = 32
+        CmbUsuario.TabIndex = 60
         ' 
         ' LblComentario
         ' 
         LblComentario.AutoSize = True
-        LblComentario.Location = New Point(12, 220)
+        LblComentario.Location = New Point(10, 213)
         LblComentario.Name = "LblComentario"
         LblComentario.Size = New Size(70, 15)
-        LblComentario.TabIndex = 31
+        LblComentario.TabIndex = 59
         LblComentario.Text = "Comentario"
         ' 
         ' TxtComentario
         ' 
-        TxtComentario.Location = New Point(12, 238)
+        TxtComentario.Location = New Point(10, 231)
         TxtComentario.Multiline = True
         TxtComentario.Name = "TxtComentario"
         TxtComentario.Size = New Size(411, 89)
-        TxtComentario.TabIndex = 30
+        TxtComentario.TabIndex = 58
         ' 
         ' LblTarea
         ' 
         LblTarea.AutoSize = True
-        LblTarea.Location = New Point(188, 120)
+        LblTarea.Location = New Point(186, 113)
         LblTarea.Name = "LblTarea"
         LblTarea.Size = New Size(34, 15)
-        LblTarea.TabIndex = 29
+        LblTarea.TabIndex = 57
         LblTarea.Text = "Tarea"
         ' 
         ' LblPrioridad
         ' 
         LblPrioridad.AutoSize = True
-        LblPrioridad.Location = New Point(12, 120)
+        LblPrioridad.Location = New Point(10, 113)
         LblPrioridad.Name = "LblPrioridad"
         LblPrioridad.Size = New Size(102, 15)
-        LblPrioridad.TabIndex = 27
+        LblPrioridad.TabIndex = 56
         LblPrioridad.Text = "Nivel De Prioridad"
         ' 
         ' LblProyecto
         ' 
         LblProyecto.AutoSize = True
-        LblProyecto.Location = New Point(186, 69)
+        LblProyecto.Location = New Point(184, 62)
         LblProyecto.Name = "LblProyecto"
         LblProyecto.Size = New Size(54, 15)
-        LblProyecto.TabIndex = 25
+        LblProyecto.TabIndex = 55
         LblProyecto.Text = "Proyecto"
         ' 
         ' LblFechaLimite
         ' 
         LblFechaLimite.AutoSize = True
-        LblFechaLimite.Location = New Point(12, 69)
+        LblFechaLimite.Location = New Point(10, 62)
         LblFechaLimite.Name = "LblFechaLimite"
         LblFechaLimite.Size = New Size(74, 15)
-        LblFechaLimite.TabIndex = 23
+        LblFechaLimite.TabIndex = 54
         LblFechaLimite.Text = "Fecha Limite"
         ' 
         ' LblCliente
         ' 
         LblCliente.AutoSize = True
-        LblCliente.Location = New Point(186, 16)
+        LblCliente.Location = New Point(184, 9)
         LblCliente.Name = "LblCliente"
         LblCliente.Size = New Size(44, 15)
-        LblCliente.TabIndex = 21
+        LblCliente.TabIndex = 53
         LblCliente.Text = "Cliente"
         ' 
         ' LblCodigo
         ' 
         LblCodigo.AutoSize = True
-        LblCodigo.Location = New Point(12, 16)
+        LblCodigo.Location = New Point(10, 9)
         LblCodigo.Name = "LblCodigo"
         LblCodigo.Size = New Size(46, 15)
-        LblCodigo.TabIndex = 19
+        LblCodigo.TabIndex = 52
         LblCodigo.Text = "Codigo"
         ' 
-        ' TxtCodigo
-        ' 
-        TxtCodigo.Enabled = False
-        TxtCodigo.Location = New Point(14, 34)
-        TxtCodigo.Name = "TxtCodigo"
-        TxtCodigo.Size = New Size(154, 23)
-        TxtCodigo.TabIndex = 43
-        ' 
-        ' CmbCliente
-        ' 
-        CmbCliente.FormattingEnabled = True
-        CmbCliente.Location = New Point(188, 34)
-        CmbCliente.Name = "CmbCliente"
-        CmbCliente.Size = New Size(235, 23)
-        CmbCliente.TabIndex = 44
-        ' 
-        ' CmbProyecto
-        ' 
-        CmbProyecto.FormattingEnabled = True
-        CmbProyecto.Location = New Point(188, 87)
-        CmbProyecto.Name = "CmbProyecto"
-        CmbProyecto.Size = New Size(235, 23)
-        CmbProyecto.TabIndex = 45
-        ' 
-        ' CmbTarea
-        ' 
-        CmbTarea.FormattingEnabled = True
-        CmbTarea.Location = New Point(188, 138)
-        CmbTarea.Name = "CmbTarea"
-        CmbTarea.Size = New Size(235, 23)
-        CmbTarea.TabIndex = 46
-        ' 
-        ' CmbPrioridad
-        ' 
-        CmbPrioridad.FormattingEnabled = True
-        CmbPrioridad.Location = New Point(14, 138)
-        CmbPrioridad.Name = "CmbPrioridad"
-        CmbPrioridad.Size = New Size(152, 23)
-        CmbPrioridad.TabIndex = 47
-        ' 
-        ' DtpFechaLimite
-        ' 
-        DtpFechaLimite.Format = DateTimePickerFormat.Short
-        DtpFechaLimite.Location = New Point(14, 87)
-        DtpFechaLimite.Name = "DtpFechaLimite"
-        DtpFechaLimite.Size = New Size(152, 23)
-        DtpFechaLimite.TabIndex = 48
-        ' 
-        ' TxtEstadoActual
-        ' 
-        TxtEstadoActual.Location = New Point(14, 194)
-        TxtEstadoActual.Name = "TxtEstadoActual"
-        TxtEstadoActual.Size = New Size(154, 23)
-        TxtEstadoActual.TabIndex = 49
-        ' 
-        ' LblEstado
-        ' 
-        LblEstado.AutoSize = True
-        LblEstado.Location = New Point(17, 176)
-        LblEstado.Name = "LblEstado"
-        LblEstado.Size = New Size(42, 15)
-        LblEstado.TabIndex = 50
-        LblEstado.Text = "Estado"
-        ' 
-        ' LblUsuario
-        ' 
-        LblUsuario.AutoSize = True
-        LblUsuario.Location = New Point(189, 175)
-        LblUsuario.Name = "LblUsuario"
-        LblUsuario.Size = New Size(47, 15)
-        LblUsuario.TabIndex = 51
-        LblUsuario.Text = "Usuario"
-        ' 
-        ' FrmModificarEliminarElemento
+        ' FrmUndatoModificarEliminar
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(432, 398)
+        BackColor = SystemColors.ControlDark
+        ClientSize = New Size(440, 414)
         Controls.Add(LblUsuario)
         Controls.Add(LblEstado)
         Controls.Add(TxtEstadoActual)
@@ -239,16 +242,24 @@ Partial Class FrmModificarEliminarElemento
         Controls.Add(LblFechaLimite)
         Controls.Add(LblCliente)
         Controls.Add(LblCodigo)
-        Name = "FrmModificarEliminarElemento"
+        Name = "FrmUndatoModificarEliminar"
         StartPosition = FormStartPosition.CenterScreen
-        Text = "FrmModificarEliminarElemento"
+        Text = "Modificar o Eliminar"
         ResumeLayout(False)
         PerformLayout()
     End Sub
 
+    Friend WithEvents LblUsuario As Label
+    Friend WithEvents LblEstado As Label
+    Friend WithEvents TxtEstadoActual As TextBox
+    Friend WithEvents DtpFechaLimite As DateTimePicker
+    Friend WithEvents CmbPrioridad As ComboBox
+    Friend WithEvents CmbTarea As ComboBox
+    Friend WithEvents CmbProyecto As ComboBox
+    Friend WithEvents CmbCliente As ComboBox
+    Friend WithEvents TxtCodigo As TextBox
     Friend WithEvents BtnEliminar As Button
     Friend WithEvents BtnModifica As Button
-    Friend WithEvents LblAsignar As Label
     Friend WithEvents CmbUsuario As ComboBox
     Friend WithEvents LblComentario As Label
     Friend WithEvents TxtComentario As TextBox
@@ -258,20 +269,4 @@ Partial Class FrmModificarEliminarElemento
     Friend WithEvents LblFechaLimite As Label
     Friend WithEvents LblCliente As Label
     Friend WithEvents LblCodigo As Label
-    Friend WithEvents CmbCodigo As ComboBox
-    Friend WithEvents ComboBox1 As ComboBox
-    Friend WithEvents DateTimePicker1 As DateTimePicker
-    Friend WithEvents ComboBox2 As ComboBox
-    Friend WithEvents ComboBox3 As ComboBox
-    Friend WithEvents ComboBox4 As ComboBox
-    Friend WithEvents TxtEstadoActual As TextBox
-    Friend WithEvents TxtCodigo As TextBox
-    Friend WithEvents CmbCliente As ComboBox
-    Friend WithEvents CmbProyecto As ComboBox
-    Friend WithEvents CmbTarea As ComboBox
-    Friend WithEvents CmbPrioridad As ComboBox
-    Friend WithEvents DtpFechaLimite As DateTimePicker
-    Friend WithEvents LblEstado As Label
-    Friend WithEvents LblUsuario As Label
-    Friend WithEvents TxtEstado As TextBox
 End Class

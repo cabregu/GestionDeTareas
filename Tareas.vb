@@ -8,4 +8,5 @@
     Public Property fechadeinicio As Date
     Public Property estado As String
     Public Property comentario As String
+    Public Property usuario As String
 End Class

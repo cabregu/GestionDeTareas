@@ -344,7 +344,32 @@ Public Class Conexion
         Return dtTareas
     End Function
 
+    Public Shared Function ObtenertareasUnaTareaPorCodigo(ByVal CadenaConexion As String, ByVal codigo As String) As List(Of Tarea)
+        Dim tareas As New List(Of Tarea)()
+        Dim sql As String = "SELECT * FROM Kanbas WHERE codigo = @codigo"
 
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@codigo", codigo)
+                cn.Open()
+                Dim reader As MySqlDataReader = cmd.ExecuteReader()
+                While reader.Read()
+                    Dim tarea As New Tarea()
+                    tarea.codigo = reader("codigo").ToString()
+                    tarea.cliente = reader("cliente").ToString()
+                    tarea.proyecto = reader("proyecto").ToString()
+                    tarea.tarea = reader("tarea").ToString()
+                    tarea.niveldeprioridad = reader("niveldeprioridad").ToString()
+                    tarea.fechalimite = reader.GetDateTime("fechalimite")
+                    tarea.comentario = reader("comentario").ToString()
+                    tarea.estado = reader("estado").ToString()
+                    tarea.usuario = reader("usuario").ToString()
+                    tareas.Add(tarea)
+                End While
+            End Using
+        End Using
+        Return tareas
+    End Function
 
 
     'funciones de actualizar
@@ -394,6 +419,7 @@ Public Class Conexion
             End Using
         End Using
     End Function
+
     Public Shared Sub ActualizarTiempo(ByVal CadenaConexion As String, ByVal codigo As String, ByVal nuevoTiempo As TimeSpan)
         Dim tiempoFormateado As String = nuevoTiempo.ToString("hh\:mm\:ss") ' Formatear el TimeSpan a HH:mm:ss
 
@@ -444,6 +470,24 @@ Public Class Conexion
         End Using
     End Function
 
+    Public Shared Function ActualizarKanbasPorCodigo(ByVal CadenaConexion As String, ByVal CodigoUsuario As String, ByVal Cliente As String, ByVal Proyecto As String, ByVal Tarea As String, ByVal NivelDePrioridad As String, ByVal Usuario As String, ByVal FechaLimite As DateTime?, ByVal Comentario As String) As Boolean
+        Dim sql As String = "UPDATE kanbas SET cliente=@cliente, proyecto=@proyecto, tarea=@tarea, niveldeprioridad=@niveldeprioridad, usuario=@usuario, fechalimite=@fechalimite, comentario=@comentario WHERE codigo=@codigousuario"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@cliente", Cliente)
+                cmd.Parameters.AddWithValue("@proyecto", Proyecto)
+                cmd.Parameters.AddWithValue("@tarea", Tarea)
+                cmd.Parameters.AddWithValue("@niveldeprioridad", NivelDePrioridad)
+                cmd.Parameters.AddWithValue("@usuario", Usuario)
+                cmd.Parameters.AddWithValue("@fechalimite", If(FechaLimite.HasValue, FechaLimite, DBNull.Value))
+                cmd.Parameters.AddWithValue("@comentario", Comentario)
+                cmd.Parameters.AddWithValue("@codigousuario", CodigoUsuario)
+                cn.Open()
+                Dim filasAfectadas As Integer = cmd.ExecuteNonQuery()
+                Return filasAfectadas > 0
+            End Using
+        End Using
+    End Function
 
 
     'funcioneas de insertar

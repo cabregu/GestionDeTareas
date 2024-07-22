@@ -50,9 +50,8 @@ Public Class FrmPpal
     End Sub
 
     Private Sub BrnModificarTarea_Click(sender As Object, e As EventArgs) Handles BtnModificarTarea.Click
-        Dim formulario As New FrmModificarTarea()
-        formulario.CadenaDeConexion = Cadenadeconexion
-        formulario.Show()
+        FrmModificarTarea.CadenaDeConexion = Cadenadeconexion
+        FrmModificarTarea.Show()
         Me.Hide()
     End Sub
 

@@ -7,24 +7,32 @@
     End Sub
 
     Private Sub FrmModificarTarea_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ObtenerLasTareasModificables()
+        ObtenerLasTareasModificables(CadenaDeConexion)
     End Sub
 
-    Private Sub ObtenerLasTareasModificables()
+    Public Sub ObtenerLasTareasModificables(ByVal CadenaDeConexionActual As String)
         DgvDatos.DataSource = Nothing
         Dim Dt As New DataTable
-        Dt = Conexion.ObtenerTareasNoFinalizadas(CadenaDeConexion)
+        Dt = Conexion.ObtenerTareasNoFinalizadas(CadenaDeConexionActual)
         DgvDatos.DataSource = Dt
 
     End Sub
 
     Private Sub DgvDatos_DoubleClick(sender As Object, e As EventArgs) Handles DgvDatos.DoubleClick
-        Dim N As String = DgvDatos.SelectedCells(0).RowIndex.ToString
-        Dim STR As String = DgvDatos.Rows(N).Cells("Codigo").Value
+        If DgvDatos.RowCount > 0 Then
+            Dim N As String = DgvDatos.SelectedCells(0).RowIndex.ToString
+            Dim STR As String = DgvDatos.Rows(N).Cells("Codigo").Value
+            Dim formulario As New FrmUndatoModificarEliminar
+            formulario.CadenaDeConexion = CadenaDeConexion
+            formulario.codigo = STR
+            formulario.Show()
 
-        MsgBox(STR)
+        End If
 
     End Sub
 
+    Private Sub BtnCerrar_Click(sender As Object, e As EventArgs) Handles BtnCerrar.Click
+        Me.Close()
 
+    End Sub
 End Class
