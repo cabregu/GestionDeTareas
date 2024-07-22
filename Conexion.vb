@@ -43,6 +43,7 @@ Public Class Conexion
         Dim cmconsult As New MySqlCommand(Sql, cn)
         cn.Open()
         Dim resultado As String = ""
+
         resultado = cmconsult.ExecuteScalar()
         cn.Close()
 
