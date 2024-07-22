@@ -28,7 +28,16 @@
     End Sub
 
     Private Sub BtnCrearTareaysalir_Click(sender As Object, e As EventArgs) Handles BtnCrearTareaysalir.Click
-        Me.Close()
+
+        If CmbAsignar.Text = "" Then
+            Creartarea()
+            Me.Close()
+        Else
+            Creartarea("Asignada")
+            Me.Close()
+        End If
+
+
 
     End Sub
 

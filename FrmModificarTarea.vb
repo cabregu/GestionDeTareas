@@ -18,6 +18,13 @@
 
     End Sub
 
+    Private Sub DgvDatos_DoubleClick(sender As Object, e As EventArgs) Handles DgvDatos.DoubleClick
+        Dim N As String = DgvDatos.SelectedCells(0).RowIndex.ToString
+        Dim STR As String = DgvDatos.Rows(N).Cells("Codigo").Value
+
+        MsgBox(STR)
+
+    End Sub
 
 
 End Class

@@ -23,10 +23,8 @@ Partial Class FrmModificarTarea
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         DgvDatos = New DataGridView()
-        LblSeleccionarUnaOpcion = New Label()
-        BtnModificar = New Button()
-        BtnEliminar = New Button()
-        BtnCancelar = New Button()
+        BtnCerrar = New Button()
+        LblComentario = New Label()
         CType(DgvDatos, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -35,48 +33,30 @@ Partial Class FrmModificarTarea
         DgvDatos.AllowUserToAddRows = False
         DgvDatos.AllowUserToDeleteRows = False
         DgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DgvDatos.Location = New Point(12, 79)
+        DgvDatos.Location = New Point(21, 41)
         DgvDatos.Name = "DgvDatos"
         DgvDatos.ReadOnly = True
         DgvDatos.RowTemplate.Height = 25
         DgvDatos.Size = New Size(1158, 404)
         DgvDatos.TabIndex = 0
         ' 
-        ' LblSeleccionarUnaOpcion
+        ' BtnCerrar
         ' 
-        LblSeleccionarUnaOpcion.AutoSize = True
-        LblSeleccionarUnaOpcion.Location = New Point(12, 61)
-        LblSeleccionarUnaOpcion.Name = "LblSeleccionarUnaOpcion"
-        LblSeleccionarUnaOpcion.Size = New Size(130, 15)
-        LblSeleccionarUnaOpcion.TabIndex = 1
-        LblSeleccionarUnaOpcion.Text = "Seleccionar una opcion"
+        BtnCerrar.Location = New Point(1104, 451)
+        BtnCerrar.Name = "BtnCerrar"
+        BtnCerrar.Size = New Size(75, 23)
+        BtnCerrar.TabIndex = 4
+        BtnCerrar.Text = "Cerrar"
+        BtnCerrar.UseVisualStyleBackColor = True
         ' 
-        ' BtnModificar
+        ' LblComentario
         ' 
-        BtnModificar.Location = New Point(933, 50)
-        BtnModificar.Name = "BtnModificar"
-        BtnModificar.Size = New Size(75, 23)
-        BtnModificar.TabIndex = 2
-        BtnModificar.Text = "Modificar"
-        BtnModificar.UseVisualStyleBackColor = True
-        ' 
-        ' BtnEliminar
-        ' 
-        BtnEliminar.Location = New Point(1014, 50)
-        BtnEliminar.Name = "BtnEliminar"
-        BtnEliminar.Size = New Size(75, 23)
-        BtnEliminar.TabIndex = 3
-        BtnEliminar.Text = "Eliminar"
-        BtnEliminar.UseVisualStyleBackColor = True
-        ' 
-        ' BtnCancelar
-        ' 
-        BtnCancelar.Location = New Point(1095, 50)
-        BtnCancelar.Name = "BtnCancelar"
-        BtnCancelar.Size = New Size(75, 23)
-        BtnCancelar.TabIndex = 4
-        BtnCancelar.Text = "Cancelar"
-        BtnCancelar.UseVisualStyleBackColor = True
+        LblComentario.AutoSize = True
+        LblComentario.Location = New Point(21, 23)
+        LblComentario.Name = "LblComentario"
+        LblComentario.Size = New Size(260, 15)
+        LblComentario.TabIndex = 5
+        LblComentario.Text = "Doble clic para modificar o eliminar el elemento"
         ' 
         ' FrmModificarTarea
         ' 
@@ -84,10 +64,8 @@ Partial Class FrmModificarTarea
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlDark
         ClientSize = New Size(1191, 495)
-        Controls.Add(BtnCancelar)
-        Controls.Add(BtnEliminar)
-        Controls.Add(BtnModificar)
-        Controls.Add(LblSeleccionarUnaOpcion)
+        Controls.Add(LblComentario)
+        Controls.Add(BtnCerrar)
         Controls.Add(DgvDatos)
         Name = "FrmModificarTarea"
         StartPosition = FormStartPosition.CenterScreen
@@ -101,5 +79,6 @@ Partial Class FrmModificarTarea
     Friend WithEvents LblSeleccionarUnaOpcion As Label
     Friend WithEvents BtnModificar As Button
     Friend WithEvents BtnEliminar As Button
-    Friend WithEvents BtnCancelar As Button
+    Friend WithEvents BtnCerrar As Button
+    Friend WithEvents LblComentario As Label
 End Class
