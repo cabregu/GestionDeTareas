@@ -78,6 +78,7 @@ Public Class FrmPpal
 
     Private Sub BtnModificarDatos_Click(sender As Object, e As EventArgs) Handles BtnModificarDatos.Click
         Dim formulario As New FrmModificarEliminar()
+        formulario.CadenaDeConexion = Cadenadeconexion
         formulario.Show()
         Me.Hide()
     End Sub

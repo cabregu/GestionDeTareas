@@ -372,6 +372,23 @@ Public Class Conexion
         Return tareas
     End Function
 
+    Public Shared Function ObtenerDatosDeTablaPorNombre(ByVal CadenaConexion As String, ByVal nombreTabla As String) As DataTable
+        Dim dt As New DataTable()
+        Dim sql As String = $"SELECT * FROM {nombreTabla}"
+
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cn.Open()
+                Using da As New MySqlDataAdapter(cmd)
+                    da.Fill(dt)
+                End Using
+            End Using
+        End Using
+
+        Return dt
+    End Function
+
+
 
     'funciones de actualizar
     Public Shared Sub ActualizarCodigo(ByVal CadenaConexion As String, ByVal codigoactual As String)
@@ -549,10 +566,10 @@ Public Class Conexion
     ByVal CadenaConexion As String,
     ByVal nick As String,
     ByVal rango As String,
-    ByVal contrasena As String) As Boolean
+    ByVal contraseña As String) As Boolean
 
         Dim sqlCheck As String = "SELECT COUNT(*) FROM usuarios WHERE nick = @nick"
-        Dim sqlInsert As String = "INSERT INTO usuarios (nick, rango, contrasena) VALUES (@nick, @rango, @contrasena)"
+        Dim sqlInsert As String = "INSERT INTO usuarios (nick, rango, contraseña) VALUES (@nick, @rango, @contraseña)"
 
         Using cn As New MySqlConnection(CadenaConexion)
             cn.Open()
@@ -572,7 +589,7 @@ Public Class Conexion
             Using cmdInsert As New MySqlCommand(sqlInsert, cn)
                 cmdInsert.Parameters.AddWithValue("@nick", nick)
                 cmdInsert.Parameters.AddWithValue("@rango", rango)
-                cmdInsert.Parameters.AddWithValue("@contrasena", contrasena)
+                cmdInsert.Parameters.AddWithValue("@contraseña", contraseña)
 
                 cmdInsert.ExecuteNonQuery()
             End Using
@@ -611,6 +628,57 @@ Public Class Conexion
         Return True
     End Function
 
+    Public Shared Function InsertarProyectoYTarea(
+    ByVal CadenaConexion As String,
+    ByVal proyecto As String,
+    ByVal tarea As String) As Boolean
+
+        Dim sqlCheckProyecto As String = "SELECT COUNT(*) FROM proyectotareas WHERE proyecto = @proyecto"
+        Dim sqlCheckTarea As String = "SELECT COUNT(*) FROM proyectotareas WHERE proyecto = @proyecto AND tareas = @tarea"
+        Dim sqlInsertTarea As String = "INSERT INTO proyectotareas (proyecto, tareas) VALUES (@proyecto, @tarea)"
+
+        Using cn As New MySqlConnection(CadenaConexion)
+            cn.Open()
+
+            Dim proyectoExiste As Boolean
+            Using cmdCheckProyecto As New MySqlCommand(sqlCheckProyecto, cn)
+                cmdCheckProyecto.Parameters.AddWithValue("@proyecto", proyecto)
+                proyectoExiste = Convert.ToInt32(cmdCheckProyecto.ExecuteScalar()) > 0
+            End Using
+
+            Dim tareaExiste As Boolean
+            Using cmdCheckTarea As New MySqlCommand(sqlCheckTarea, cn)
+                cmdCheckTarea.Parameters.AddWithValue("@proyecto", proyecto)
+                cmdCheckTarea.Parameters.AddWithValue("@tarea", tarea)
+                tareaExiste = Convert.ToInt32(cmdCheckTarea.ExecuteScalar()) > 0
+            End Using
+
+            ' Variables para comprobar el éxito de las operaciones
+            Dim exito As Boolean = False
+
+            If Not proyectoExiste Then
+                ' Si el proyecto no existe, insertar tanto el proyecto como la tarea
+                Using cmdInsert As New MySqlCommand(sqlInsertTarea, cn)
+                    cmdInsert.Parameters.AddWithValue("@proyecto", proyecto)
+                    cmdInsert.Parameters.AddWithValue("@tarea", tarea)
+                    exito = cmdInsert.ExecuteNonQuery() > 0
+                End Using
+            ElseIf Not tareaExiste Then
+                ' Si el proyecto existe pero la tarea no, insertar solo la tarea
+                Using cmdInsert As New MySqlCommand(sqlInsertTarea, cn)
+                    cmdInsert.Parameters.AddWithValue("@proyecto", proyecto)
+                    cmdInsert.Parameters.AddWithValue("@tarea", tarea)
+                    exito = cmdInsert.ExecuteNonQuery() > 0
+                End Using
+            End If
+
+            Return exito
+        End Using
+    End Function
+
+
+
+
 
     'funcion eliminar
     Public Shared Function EliminarKanbasPorCodigo(ByVal CadenaConexion As String, ByVal CodigoUsuario As String) As Boolean
@@ -625,6 +693,24 @@ Public Class Conexion
         End Using
     End Function
 
+    Public Shared Function EliminarRegistroPorID(ByVal CadenaConexion As String, ByVal nombreTabla As String, ByVal nombreCampoID As String, ByVal id As Object) As Boolean
+        Dim sql As String = $"DELETE FROM {nombreTabla} WHERE {nombreCampoID} = @id"
+
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@id", id)
+                cn.Open()
+
+                Try
+                    Dim filasAfectadas As Integer = cmd.ExecuteNonQuery()
+                    Return filasAfectadas > 0
+                Catch ex As Exception
+                    ' Manejar errores si es necesario
+                    Return False
+                End Try
+            End Using
+        End Using
+    End Function
 
 
 

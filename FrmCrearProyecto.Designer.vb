@@ -27,13 +27,13 @@ Partial Class FrmCrearProyecto
         CmbProyectoExistente = New ComboBox()
         TxtNuevoProyecto = New TextBox()
         LblAgregarProyecto = New Label()
-        DgbTareas = New DataGridView()
+        DgvTareas = New DataGridView()
         Tareas = New DataGridViewTextBoxColumn()
         TxtNuevaTarea = New TextBox()
         BtnAgregar = New Button()
         BtnCancelar = New Button()
         BtnConfirmar = New Button()
-        CType(DgbTareas, ComponentModel.ISupportInitialize).BeginInit()
+        CType(DgvTareas, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' RbProyectoExistente
@@ -82,18 +82,18 @@ Partial Class FrmCrearProyecto
         LblAgregarProyecto.TabIndex = 4
         LblAgregarProyecto.Text = "Agregar Tarea"
         ' 
-        ' DgbTareas
+        ' DgvTareas
         ' 
-        DgbTareas.AllowUserToAddRows = False
-        DgbTareas.AllowUserToDeleteRows = False
-        DgbTareas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DgbTareas.Columns.AddRange(New DataGridViewColumn() {Tareas})
-        DgbTareas.Location = New Point(67, 149)
-        DgbTareas.Name = "DgbTareas"
-        DgbTareas.ReadOnly = True
-        DgbTareas.RowTemplate.Height = 25
-        DgbTareas.Size = New Size(372, 403)
-        DgbTareas.TabIndex = 5
+        DgvTareas.AllowUserToAddRows = False
+        DgvTareas.AllowUserToDeleteRows = False
+        DgvTareas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DgvTareas.Columns.AddRange(New DataGridViewColumn() {Tareas})
+        DgvTareas.Location = New Point(67, 149)
+        DgvTareas.Name = "DgvTareas"
+        DgvTareas.ReadOnly = True
+        DgvTareas.RowTemplate.Height = 25
+        DgvTareas.Size = New Size(372, 403)
+        DgvTareas.TabIndex = 5
         ' 
         ' Tareas
         ' 
@@ -146,7 +146,7 @@ Partial Class FrmCrearProyecto
         Controls.Add(BtnConfirmar)
         Controls.Add(BtnAgregar)
         Controls.Add(TxtNuevaTarea)
-        Controls.Add(DgbTareas)
+        Controls.Add(DgvTareas)
         Controls.Add(LblAgregarProyecto)
         Controls.Add(TxtNuevoProyecto)
         Controls.Add(CmbProyectoExistente)
@@ -155,7 +155,7 @@ Partial Class FrmCrearProyecto
         Name = "FrmCrearProyecto"
         StartPosition = FormStartPosition.CenterScreen
         Text = "FrmCrearProyecto"
-        CType(DgbTareas, ComponentModel.ISupportInitialize).EndInit()
+        CType(DgvTareas, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -165,7 +165,7 @@ Partial Class FrmCrearProyecto
     Friend WithEvents CmbProyectoExistente As ComboBox
     Friend WithEvents TxtNuevoProyecto As TextBox
     Friend WithEvents LblAgregarProyecto As Label
-    Friend WithEvents DgbTareas As DataGridView
+    Friend WithEvents DgvTareas As DataGridView
     Friend WithEvents Tareas As DataGridViewTextBoxColumn
     Friend WithEvents TxtNuevaTarea As TextBox
     Friend WithEvents BtnAgregar As Button

@@ -30,6 +30,8 @@ Partial Class FrmModificarEliminar
         BtnCancelar = New Button()
         LblSeleccioneUnaOpcion = New Label()
         DgvDatos = New DataGridView()
+        LblTipoSeleccion = New Label()
+        LblIden = New Label()
         CType(DgvDatos, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -53,7 +55,8 @@ Partial Class FrmModificarEliminar
         ' 
         ' BtnModificar
         ' 
-        BtnModificar.Location = New Point(218, 92)
+        BtnModificar.Enabled = False
+        BtnModificar.Location = New Point(218, 370)
         BtnModificar.Name = "BtnModificar"
         BtnModificar.Size = New Size(100, 30)
         BtnModificar.TabIndex = 2
@@ -62,7 +65,8 @@ Partial Class FrmModificarEliminar
         ' 
         ' BtnEliminar
         ' 
-        BtnEliminar.Location = New Point(339, 92)
+        BtnEliminar.Enabled = False
+        BtnEliminar.Location = New Point(339, 370)
         BtnEliminar.Name = "BtnEliminar"
         BtnEliminar.Size = New Size(100, 30)
         BtnEliminar.TabIndex = 3
@@ -80,7 +84,7 @@ Partial Class FrmModificarEliminar
         ' 
         ' BtnCancelar
         ' 
-        BtnCancelar.Location = New Point(456, 92)
+        BtnCancelar.Location = New Point(456, 370)
         BtnCancelar.Name = "BtnCancelar"
         BtnCancelar.Size = New Size(100, 30)
         BtnCancelar.TabIndex = 5
@@ -99,18 +103,38 @@ Partial Class FrmModificarEliminar
         ' DgvDatos
         ' 
         DgvDatos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DgvDatos.Location = New Point(12, 128)
+        DgvDatos.Location = New Point(12, 92)
         DgvDatos.Name = "DgvDatos"
         DgvDatos.RowTemplate.Height = 25
         DgvDatos.Size = New Size(544, 272)
         DgvDatos.TabIndex = 7
+        ' 
+        ' LblTipoSeleccion
+        ' 
+        LblTipoSeleccion.AutoSize = True
+        LblTipoSeleccion.Location = New Point(12, 9)
+        LblTipoSeleccion.Name = "LblTipoSeleccion"
+        LblTipoSeleccion.Size = New Size(13, 15)
+        LblTipoSeleccion.TabIndex = 8
+        LblTipoSeleccion.Text = "0"
+        ' 
+        ' LblIden
+        ' 
+        LblIden.AutoSize = True
+        LblIden.Location = New Point(141, 9)
+        LblIden.Name = "LblIden"
+        LblIden.Size = New Size(13, 15)
+        LblIden.TabIndex = 9
+        LblIden.Text = "0"
         ' 
         ' FrmModificarEliminar
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlDark
-        ClientSize = New Size(577, 443)
+        ClientSize = New Size(575, 421)
+        Controls.Add(LblIden)
+        Controls.Add(LblTipoSeleccion)
         Controls.Add(DgvDatos)
         Controls.Add(LblSeleccioneUnaOpcion)
         Controls.Add(BtnCancelar)
@@ -135,4 +159,6 @@ Partial Class FrmModificarEliminar
     Friend WithEvents BtnCancelar As Button
     Friend WithEvents LblSeleccioneUnaOpcion As Label
     Friend WithEvents DgvDatos As DataGridView
+    Friend WithEvents LblTipoSeleccion As Label
+    Friend WithEvents LblIden As Label
 End Class
