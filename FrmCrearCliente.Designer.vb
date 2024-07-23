@@ -46,7 +46,7 @@ Partial Class FrmCrearCliente
         ' 
         ' BtnCancelar
         ' 
-        BtnCancelar.Location = New Point(234, 111)
+        BtnCancelar.Location = New Point(260, 129)
         BtnCancelar.Name = "BtnCancelar"
         BtnCancelar.Size = New Size(106, 39)
         BtnCancelar.TabIndex = 9
@@ -55,7 +55,7 @@ Partial Class FrmCrearCliente
         ' 
         ' BtnCrear
         ' 
-        BtnCrear.Location = New Point(95, 111)
+        BtnCrear.Location = New Point(62, 129)
         BtnCrear.Name = "BtnCrear"
         BtnCrear.Size = New Size(108, 39)
         BtnCrear.TabIndex = 8

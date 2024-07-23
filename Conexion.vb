@@ -545,6 +545,71 @@ Public Class Conexion
         Return True
     End Function
 
+    Public Shared Function InsertarUsuarioNuevo(
+    ByVal CadenaConexion As String,
+    ByVal nick As String,
+    ByVal rango As String,
+    ByVal contrasena As String) As Boolean
+
+        Dim sqlCheck As String = "SELECT COUNT(*) FROM usuarios WHERE nick = @nick"
+        Dim sqlInsert As String = "INSERT INTO usuarios (nick, rango, contrasena) VALUES (@nick, @rango, @contrasena)"
+
+        Using cn As New MySqlConnection(CadenaConexion)
+            cn.Open()
+
+            ' Verificar si el nick ya existe
+            Using cmdCheck As New MySqlCommand(sqlCheck, cn)
+                cmdCheck.Parameters.AddWithValue("@nick", nick)
+                Dim count As Integer = Convert.ToInt32(cmdCheck.ExecuteScalar())
+
+                If count > 0 Then
+                    ' El nick ya existe
+                    Return False
+                End If
+            End Using
+
+            ' Insertar el nuevo registro
+            Using cmdInsert As New MySqlCommand(sqlInsert, cn)
+                cmdInsert.Parameters.AddWithValue("@nick", nick)
+                cmdInsert.Parameters.AddWithValue("@rango", rango)
+                cmdInsert.Parameters.AddWithValue("@contrasena", contrasena)
+
+                cmdInsert.ExecuteNonQuery()
+            End Using
+        End Using
+
+        ' El registro se insertó correctamente
+        Return True
+    End Function
+
+    Public Shared Function InsertarClienteNuevo(ByVal CadenaConexion As String, ByVal cliente As String) As Boolean
+        Dim sqlCheck As String = "SELECT COUNT(*) FROM clientes WHERE cliente = @cliente"
+        Dim sqlInsert As String = "INSERT INTO clientes (cliente) VALUES (@cliente)"
+
+        Using cn As New MySqlConnection(CadenaConexion)
+            cn.Open()
+
+            ' Verificar si el cliente ya existe
+            Using cmdCheck As New MySqlCommand(sqlCheck, cn)
+                cmdCheck.Parameters.AddWithValue("@cliente", cliente)
+                Dim count As Integer = Convert.ToInt32(cmdCheck.ExecuteScalar())
+
+                If count > 0 Then
+                    ' El cliente ya existe
+                    Return False
+                End If
+            End Using
+
+            ' Insertar el nuevo registro
+            Using cmdInsert As New MySqlCommand(sqlInsert, cn)
+                cmdInsert.Parameters.AddWithValue("@cliente", cliente)
+                cmdInsert.ExecuteNonQuery()
+            End Using
+        End Using
+
+        ' El registro se insertó correctamente
+        Return True
+    End Function
 
 
     'funcion eliminar

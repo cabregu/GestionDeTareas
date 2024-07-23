@@ -57,18 +57,21 @@ Public Class FrmPpal
 
     Private Sub BtnCrearUsuario_Click(sender As Object, e As EventArgs) Handles BtnCrearUsuario.Click
         Dim formulario As New FrmUsuario()
+        formulario.CadenaDeConexion = Cadenadeconexion
         formulario.Show()
         Me.Hide()
     End Sub
 
     Private Sub BtnCrearCliente_Click(sender As Object, e As EventArgs) Handles BtnCrearCliente.Click
         Dim formulario As New FrmCrearCliente()
+        formulario.CadenaDeConexion = Cadenadeconexion
         formulario.Show()
         Me.Hide()
     End Sub
 
     Private Sub BtnCrearProyecto_Click(sender As Object, e As EventArgs) Handles BtnCrearProyecto.Click
         Dim formulario As New FrmCrearProyecto()
+        formulario.CadenaDeConexion = Cadenadeconexion
         formulario.Show()
         Me.Hide()
     End Sub
