@@ -1,5 +1,9 @@
-﻿Imports MySql.Data.MySqlClient
+﻿
+Imports MySql.Data.MySqlClient
 Imports System.Data.OleDb
+Imports System.IO
+
+
 
 Public Class Conexion
 
@@ -389,6 +393,34 @@ Public Class Conexion
     End Function
 
 
+    Public Shared Function ObtenerTareasPorFecha(ByVal CadenaConexion As String, ByVal fechaInicio As DateTime, ByVal fechaFin As DateTime) As DataTable
+        Dim dtTareas As New DataTable()
+
+        ' Convertir las fechas al formato adecuado para MySQL
+        Dim fechaInicioFormateada As String = fechaInicio.ToString("yyyy-MM-dd HH:mm:ss")
+        Dim fechaFinFormateada As String = fechaFin.ToString("yyyy-MM-dd HH:mm:ss")
+
+        ' La consulta SQL ahora incluye un rango de fechas para el campo "fechadeinicio"
+        Dim sql As String = "SELECT * FROM Kanbas WHERE fechadeinicio BETWEEN @fechaInicio AND @fechaFin"
+
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                ' Añadir los parámetros para la consulta SQL
+                cmd.Parameters.AddWithValue("@fechaInicio", fechaInicioFormateada)
+                cmd.Parameters.AddWithValue("@fechaFin", fechaFinFormateada)
+
+                cn.Open()
+                Using reader As MySqlDataReader = cmd.ExecuteReader()
+                    dtTareas.Load(reader)
+                End Using
+            End Using
+        End Using
+        Return dtTareas
+    End Function
+
+
+
+
 
     'funciones de actualizar
     Public Shared Sub ActualizarCodigo(ByVal CadenaConexion As String, ByVal codigoactual As String)
@@ -751,6 +783,10 @@ Public Class Conexion
             Return "Error al sumar los tiempos transcurridos."
         End Try
     End Function
+
+
+
+
 
 
 

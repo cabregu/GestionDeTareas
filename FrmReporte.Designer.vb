@@ -27,8 +27,6 @@ Partial Class FrmReporte
         LblFechaInicial = New Label()
         LblFechaFinal = New Label()
         DgvDatos = New DataGridView()
-        CmbUsuario = New ComboBox()
-        LblUsuario = New Label()
         BtnExcel = New Button()
         BtnConsultar = New Button()
         CType(DgvDatos, ComponentModel.ISupportInitialize).BeginInit()
@@ -77,23 +75,6 @@ Partial Class FrmReporte
         DgvDatos.Size = New Size(738, 295)
         DgvDatos.TabIndex = 4
         ' 
-        ' CmbUsuario
-        ' 
-        CmbUsuario.FormattingEnabled = True
-        CmbUsuario.Location = New Point(318, 56)
-        CmbUsuario.Name = "CmbUsuario"
-        CmbUsuario.Size = New Size(161, 23)
-        CmbUsuario.TabIndex = 5
-        ' 
-        ' LblUsuario
-        ' 
-        LblUsuario.AutoSize = True
-        LblUsuario.Location = New Point(318, 25)
-        LblUsuario.Name = "LblUsuario"
-        LblUsuario.Size = New Size(47, 15)
-        LblUsuario.TabIndex = 6
-        LblUsuario.Text = "Usuario"
-        ' 
         ' BtnExcel
         ' 
         BtnExcel.Location = New Point(713, 396)
@@ -105,7 +86,7 @@ Partial Class FrmReporte
         ' 
         ' BtnConsultar
         ' 
-        BtnConsultar.Location = New Point(501, 55)
+        BtnConsultar.Location = New Point(713, 58)
         BtnConsultar.Name = "BtnConsultar"
         BtnConsultar.Size = New Size(75, 23)
         BtnConsultar.TabIndex = 8
@@ -120,8 +101,6 @@ Partial Class FrmReporte
         ClientSize = New Size(812, 451)
         Controls.Add(BtnConsultar)
         Controls.Add(BtnExcel)
-        Controls.Add(LblUsuario)
-        Controls.Add(CmbUsuario)
         Controls.Add(DgvDatos)
         Controls.Add(LblFechaFinal)
         Controls.Add(LblFechaInicial)
@@ -140,8 +119,6 @@ Partial Class FrmReporte
     Friend WithEvents LblFechaInicial As Label
     Friend WithEvents LblFechaFinal As Label
     Friend WithEvents DgvDatos As DataGridView
-    Friend WithEvents CmbUsuario As ComboBox
-    Friend WithEvents LblUsuario As Label
     Friend WithEvents BtnExcel As Button
     Friend WithEvents BtnConsultar As Button
 End Class
