@@ -10,6 +10,7 @@
         FrmPpal.Visible = True
     End Sub
 
+
     Private Sub BtnCrear_Click(sender As Object, e As EventArgs) Handles BtnCrear.Click
         If String.IsNullOrWhiteSpace(TxtNombreCliente.Text) Then
             MessageBox.Show("Por favor, ingrese un nombre de cliente.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
