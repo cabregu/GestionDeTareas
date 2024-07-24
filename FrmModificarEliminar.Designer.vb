@@ -30,14 +30,19 @@ Partial Class FrmModificarEliminar
         BtnCancelar = New Button()
         LblSeleccioneUnaOpcion = New Label()
         DgvDatos = New DataGridView()
-        LblTipoSeleccion = New Label()
+        LblTabla = New Label()
         LblIden = New Label()
+        TxtValorAModificar = New TextBox()
+        LblCampo = New Label()
+        TxtValorNuevo = New TextBox()
+        LblModificar = New Label()
+        Label2 = New Label()
         CType(DgvDatos, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' BtnClientes
         ' 
-        BtnClientes.Location = New Point(218, 56)
+        BtnClientes.Location = New Point(327, 56)
         BtnClientes.Name = "BtnClientes"
         BtnClientes.Size = New Size(100, 30)
         BtnClientes.TabIndex = 0
@@ -46,7 +51,7 @@ Partial Class FrmModificarEliminar
         ' 
         ' BtnUsuarios
         ' 
-        BtnUsuarios.Location = New Point(339, 56)
+        BtnUsuarios.Location = New Point(448, 56)
         BtnUsuarios.Name = "BtnUsuarios"
         BtnUsuarios.Size = New Size(100, 30)
         BtnUsuarios.TabIndex = 1
@@ -56,7 +61,7 @@ Partial Class FrmModificarEliminar
         ' BtnModificar
         ' 
         BtnModificar.Enabled = False
-        BtnModificar.Location = New Point(218, 370)
+        BtnModificar.Location = New Point(327, 427)
         BtnModificar.Name = "BtnModificar"
         BtnModificar.Size = New Size(100, 30)
         BtnModificar.TabIndex = 2
@@ -66,7 +71,7 @@ Partial Class FrmModificarEliminar
         ' BtnEliminar
         ' 
         BtnEliminar.Enabled = False
-        BtnEliminar.Location = New Point(339, 370)
+        BtnEliminar.Location = New Point(564, 370)
         BtnEliminar.Name = "BtnEliminar"
         BtnEliminar.Size = New Size(100, 30)
         BtnEliminar.TabIndex = 3
@@ -75,7 +80,7 @@ Partial Class FrmModificarEliminar
         ' 
         ' BtnTareas
         ' 
-        BtnTareas.Location = New Point(456, 56)
+        BtnTareas.Location = New Point(565, 56)
         BtnTareas.Name = "BtnTareas"
         BtnTareas.Size = New Size(100, 30)
         BtnTareas.TabIndex = 4
@@ -84,7 +89,7 @@ Partial Class FrmModificarEliminar
         ' 
         ' BtnCancelar
         ' 
-        BtnCancelar.Location = New Point(456, 370)
+        BtnCancelar.Location = New Point(565, 497)
         BtnCancelar.Name = "BtnCancelar"
         BtnCancelar.Size = New Size(100, 30)
         BtnCancelar.TabIndex = 5
@@ -106,17 +111,18 @@ Partial Class FrmModificarEliminar
         DgvDatos.Location = New Point(12, 92)
         DgvDatos.Name = "DgvDatos"
         DgvDatos.RowTemplate.Height = 25
-        DgvDatos.Size = New Size(544, 272)
+        DgvDatos.Size = New Size(653, 272)
         DgvDatos.TabIndex = 7
         ' 
-        ' LblTipoSeleccion
+        ' LblTabla
         ' 
-        LblTipoSeleccion.AutoSize = True
-        LblTipoSeleccion.Location = New Point(12, 9)
-        LblTipoSeleccion.Name = "LblTipoSeleccion"
-        LblTipoSeleccion.Size = New Size(13, 15)
-        LblTipoSeleccion.TabIndex = 8
-        LblTipoSeleccion.Text = "0"
+        LblTabla.AutoSize = True
+        LblTabla.Location = New Point(12, 9)
+        LblTabla.Name = "LblTabla"
+        LblTabla.Size = New Size(13, 15)
+        LblTabla.TabIndex = 8
+        LblTabla.Text = "0"
+        LblTabla.Visible = False
         ' 
         ' LblIden
         ' 
@@ -126,15 +132,66 @@ Partial Class FrmModificarEliminar
         LblIden.Size = New Size(13, 15)
         LblIden.TabIndex = 9
         LblIden.Text = "0"
+        LblIden.Visible = False
+        ' 
+        ' TxtValorAModificar
+        ' 
+        TxtValorAModificar.Enabled = False
+        TxtValorAModificar.Font = New Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
+        TxtValorAModificar.Location = New Point(5, 402)
+        TxtValorAModificar.Name = "TxtValorAModificar"
+        TxtValorAModificar.Size = New Size(304, 27)
+        TxtValorAModificar.TabIndex = 10
+        ' 
+        ' LblCampo
+        ' 
+        LblCampo.AutoSize = True
+        LblCampo.Location = New Point(327, 9)
+        LblCampo.Name = "LblCampo"
+        LblCampo.Size = New Size(13, 15)
+        LblCampo.TabIndex = 11
+        LblCampo.Text = "0"
+        LblCampo.Visible = False
+        ' 
+        ' TxtValorNuevo
+        ' 
+        TxtValorNuevo.Font = New Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
+        TxtValorNuevo.Location = New Point(5, 455)
+        TxtValorNuevo.Name = "TxtValorNuevo"
+        TxtValorNuevo.Size = New Size(304, 27)
+        TxtValorNuevo.TabIndex = 12
+        ' 
+        ' LblModificar
+        ' 
+        LblModificar.AutoSize = True
+        LblModificar.Location = New Point(5, 385)
+        LblModificar.Name = "LblModificar"
+        LblModificar.Size = New Size(83, 15)
+        LblModificar.TabIndex = 13
+        LblModificar.Text = "Modificar esto"
+        ' 
+        ' Label2
+        ' 
+        Label2.AutoSize = True
+        Label2.Location = New Point(5, 437)
+        Label2.Name = "Label2"
+        Label2.Size = New Size(50, 15)
+        Label2.TabIndex = 14
+        Label2.Text = "Por esto"
         ' 
         ' FrmModificarEliminar
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlDark
-        ClientSize = New Size(575, 421)
+        ClientSize = New Size(674, 540)
+        Controls.Add(Label2)
+        Controls.Add(LblModificar)
+        Controls.Add(TxtValorNuevo)
+        Controls.Add(LblCampo)
+        Controls.Add(TxtValorAModificar)
         Controls.Add(LblIden)
-        Controls.Add(LblTipoSeleccion)
+        Controls.Add(LblTabla)
         Controls.Add(DgvDatos)
         Controls.Add(LblSeleccioneUnaOpcion)
         Controls.Add(BtnCancelar)
@@ -159,6 +216,11 @@ Partial Class FrmModificarEliminar
     Friend WithEvents BtnCancelar As Button
     Friend WithEvents LblSeleccioneUnaOpcion As Label
     Friend WithEvents DgvDatos As DataGridView
-    Friend WithEvents LblTipoSeleccion As Label
+    Friend WithEvents LblTabla As Label
     Friend WithEvents LblIden As Label
+    Friend WithEvents TxtValorAModificar As TextBox
+    Friend WithEvents LblCampo As Label
+    Friend WithEvents TxtValorNuevo As TextBox
+    Friend WithEvents LblModificar As Label
+    Friend WithEvents Label2 As Label
 End Class

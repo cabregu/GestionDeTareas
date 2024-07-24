@@ -507,6 +507,28 @@ Public Class Conexion
         End Using
     End Function
 
+    Public Shared Function ActualizarRegistroPorTablaYporID(ByVal CadenaConexion As String, ByVal nombreTabla As String, ByVal nombreCampoActualizar As String, ByVal valorActualizar As Object, ByVal nombreCampoID As String, ByVal id As Object) As Boolean
+        Dim sql As String = $"UPDATE {nombreTabla} SET {nombreCampoActualizar} = @valorActualizar WHERE {nombreCampoID} = @id"
+
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@valorActualizar", valorActualizar)
+                cmd.Parameters.AddWithValue("@id", id)
+                cn.Open()
+
+                Try
+                    Dim filasAfectadas As Integer = cmd.ExecuteNonQuery()
+                    Return filasAfectadas > 0
+                Catch ex As Exception
+
+                    Return False
+                End Try
+            End Using
+        End Using
+    End Function
+
+
+
 
     'funcioneas de insertar
     Public Shared Function InsertarKanba(

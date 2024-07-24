@@ -41,6 +41,7 @@ Partial Class FrmLogin
         ' 
         TxtContraseña.Location = New Point(46, 128)
         TxtContraseña.Name = "TxtContraseña"
+        TxtContraseña.PasswordChar = "*"c
         TxtContraseña.Size = New Size(192, 23)
         TxtContraseña.TabIndex = 1
         ' 
