@@ -40,7 +40,6 @@ Partial Class FrmPpal
         BtnReporte = New Button()
         BtnSalir = New Button()
         BtnConfiguracion = New Button()
-        BackgroundWorker1 = New ComponentModel.BackgroundWorker()
         GpbTareas.SuspendLayout()
         GpbDatos.SuspendLayout()
         GpbReportes.SuspendLayout()
@@ -84,21 +83,21 @@ Partial Class FrmPpal
         ' 
         ' GpbTareas
         ' 
-        GpbTareas.BackColor = SystemColors.ControlDark
+        GpbTareas.BackColor = SystemColors.ControlLight
         GpbTareas.Controls.Add(BtnModificarTarea)
         GpbTareas.Controls.Add(BtnAsignarTarea)
         GpbTareas.Controls.Add(BtnRealizarTarea)
         GpbTareas.Controls.Add(BtnCrearTarea)
         GpbTareas.Location = New Point(7, 62)
         GpbTareas.Name = "GpbTareas"
-        GpbTareas.Size = New Size(695, 119)
+        GpbTareas.Size = New Size(472, 119)
         GpbTareas.TabIndex = 4
         GpbTareas.TabStop = False
         GpbTareas.Text = "Tareas Activas"
         ' 
         ' BtnModificarTarea
         ' 
-        BtnModificarTarea.Location = New Point(497, 71)
+        BtnModificarTarea.Location = New Point(280, 71)
         BtnModificarTarea.Name = "BtnModificarTarea"
         BtnModificarTarea.Size = New Size(150, 30)
         BtnModificarTarea.TabIndex = 3
@@ -107,7 +106,7 @@ Partial Class FrmPpal
         ' 
         ' BtnAsignarTarea
         ' 
-        BtnAsignarTarea.Location = New Point(497, 33)
+        BtnAsignarTarea.Location = New Point(280, 33)
         BtnAsignarTarea.Name = "BtnAsignarTarea"
         BtnAsignarTarea.Size = New Size(150, 30)
         BtnAsignarTarea.TabIndex = 2
@@ -134,21 +133,21 @@ Partial Class FrmPpal
         ' 
         ' GpbDatos
         ' 
-        GpbDatos.BackColor = SystemColors.ControlDark
+        GpbDatos.BackColor = SystemColors.ControlLight
         GpbDatos.Controls.Add(BtnModificarDatos)
         GpbDatos.Controls.Add(BtnCrearCliente)
         GpbDatos.Controls.Add(BtnCrearProyecto)
         GpbDatos.Controls.Add(BtnCrearUsuario)
         GpbDatos.Location = New Point(7, 223)
         GpbDatos.Name = "GpbDatos"
-        GpbDatos.Size = New Size(695, 119)
+        GpbDatos.Size = New Size(472, 119)
         GpbDatos.TabIndex = 5
         GpbDatos.TabStop = False
         GpbDatos.Text = "Datos"
         ' 
         ' BtnModificarDatos
         ' 
-        BtnModificarDatos.Location = New Point(497, 70)
+        BtnModificarDatos.Location = New Point(280, 70)
         BtnModificarDatos.Name = "BtnModificarDatos"
         BtnModificarDatos.Size = New Size(150, 30)
         BtnModificarDatos.TabIndex = 3
@@ -157,7 +156,7 @@ Partial Class FrmPpal
         ' 
         ' BtnCrearCliente
         ' 
-        BtnCrearCliente.Location = New Point(497, 32)
+        BtnCrearCliente.Location = New Point(280, 32)
         BtnCrearCliente.Name = "BtnCrearCliente"
         BtnCrearCliente.Size = New Size(150, 30)
         BtnCrearCliente.TabIndex = 2
@@ -184,11 +183,11 @@ Partial Class FrmPpal
         ' 
         ' GpbReportes
         ' 
-        GpbReportes.BackColor = SystemColors.ControlDark
+        GpbReportes.BackColor = SystemColors.ControlLight
         GpbReportes.Controls.Add(BtnReporte)
         GpbReportes.Location = New Point(7, 361)
         GpbReportes.Name = "GpbReportes"
-        GpbReportes.Size = New Size(695, 119)
+        GpbReportes.Size = New Size(472, 119)
         GpbReportes.TabIndex = 6
         GpbReportes.TabStop = False
         GpbReportes.Text = "Reportes"
@@ -205,7 +204,7 @@ Partial Class FrmPpal
         ' BtnSalir
         ' 
         BtnSalir.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        BtnSalir.Location = New Point(549, 507)
+        BtnSalir.Location = New Point(329, 507)
         BtnSalir.Name = "BtnSalir"
         BtnSalir.Size = New Size(150, 30)
         BtnSalir.TabIndex = 0
@@ -215,7 +214,7 @@ Partial Class FrmPpal
         ' BtnConfiguracion
         ' 
         BtnConfiguracion.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        BtnConfiguracion.Location = New Point(370, 507)
+        BtnConfiguracion.Location = New Point(173, 507)
         BtnConfiguracion.Name = "BtnConfiguracion"
         BtnConfiguracion.Size = New Size(150, 30)
         BtnConfiguracion.TabIndex = 1
@@ -226,8 +225,8 @@ Partial Class FrmPpal
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = SystemColors.ControlDark
-        ClientSize = New Size(734, 549)
+        BackColor = SystemColors.ControlLight
+        ClientSize = New Size(498, 549)
         Controls.Add(GpbReportes)
         Controls.Add(BtnConfiguracion)
         Controls.Add(GpbDatos)
@@ -265,6 +264,5 @@ Partial Class FrmPpal
     Friend WithEvents BtnReporte As Button
     Friend WithEvents BtnConfiguracion As Button
     Friend WithEvents BtnSalir As Button
-    Friend WithEvents BackgroundWorker1 As System.ComponentModel.BackgroundWorker
 
 End Class

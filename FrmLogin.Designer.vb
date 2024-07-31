@@ -85,7 +85,7 @@ Partial Class FrmLogin
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = SystemColors.ControlDark
+        BackColor = SystemColors.ControlLight
         ClientSize = New Size(304, 277)
         Controls.Add(LblContraseña)
         Controls.Add(LblUsuario)

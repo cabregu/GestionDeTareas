@@ -38,6 +38,7 @@ Partial Class FrmConfiguracion
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
+        BackColor = SystemColors.ControlLight
         ClientSize = New Size(447, 368)
         Controls.Add(BtnCrearUsuario)
         Name = "FrmConfiguracion"

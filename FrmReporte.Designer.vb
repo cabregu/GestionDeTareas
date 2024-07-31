@@ -97,7 +97,7 @@ Partial Class FrmReporte
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = SystemColors.ControlDark
+        BackColor = SystemColors.ControlLight
         ClientSize = New Size(812, 451)
         Controls.Add(BtnConsultar)
         Controls.Add(BtnExcel)

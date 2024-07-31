@@ -62,7 +62,7 @@ Partial Class FrmModificarTarea
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = SystemColors.ControlDark
+        BackColor = SystemColors.ControlLight
         ClientSize = New Size(1191, 495)
         Controls.Add(LblComentario)
         Controls.Add(BtnCerrar)

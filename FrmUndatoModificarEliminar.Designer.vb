@@ -220,7 +220,7 @@ Partial Class FrmUndatoModificarEliminar
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = SystemColors.ControlDark
+        BackColor = SystemColors.ControlLight
         ClientSize = New Size(440, 414)
         Controls.Add(LblUsuario)
         Controls.Add(LblEstado)

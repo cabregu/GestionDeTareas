@@ -104,7 +104,7 @@ Partial Class FrmUsuario
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        BackColor = SystemColors.ControlDark
+        BackColor = SystemColors.ControlLight
         ClientSize = New Size(371, 273)
         Controls.Add(BtnCancelar)
         Controls.Add(BtnCrear)
