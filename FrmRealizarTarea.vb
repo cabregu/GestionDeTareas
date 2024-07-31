@@ -157,7 +157,7 @@
 
 
 
-        If Conexion.ActualizarEstadoKanbas(CadenaDeConexion, CmbCodigo.Text, "Finalizada", TxtComentarioFinal.Text) = True Then
+            If Conexion.ActualizarEstadoKanbasFinalizada(CadenaDeConexion, CmbCodigo.Text, "Finalizada", TxtComentarioFinal.Text, FechaHoraServer) = True Then
 
                 CmbCodigo.Text = ""
                 TxtCliente.Text = ""

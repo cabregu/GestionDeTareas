@@ -77,9 +77,12 @@
         Dim usuario As String = CmbAsignar.Text
         Dim fechaDeInicio As DateTime? = Nothing
         Dim tiempo As String = Nothing
+        Dim FechaCreacion As DateTime = Conexion.ObtenerFechaHoraServidor(CadenaDeConexion)
+
+
 
         ' Intentar insertar el registro
-        Dim resultado As Boolean = Conexion.InsertarKanba(CadenaDeConexion, codigo, cliente, proyecto, tarea, nivelDePrioridad, usuario, fechaLimite, Estado, fechaDeInicio, tiempo, comentario)
+        Dim resultado As Boolean = Conexion.InsertarKanba(CadenaDeConexion, codigo, cliente, proyecto, tarea, nivelDePrioridad, usuario, fechaLimite, Estado, fechaDeInicio, tiempo, comentario, FechaCreacion)
 
         ' Mostrar resultado
         If resultado Then

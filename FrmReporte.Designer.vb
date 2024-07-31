@@ -29,6 +29,15 @@ Partial Class FrmReporte
         DgvDatos = New DataGridView()
         BtnExcel = New Button()
         BtnConsultar = New Button()
+        CHKEstatusdetareas = New CheckBox()
+        ChkUsuarioshoras = New CheckBox()
+        ChkClienteshoras = New CheckBox()
+        ChkTareashoras = New CheckBox()
+        ChkUsuariosClientes = New CheckBox()
+        ChkUsuariosTareas = New CheckBox()
+        ChkClientesUsuarios = New CheckBox()
+        ChkClientesProyectos = New CheckBox()
+        ChkCuadroNinja = New CheckBox()
         CType(DgvDatos, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -72,12 +81,12 @@ Partial Class FrmReporte
         DgvDatos.Location = New Point(50, 95)
         DgvDatos.Name = "DgvDatos"
         DgvDatos.RowTemplate.Height = 25
-        DgvDatos.Size = New Size(738, 295)
+        DgvDatos.Size = New Size(967, 414)
         DgvDatos.TabIndex = 4
         ' 
         ' BtnExcel
         ' 
-        BtnExcel.Location = New Point(713, 396)
+        BtnExcel.Location = New Point(940, 586)
         BtnExcel.Name = "BtnExcel"
         BtnExcel.Size = New Size(75, 23)
         BtnExcel.TabIndex = 7
@@ -86,19 +95,127 @@ Partial Class FrmReporte
         ' 
         ' BtnConsultar
         ' 
-        BtnConsultar.Location = New Point(713, 58)
+        BtnConsultar.Location = New Point(940, 58)
         BtnConsultar.Name = "BtnConsultar"
         BtnConsultar.Size = New Size(75, 23)
         BtnConsultar.TabIndex = 8
         BtnConsultar.Text = "Consultar"
         BtnConsultar.UseVisualStyleBackColor = True
         ' 
+        ' CHKEstatusdetareas
+        ' 
+        CHKEstatusdetareas.AutoSize = True
+        CHKEstatusdetareas.Enabled = False
+        CHKEstatusdetareas.Location = New Point(50, 539)
+        CHKEstatusdetareas.Name = "CHKEstatusdetareas"
+        CHKEstatusdetareas.Size = New Size(113, 19)
+        CHKEstatusdetareas.TabIndex = 9
+        CHKEstatusdetareas.Text = "Estatus de tareas"
+        CHKEstatusdetareas.UseVisualStyleBackColor = True
+        ' 
+        ' ChkUsuarioshoras
+        ' 
+        ChkUsuarioshoras.AutoSize = True
+        ChkUsuarioshoras.Enabled = False
+        ChkUsuarioshoras.Location = New Point(50, 583)
+        ChkUsuarioshoras.Name = "ChkUsuarioshoras"
+        ChkUsuarioshoras.Size = New Size(103, 19)
+        ChkUsuarioshoras.TabIndex = 10
+        ChkUsuarioshoras.Text = "Usuarios horas"
+        ChkUsuarioshoras.UseVisualStyleBackColor = True
+        ' 
+        ' ChkClienteshoras
+        ' 
+        ChkClienteshoras.AutoSize = True
+        ChkClienteshoras.Enabled = False
+        ChkClienteshoras.Location = New Point(169, 539)
+        ChkClienteshoras.Name = "ChkClienteshoras"
+        ChkClienteshoras.Size = New Size(100, 19)
+        ChkClienteshoras.TabIndex = 11
+        ChkClienteshoras.Text = "Clientes horas"
+        ChkClienteshoras.UseVisualStyleBackColor = True
+        ' 
+        ' ChkTareashoras
+        ' 
+        ChkTareashoras.AutoSize = True
+        ChkTareashoras.Enabled = False
+        ChkTareashoras.Location = New Point(169, 583)
+        ChkTareashoras.Name = "ChkTareashoras"
+        ChkTareashoras.Size = New Size(90, 19)
+        ChkTareashoras.TabIndex = 12
+        ChkTareashoras.Text = "Tareas horas"
+        ChkTareashoras.UseVisualStyleBackColor = True
+        ' 
+        ' ChkUsuariosClientes
+        ' 
+        ChkUsuariosClientes.AutoSize = True
+        ChkUsuariosClientes.Enabled = False
+        ChkUsuariosClientes.Location = New Point(278, 539)
+        ChkUsuariosClientes.Name = "ChkUsuariosClientes"
+        ChkUsuariosClientes.Size = New Size(118, 19)
+        ChkUsuariosClientes.TabIndex = 13
+        ChkUsuariosClientes.Text = "Usuarios-Clientes"
+        ChkUsuariosClientes.UseVisualStyleBackColor = True
+        ' 
+        ' ChkUsuariosTareas
+        ' 
+        ChkUsuariosTareas.AutoSize = True
+        ChkUsuariosTareas.Enabled = False
+        ChkUsuariosTareas.Location = New Point(278, 586)
+        ChkUsuariosTareas.Name = "ChkUsuariosTareas"
+        ChkUsuariosTareas.Size = New Size(108, 19)
+        ChkUsuariosTareas.TabIndex = 14
+        ChkUsuariosTareas.Text = "Usuarios-Tareas"
+        ChkUsuariosTareas.UseVisualStyleBackColor = True
+        ' 
+        ' ChkClientesUsuarios
+        ' 
+        ChkClientesUsuarios.AutoSize = True
+        ChkClientesUsuarios.Enabled = False
+        ChkClientesUsuarios.Location = New Point(402, 586)
+        ChkClientesUsuarios.Name = "ChkClientesUsuarios"
+        ChkClientesUsuarios.Size = New Size(118, 19)
+        ChkClientesUsuarios.TabIndex = 15
+        ChkClientesUsuarios.Text = "Clientes-Usuarios"
+        ChkClientesUsuarios.UseVisualStyleBackColor = True
+        ' 
+        ' ChkClientesProyectos
+        ' 
+        ChkClientesProyectos.AutoSize = True
+        ChkClientesProyectos.Enabled = False
+        ChkClientesProyectos.Location = New Point(402, 539)
+        ChkClientesProyectos.Name = "ChkClientesProyectos"
+        ChkClientesProyectos.Size = New Size(125, 19)
+        ChkClientesProyectos.TabIndex = 16
+        ChkClientesProyectos.Text = "Clientes-Proyectos"
+        ChkClientesProyectos.UseVisualStyleBackColor = True
+        ' 
+        ' ChkCuadroNinja
+        ' 
+        ChkCuadroNinja.AutoSize = True
+        ChkCuadroNinja.Enabled = False
+        ChkCuadroNinja.Location = New Point(533, 586)
+        ChkCuadroNinja.Name = "ChkCuadroNinja"
+        ChkCuadroNinja.Size = New Size(96, 19)
+        ChkCuadroNinja.TabIndex = 18
+        ChkCuadroNinja.Text = "Cuadro Ninja"
+        ChkCuadroNinja.UseVisualStyleBackColor = True
+        ' 
         ' FrmReporte
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlLight
-        ClientSize = New Size(812, 451)
+        ClientSize = New Size(1027, 646)
+        Controls.Add(ChkCuadroNinja)
+        Controls.Add(ChkClientesProyectos)
+        Controls.Add(ChkClientesUsuarios)
+        Controls.Add(ChkUsuariosTareas)
+        Controls.Add(ChkUsuariosClientes)
+        Controls.Add(ChkTareashoras)
+        Controls.Add(ChkClienteshoras)
+        Controls.Add(ChkUsuarioshoras)
+        Controls.Add(CHKEstatusdetareas)
         Controls.Add(BtnConsultar)
         Controls.Add(BtnExcel)
         Controls.Add(DgvDatos)
@@ -121,4 +238,13 @@ Partial Class FrmReporte
     Friend WithEvents DgvDatos As DataGridView
     Friend WithEvents BtnExcel As Button
     Friend WithEvents BtnConsultar As Button
+    Friend WithEvents CHKEstatusdetareas As CheckBox
+    Friend WithEvents ChkUsuarioshoras As CheckBox
+    Friend WithEvents ChkClienteshoras As CheckBox
+    Friend WithEvents ChkTareashoras As CheckBox
+    Friend WithEvents ChkUsuariosClientes As CheckBox
+    Friend WithEvents ChkUsuariosTareas As CheckBox
+    Friend WithEvents ChkClientesUsuarios As CheckBox
+    Friend WithEvents ChkClientesProyectos As CheckBox
+    Friend WithEvents ChkCuadroNinja As CheckBox
 End Class

@@ -392,7 +392,6 @@ Public Class Conexion
         Return dt
     End Function
 
-
     Public Shared Function ObtenerTareasPorFecha(ByVal CadenaConexion As String, ByVal fechaInicio As DateTime, ByVal fechaFin As DateTime) As DataTable
         Dim dtTareas As New DataTable()
 
@@ -417,6 +416,90 @@ Public Class Conexion
         End Using
         Return dtTareas
     End Function
+
+    Public Shared Function ObtenerDatosReporte1(ByVal CadenaConexion As String, ByVal fechaCreacionDesde As DateTime, ByVal fechaCreacionHasta As DateTime) As DataTable
+        Dim dt As New DataTable()
+        Dim horarioLimite As String = ""
+
+        ' Obtener el valor de "Horariolimite" de la tabla configuracion
+        Using cn As New MySqlConnection(CadenaConexion)
+            cn.Open()
+            Dim sqlConfig As String = "SELECT valortxt FROM configuracion WHERE descripcion = 'Horariolimite'"
+            Using cmdConfig As New MySqlCommand(sqlConfig, cn)
+                Dim result As Object = cmdConfig.ExecuteScalar()
+                If result IsNot Nothing Then
+                    horarioLimite = Convert.ToString(result)
+                End If
+            End Using
+        End Using
+
+        ' Consulta para obtener los datos del reporte
+        Dim sql As String = "SELECT cliente, proyecto, tarea, niveldeprioridad, fechacreacion, usuario, estado, fechadeinicio, fechafinalizacion, fechalimite, tiempo, comentario, comentariofinal " &
+                        "FROM kanbas " &
+                        "WHERE fechacreacion BETWEEN @fechaCreacionDesde AND @fechaCreacionHasta"
+
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@fechaCreacionDesde", fechaCreacionDesde.ToString("yyyy-MM-dd 00:00:00"))
+                cmd.Parameters.AddWithValue("@fechaCreacionHasta", fechaCreacionHasta.ToString("yyyy-MM-dd 23:59:59"))
+                cn.Open()
+                Using da As New MySqlDataAdapter(cmd)
+                    da.Fill(dt)
+                End Using
+            End Using
+        End Using
+
+        ' Agregar el nuevo campo "Status" después del campo "tiempo"
+        dt.Columns.Add("Status", GetType(String)).SetOrdinal(dt.Columns("tiempo").Ordinal + 1)
+
+        ' Obtener la fecha actual del servidor MySQL
+        Dim serverDate As DateTime
+        Using cn As New MySqlConnection(CadenaConexion)
+            cn.Open()
+            Dim sqlServerDate As String = "SELECT NOW()"
+            Using cmdServerDate As New MySqlCommand(sqlServerDate, cn)
+                serverDate = Convert.ToDateTime(cmdServerDate.ExecuteScalar())
+            End Using
+        End Using
+
+        ' Recorrer el DataTable y actualizar el campo fechalimite y el campo Status
+        For Each row As DataRow In dt.Rows
+            If Not IsDBNull(row("fechalimite")) Then
+                Dim fechalimite As DateTime = Convert.ToDateTime(row("fechalimite"))
+                row("fechalimite") = fechalimite.ToString("yyyy-MM-dd") & " " & horarioLimite
+            End If
+
+            ' Determinar el valor del campo "Status"
+            Dim fechalimiteComparar As DateTime = Convert.ToDateTime(row("fechalimite"))
+            Dim fechaFinalizacion As DateTime?
+            If Not IsDBNull(row("fechafinalizacion")) Then
+                fechaFinalizacion = Convert.ToDateTime(row("fechafinalizacion"))
+            Else
+                fechaFinalizacion = Nothing
+            End If
+
+            If fechaFinalizacion.HasValue Then
+                If fechaFinalizacion > fechalimiteComparar Then
+                    row("Status") = "CON RETRASO"
+                Else
+                    row("Status") = "A TIEMPO"
+                End If
+            Else
+                If serverDate > fechalimiteComparar Then
+                    row("Status") = "CON RETRASO"
+                Else
+                    row("Status") = "A TIEMPO"
+                End If
+            End If
+        Next
+
+        Return dt
+    End Function
+
+
+
+
+
 
 
 
@@ -520,6 +603,29 @@ Public Class Conexion
         End Using
     End Function
 
+    Public Shared Function ActualizarEstadoKanbasFinalizada(
+    ByVal CadenaConexion As String,
+    ByVal CodigoUsuario As String,
+    ByVal NuevoEstado As String,
+    ByVal Comentariofinal As String,
+    ByVal Fechafinalizada As DateTime) As Boolean
+
+        Dim sql As String = "UPDATE kanbas SET estado=@nuevoestado, comentariofinal=@Comentariofinal, fechafinalizacion=@fechafinalizada WHERE codigo=@codigousuario"
+
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@nuevoestado", NuevoEstado)
+                cmd.Parameters.AddWithValue("@codigousuario", CodigoUsuario)
+                cmd.Parameters.AddWithValue("@Comentariofinal", Comentariofinal)
+                cmd.Parameters.AddWithValue("@fechafinalizada", Fechafinalizada.ToString("yyyy-MM-dd HH:mm:ss")) ' Formato esperado por MySQL
+
+                cn.Open()
+                Dim filasAfectadas As Integer = cmd.ExecuteNonQuery()
+                Return filasAfectadas > 0
+            End Using
+        End Using
+    End Function
+
     Public Shared Function ActualizarKanbasPorCodigo(ByVal CadenaConexion As String, ByVal CodigoUsuario As String, ByVal Cliente As String, ByVal Proyecto As String, ByVal Tarea As String, ByVal NivelDePrioridad As String, ByVal Usuario As String, ByVal FechaLimite As DateTime?, ByVal Comentario As String) As Boolean
         Dim sql As String = "UPDATE kanbas SET cliente=@cliente, proyecto=@proyecto, tarea=@tarea, niveldeprioridad=@niveldeprioridad, usuario=@usuario, fechalimite=@fechalimite, comentario=@comentario WHERE codigo=@codigousuario"
         Using cn As New MySqlConnection(CadenaConexion)
@@ -575,10 +681,11 @@ Public Class Conexion
     ByVal estado As String,
     Optional ByVal fechadeinicio As DateTime? = Nothing,
     Optional ByVal tiempo As String = Nothing,
-    Optional ByVal comentario As String = Nothing) As Boolean
+    Optional ByVal comentario As String = Nothing,
+    Optional ByVal fechacreacion As DateTime? = Nothing) As Boolean
 
         Dim sqlCheck As String = "SELECT COUNT(*) FROM kanbas WHERE codigo = @codigo"
-        Dim sqlInsert As String = "INSERT INTO kanbas (codigo, cliente, proyecto, tarea, niveldeprioridad, usuario, fechalimite, estado, fechadeinicio, tiempo, comentario) VALUES (@codigo, @cliente, @proyecto, @tarea, @niveldeprioridad, @usuario, @fechalimite, @estado, @fechadeinicio, @tiempo, @comentario)"
+        Dim sqlInsert As String = "INSERT INTO kanbas (codigo, cliente, proyecto, tarea, niveldeprioridad, usuario, fechalimite, estado, fechadeinicio, tiempo, comentario, fechacreacion) VALUES (@codigo, @cliente, @proyecto, @tarea, @niveldeprioridad, @usuario, @fechalimite, @estado, @fechadeinicio, @tiempo, @comentario, @fechacreacion)"
 
         Using cn As New MySqlConnection(CadenaConexion)
             cn.Open()
@@ -607,6 +714,7 @@ Public Class Conexion
                 cmdInsert.Parameters.AddWithValue("@fechadeinicio", If(fechadeinicio.HasValue, fechadeinicio, DBNull.Value))
                 cmdInsert.Parameters.AddWithValue("@tiempo", If(String.IsNullOrEmpty(tiempo), DBNull.Value, tiempo))
                 cmdInsert.Parameters.AddWithValue("@comentario", If(String.IsNullOrEmpty(comentario), DBNull.Value, comentario))
+                cmdInsert.Parameters.AddWithValue("@fechacreacion", If(fechacreacion.HasValue, fechacreacion, DBNull.Value))
 
                 cmdInsert.ExecuteNonQuery()
             End Using
@@ -615,6 +723,7 @@ Public Class Conexion
         ' El registro se insertó correctamente
         Return True
     End Function
+
 
     Public Shared Function InsertarUsuarioNuevo(
     ByVal CadenaConexion As String,
