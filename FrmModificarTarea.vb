@@ -9,6 +9,7 @@
     Private Sub FrmModificarTarea_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ObtenerLasTareasModificables(CadenaDeConexion)
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
+        Me.MaximizeBox = False
     End Sub
 
     Public Sub ObtenerLasTareasModificables(ByVal CadenaDeConexionActual As String)

@@ -4,6 +4,7 @@
 
     Private Sub FrmCrearCliente_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
+        Me.MaximizeBox = False
     End Sub
 
     Private Sub FrmCrearCliente_Closed(sender As Object, e As EventArgs) Handles Me.Closed

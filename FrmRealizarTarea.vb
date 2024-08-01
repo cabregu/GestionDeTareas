@@ -8,6 +8,7 @@
     Private Sub FrmRealizarTarea_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LlenarConCodigos(CadenaDeConexion, LblUsuario.Text)
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
+        Me.MaximizeBox = False
     End Sub
 
     Private Sub CmbCodigo_SelectedValueChanged(sender As Object, e As EventArgs) Handles CmbCodigo.SelectedValueChanged

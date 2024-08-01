@@ -15,6 +15,8 @@
         Dim Codigo As Integer = Conexion.ObtenerCodigo(CadenaDeConexion)
         LblCodigo.Text = Codigo
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
+        Me.MaximizeBox = False
+
 
     End Sub
 

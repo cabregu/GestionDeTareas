@@ -10,6 +10,7 @@
         CargarTareasPorCodigo()
         CargarTareas(CmbProyecto.Text)
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
+        Me.MaximizeBox = False
     End Sub
 
 
