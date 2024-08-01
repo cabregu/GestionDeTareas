@@ -14,7 +14,7 @@
 
         Dim Codigo As Integer = Conexion.ObtenerCodigo(CadenaDeConexion)
         LblCodigo.Text = Codigo
-
+        Me.FormBorderStyle = FormBorderStyle.FixedDialog
 
     End Sub
 

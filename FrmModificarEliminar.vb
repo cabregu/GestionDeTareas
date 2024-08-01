@@ -143,6 +143,7 @@ Public Class FrmModificarEliminar
         End If
     End Sub
 
-
-
+    Private Sub FrmModificarEliminar_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.FormBorderStyle = FormBorderStyle.FixedDialog
+    End Sub
 End Class

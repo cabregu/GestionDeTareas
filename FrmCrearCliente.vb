@@ -3,7 +3,7 @@
     Public CadenaDeConexion As String = ""
 
     Private Sub FrmCrearCliente_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        Me.FormBorderStyle = FormBorderStyle.FixedDialog
     End Sub
 
     Private Sub FrmCrearCliente_Closed(sender As Object, e As EventArgs) Handles Me.Closed

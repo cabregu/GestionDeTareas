@@ -29,7 +29,7 @@ Public Class FrmReporte
     End Sub
 
     Private Sub FrmReporte_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        Me.FormBorderStyle = FormBorderStyle.FixedDialog
     End Sub
 
 
@@ -167,10 +167,234 @@ Public Class FrmReporte
     End Sub
 
 
+    'Private Shared Function UsuariosHoras(ByVal DTable As DataTable) As DataTable
+    '    Dim DtUsuHoras As New DataTable()
+    '    DtUsuHoras.Columns.Add("USUARIOS", GetType(String))
+    '    DtUsuHoras.Columns.Add("HORAS", GetType(String))
+
+    '    Dim userTimeTotals As New Dictionary(Of String, TimeSpan)()
+
+    '    For Each row As DataRow In DTable.Rows
+    '        Dim user As String = row("usuario").ToString()
+    '        Dim timeStr As String = row("tiempo").ToString()
+
+    '        Dim timeSpent As TimeSpan
+    '        If TimeSpan.TryParse(timeStr, timeSpent) Then
+    '            If userTimeTotals.ContainsKey(user) Then
+    '                userTimeTotals(user) = userTimeTotals(user).Add(timeSpent)
+    '            Else
+    '                userTimeTotals(user) = timeSpent
+    '            End If
+    '        End If
+    '    Next
+
+    '    Dim totalGlobal As New TimeSpan()
+    '    For Each kvp In userTimeTotals
+    '        DtUsuHoras.Rows.Add(kvp.Key, kvp.Value.ToString())
+    '        totalGlobal = totalGlobal.Add(kvp.Value)
+    '    Next
+
+    '    ' Fila en blanco
+    '    DtUsuHoras.Rows.Add()
+
+    '    DtUsuHoras.Rows.Add("TOTAL", totalGlobal.ToString())
+    '    Return DtUsuHoras
+    'End Function
+
+    'Private Shared Function ClientesHoras(ByVal DTable As DataTable) As DataTable
+    '    Dim DtCliHoras As New DataTable()
+    '    DtCliHoras.Columns.Add("CLIENTE", GetType(String))
+    '    DtCliHoras.Columns.Add("HORAS", GetType(String))
+
+    '    Dim clientTimeTotals As New Dictionary(Of String, TimeSpan)()
+
+    '    For Each row As DataRow In DTable.Rows
+    '        Dim client As String = row("cliente").ToString()
+    '        Dim timeStr As String = row("tiempo").ToString()
+
+    '        Dim timeSpent As TimeSpan
+    '        If TimeSpan.TryParse(timeStr, timeSpent) Then
+    '            If clientTimeTotals.ContainsKey(client) Then
+    '                clientTimeTotals(client) = clientTimeTotals(client).Add(timeSpent)
+    '            Else
+    '                clientTimeTotals(client) = timeSpent
+    '            End If
+    '        End If
+    '    Next
+
+    '    Dim totalGlobal As New TimeSpan()
+    '    For Each kvp In clientTimeTotals
+    '        DtCliHoras.Rows.Add(kvp.Key, kvp.Value.ToString())
+    '        totalGlobal = totalGlobal.Add(kvp.Value)
+    '    Next
+
+    '    ' Fila en blanco
+    '    DtCliHoras.Rows.Add()
+
+    '    DtCliHoras.Rows.Add("TOTAL", totalGlobal.ToString())
+    '    Return DtCliHoras
+    'End Function
+
+    'Private Shared Function TareasHoras(ByVal DTable As DataTable) As DataTable
+    '    Dim DtTareasHoras As New DataTable()
+    '    DtTareasHoras.Columns.Add("TAREA", GetType(String))
+    '    DtTareasHoras.Columns.Add("HORAS", GetType(String))
+
+    '    Dim taskTimeTotals As New Dictionary(Of String, TimeSpan)()
+
+    '    For Each row As DataRow In DTable.Rows
+    '        Dim task As String = row("tarea").ToString()
+    '        Dim timeStr As String = row("tiempo").ToString()
+
+    '        Dim timeSpent As TimeSpan
+    '        If TimeSpan.TryParse(timeStr, timeSpent) Then
+    '            If taskTimeTotals.ContainsKey(task) Then
+    '                taskTimeTotals(task) = taskTimeTotals(task).Add(timeSpent)
+    '            Else
+    '                taskTimeTotals(task) = timeSpent
+    '            End If
+    '        End If
+    '    Next
+
+    '    Dim totalGlobal As New TimeSpan()
+    '    For Each kvp In taskTimeTotals
+    '        DtTareasHoras.Rows.Add(kvp.Key, kvp.Value.ToString())
+    '        totalGlobal = totalGlobal.Add(kvp.Value)
+    '    Next
+
+    '    ' Fila en blanco
+    '    DtTareasHoras.Rows.Add()
+
+    '    DtTareasHoras.Rows.Add("TOTAL", totalGlobal.ToString())
+    '    Return DtTareasHoras
+    'End Function
+
+    'Private Shared Function UsuarioClienteHoras(ByVal DTable As DataTable) As DataTable
+    '    Dim DtUsuCliHoras As New DataTable()
+    '    DtUsuCliHoras.Columns.Add("USUARIO", GetType(String))
+    '    DtUsuCliHoras.Columns.Add("CLIENTE", GetType(String))
+    '    DtUsuCliHoras.Columns.Add("HORAS", GetType(String))
+
+    '    Dim userClientTimeTotals As New Dictionary(Of String, Dictionary(Of String, TimeSpan))()
+
+    '    For Each row As DataRow In DTable.Rows
+    '        Dim user As String = row("usuario").ToString()
+    '        Dim client As String = row("cliente").ToString()
+    '        Dim timeStr As String = row("tiempo").ToString()
+
+    '        Dim timeSpent As TimeSpan
+    '        If TimeSpan.TryParse(timeStr, timeSpent) Then
+    '            If Not userClientTimeTotals.ContainsKey(user) Then
+    '                userClientTimeTotals(user) = New Dictionary(Of String, TimeSpan)()
+    '            End If
+
+    '            If userClientTimeTotals(user).ContainsKey(client) Then
+    '                userClientTimeTotals(user)(client) = userClientTimeTotals(user)(client).Add(timeSpent)
+    '            Else
+    '                userClientTimeTotals(user)(client) = timeSpent
+    '            End If
+    '        End If
+    '    Next
+
+    '    For Each userKvp In userClientTimeTotals
+    '        Dim totalUser As New TimeSpan()
+    '        For Each clientKvp In userKvp.Value
+    '            DtUsuCliHoras.Rows.Add(userKvp.Key, clientKvp.Key, clientKvp.Value.ToString())
+    '            totalUser = totalUser.Add(clientKvp.Value)
+    '        Next
+    '        ' Fila en blanco
+    '        DtUsuCliHoras.Rows.Add()
+    '        DtUsuCliHoras.Rows.Add(userKvp.Key, "TOTAL", totalUser.ToString())
+    '    Next
+
+    '    Return DtUsuCliHoras
+    'End Function
+
+    'Private Shared Function UsuarioTareaHoras(ByVal DTable As DataTable) As DataTable
+    '    Dim DtUsuTareaHoras As New DataTable()
+    '    DtUsuTareaHoras.Columns.Add("USUARIO", GetType(String))
+    '    DtUsuTareaHoras.Columns.Add("TAREA", GetType(String))
+    '    DtUsuTareaHoras.Columns.Add("HORAS", GetType(String))
+
+    '    Dim userTaskTimeTotals As New Dictionary(Of String, Dictionary(Of String, TimeSpan))()
+
+    '    For Each row As DataRow In DTable.Rows
+    '        Dim user As String = row("usuario").ToString()
+    '        Dim task As String = row("tarea").ToString()
+    '        Dim timeStr As String = row("tiempo").ToString()
+
+    '        Dim timeSpent As TimeSpan
+    '        If TimeSpan.TryParse(timeStr, timeSpent) Then
+    '            If Not userTaskTimeTotals.ContainsKey(user) Then
+    '                userTaskTimeTotals(user) = New Dictionary(Of String, TimeSpan)()
+    '            End If
+
+    '            If userTaskTimeTotals(user).ContainsKey(task) Then
+    '                userTaskTimeTotals(user)(task) = userTaskTimeTotals(user)(task).Add(timeSpent)
+    '            Else
+    '                userTaskTimeTotals(user)(task) = timeSpent
+    '            End If
+    '        End If
+    '    Next
+
+    '    For Each userKvp In userTaskTimeTotals
+    '        Dim totalUser As New TimeSpan()
+    '        For Each taskKvp In userKvp.Value
+    '            DtUsuTareaHoras.Rows.Add(userKvp.Key, taskKvp.Key, taskKvp.Value.ToString())
+    '            totalUser = totalUser.Add(taskKvp.Value)
+    '        Next
+    '        ' Fila en blanco
+    '        DtUsuTareaHoras.Rows.Add()
+    '        DtUsuTareaHoras.Rows.Add(userKvp.Key, "TOTAL", totalUser.ToString())
+    '    Next
+
+    '    Return DtUsuTareaHoras
+    'End Function
+
+    'Private Shared Function ClienteProyectoHoras(ByVal DTable As DataTable) As DataTable
+    '    Dim DtCliProyHoras As New DataTable()
+    '    DtCliProyHoras.Columns.Add("CLIENTE", GetType(String))
+    '    DtCliProyHoras.Columns.Add("PROYECTO", GetType(String))
+    '    DtCliProyHoras.Columns.Add("HORAS", GetType(String))
+
+    '    Dim clientProjectTimeTotals As New Dictionary(Of String, Dictionary(Of String, TimeSpan))()
+
+    '    For Each row As DataRow In DTable.Rows
+    '        Dim client As String = row("cliente").ToString()
+    '        Dim project As String = row("proyecto").ToString()
+    '        Dim timeStr As String = row("tiempo").ToString()
+
+    '        Dim timeSpent As TimeSpan
+    '        If TimeSpan.TryParse(timeStr, timeSpent) Then
+    '            If Not clientProjectTimeTotals.ContainsKey(client) Then
+    '                clientProjectTimeTotals(client) = New Dictionary(Of String, TimeSpan)()
+    '            End If
+
+    '            If clientProjectTimeTotals(client).ContainsKey(project) Then
+    '                clientProjectTimeTotals(client)(project) = clientProjectTimeTotals(client)(project).Add(timeSpent)
+    '            Else
+    '                clientProjectTimeTotals(client)(project) = timeSpent
+    '            End If
+    '        End If
+    '    Next
+
+    '    For Each clientKvp In clientProjectTimeTotals
+    '        Dim totalClient As New TimeSpan()
+    '        For Each projectKvp In clientKvp.Value
+    '            DtCliProyHoras.Rows.Add(clientKvp.Key, projectKvp.Key, projectKvp.Value.ToString())
+    '            totalClient = totalClient.Add(projectKvp.Value)
+    '        Next
+    '        ' Fila en blanco
+    '        DtCliProyHoras.Rows.Add()
+    '        DtCliProyHoras.Rows.Add(clientKvp.Key, "TOTAL", totalClient.ToString())
+    '    Next
+
+    '    Return DtCliProyHoras
+    'End Function
+
 
 
     Private Shared Function UsuariosHoras(ByVal DTable As DataTable) As DataTable
-
         Dim DtUsuHoras As New DataTable()
         DtUsuHoras.Columns.Add("USUARIOS", GetType(String))
         DtUsuHoras.Columns.Add("HORAS", GetType(String))
@@ -180,7 +404,6 @@ Public Class FrmReporte
         For Each row As DataRow In DTable.Rows
             Dim user As String = row("usuario").ToString()
             Dim timeStr As String = row("tiempo").ToString()
-
 
             Dim timeSpent As TimeSpan
             If TimeSpan.TryParse(timeStr, timeSpent) Then
@@ -199,8 +422,8 @@ Public Class FrmReporte
         Next
 
         DtUsuHoras.Rows.Add("TOTAL", totalGlobal.ToString())
+        DtUsuHoras.Rows.Add() ' Fila en blanco
         Return DtUsuHoras
-
     End Function
 
     Private Shared Function ClientesHoras(ByVal DTable As DataTable) As DataTable
@@ -231,38 +454,8 @@ Public Class FrmReporte
         Next
 
         DtCliHoras.Rows.Add("TOTAL", totalGlobal.ToString())
+        DtCliHoras.Rows.Add() ' Fila en blanco
         Return DtCliHoras
-    End Function
-
-    Private Shared Function TareasHoras(ByVal DTable As DataTable) As DataTable
-        Dim DtTareasHoras As New DataTable()
-        DtTareasHoras.Columns.Add("TAREA", GetType(String))
-        DtTareasHoras.Columns.Add("HORAS", GetType(String))
-
-        Dim taskTimeTotals As New Dictionary(Of String, TimeSpan)()
-
-        For Each row As DataRow In DTable.Rows
-            Dim task As String = row("tarea").ToString()
-            Dim timeStr As String = row("tiempo").ToString()
-
-            Dim timeSpent As TimeSpan
-            If TimeSpan.TryParse(timeStr, timeSpent) Then
-                If taskTimeTotals.ContainsKey(task) Then
-                    taskTimeTotals(task) = taskTimeTotals(task).Add(timeSpent)
-                Else
-                    taskTimeTotals(task) = timeSpent
-                End If
-            End If
-        Next
-
-        Dim totalGlobal As New TimeSpan()
-        For Each kvp In taskTimeTotals
-            DtTareasHoras.Rows.Add(kvp.Key, kvp.Value.ToString())
-            totalGlobal = totalGlobal.Add(kvp.Value)
-        Next
-
-        DtTareasHoras.Rows.Add("TOTAL", totalGlobal.ToString())
-        Return DtTareasHoras
     End Function
 
     Private Shared Function UsuarioClienteHoras(ByVal DTable As DataTable) As DataTable
@@ -299,6 +492,7 @@ Public Class FrmReporte
                 totalUser = totalUser.Add(clientKvp.Value)
             Next
             DtUsuCliHoras.Rows.Add(userKvp.Key, "TOTAL", totalUser.ToString())
+            DtUsuCliHoras.Rows.Add() ' Fila en blanco
         Next
 
         Return DtUsuCliHoras
@@ -338,6 +532,7 @@ Public Class FrmReporte
                 totalUser = totalUser.Add(taskKvp.Value)
             Next
             DtUsuTareaHoras.Rows.Add(userKvp.Key, "TOTAL", totalUser.ToString())
+            DtUsuTareaHoras.Rows.Add() ' Fila en blanco
         Next
 
         Return DtUsuTareaHoras
@@ -377,9 +572,42 @@ Public Class FrmReporte
                 totalClient = totalClient.Add(projectKvp.Value)
             Next
             DtCliProyHoras.Rows.Add(clientKvp.Key, "TOTAL", totalClient.ToString())
+            DtCliProyHoras.Rows.Add() ' Fila en blanco
         Next
 
         Return DtCliProyHoras
+    End Function
+
+    Private Shared Function TareasHoras(ByVal DTable As DataTable) As DataTable
+        Dim DtTareasHoras As New DataTable()
+        DtTareasHoras.Columns.Add("TAREA", GetType(String))
+        DtTareasHoras.Columns.Add("HORAS", GetType(String))
+
+        Dim taskTimeTotals As New Dictionary(Of String, TimeSpan)()
+
+        For Each row As DataRow In DTable.Rows
+            Dim task As String = row("tarea").ToString()
+            Dim timeStr As String = row("tiempo").ToString()
+
+            Dim timeSpent As TimeSpan
+            If TimeSpan.TryParse(timeStr, timeSpent) Then
+                If taskTimeTotals.ContainsKey(task) Then
+                    taskTimeTotals(task) = taskTimeTotals(task).Add(timeSpent)
+                Else
+                    taskTimeTotals(task) = timeSpent
+                End If
+            End If
+        Next
+
+        Dim totalGlobal As New TimeSpan()
+        For Each kvp In taskTimeTotals
+            DtTareasHoras.Rows.Add(kvp.Key, kvp.Value.ToString())
+            totalGlobal = totalGlobal.Add(kvp.Value)
+        Next
+
+        DtTareasHoras.Rows.Add("TOTAL", totalGlobal.ToString())
+        DtTareasHoras.Rows.Add() ' Fila en blanco
+        Return DtTareasHoras
     End Function
 
     Private Shared Function ClienteUsuarioHoras(ByVal DTable As DataTable) As DataTable
@@ -416,6 +644,7 @@ Public Class FrmReporte
                 totalClient = totalClient.Add(userKvp.Value)
             Next
             DtCliUsuHoras.Rows.Add(clientKvp.Key, "TOTAL", totalClient.ToString())
+            DtCliUsuHoras.Rows.Add() ' Fila en blanco
         Next
 
         Return DtCliUsuHoras
@@ -451,6 +680,8 @@ Public Class FrmReporte
 
         Return DtEstados
     End Function
+
+
 
 
 

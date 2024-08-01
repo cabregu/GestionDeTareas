@@ -8,6 +8,7 @@
 
     Private Sub FrmModificarTarea_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ObtenerLasTareasModificables(CadenaDeConexion)
+        Me.FormBorderStyle = FormBorderStyle.FixedDialog
     End Sub
 
     Public Sub ObtenerLasTareasModificables(ByVal CadenaDeConexionActual As String)

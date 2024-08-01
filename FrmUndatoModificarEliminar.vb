@@ -9,7 +9,7 @@
         CargarUsuarios()
         CargarTareasPorCodigo()
         CargarTareas(CmbProyecto.Text)
-
+        Me.FormBorderStyle = FormBorderStyle.FixedDialog
     End Sub
 
 

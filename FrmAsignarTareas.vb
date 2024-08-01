@@ -6,6 +6,7 @@ Public Class FrmAsignarTareas
     Public CadenaDeConexion As String = ""
     Private Sub FrmAsignarTareas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CargarUsuarios()
+        Me.FormBorderStyle = FormBorderStyle.FixedDialog
     End Sub
 
     Private Sub FrmAsignarTareas_Closed(sender As Object, e As EventArgs) Handles Me.Closed

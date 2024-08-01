@@ -131,4 +131,7 @@
 
     End Sub
 
+    Private Sub FrmCrearProyecto_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.FormBorderStyle = FormBorderStyle.FixedDialog
+    End Sub
 End Class

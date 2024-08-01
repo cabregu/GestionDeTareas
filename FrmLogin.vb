@@ -80,5 +80,7 @@ Public Class FrmLogin
         End If
     End Sub
 
-
+    Private Sub FrmLogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.FormBorderStyle = FormBorderStyle.FixedDialog
+    End Sub
 End Class
