@@ -106,7 +106,7 @@ Partial Class FrmReporte
         ' 
         CHKEstatusdetareas.AutoSize = True
         CHKEstatusdetareas.Enabled = False
-        CHKEstatusdetareas.Location = New Point(50, 539)
+        CHKEstatusdetareas.Location = New Point(50, 559)
         CHKEstatusdetareas.Name = "CHKEstatusdetareas"
         CHKEstatusdetareas.Size = New Size(113, 19)
         CHKEstatusdetareas.TabIndex = 9
@@ -117,7 +117,7 @@ Partial Class FrmReporte
         ' 
         ChkUsuarioshoras.AutoSize = True
         ChkUsuarioshoras.Enabled = False
-        ChkUsuarioshoras.Location = New Point(50, 583)
+        ChkUsuarioshoras.Location = New Point(50, 603)
         ChkUsuarioshoras.Name = "ChkUsuarioshoras"
         ChkUsuarioshoras.Size = New Size(103, 19)
         ChkUsuarioshoras.TabIndex = 10
@@ -128,7 +128,7 @@ Partial Class FrmReporte
         ' 
         ChkClienteshoras.AutoSize = True
         ChkClienteshoras.Enabled = False
-        ChkClienteshoras.Location = New Point(169, 539)
+        ChkClienteshoras.Location = New Point(169, 559)
         ChkClienteshoras.Name = "ChkClienteshoras"
         ChkClienteshoras.Size = New Size(100, 19)
         ChkClienteshoras.TabIndex = 11
@@ -139,7 +139,7 @@ Partial Class FrmReporte
         ' 
         ChkTareashoras.AutoSize = True
         ChkTareashoras.Enabled = False
-        ChkTareashoras.Location = New Point(169, 583)
+        ChkTareashoras.Location = New Point(169, 603)
         ChkTareashoras.Name = "ChkTareashoras"
         ChkTareashoras.Size = New Size(90, 19)
         ChkTareashoras.TabIndex = 12
@@ -150,7 +150,7 @@ Partial Class FrmReporte
         ' 
         ChkUsuariosClientes.AutoSize = True
         ChkUsuariosClientes.Enabled = False
-        ChkUsuariosClientes.Location = New Point(278, 539)
+        ChkUsuariosClientes.Location = New Point(278, 559)
         ChkUsuariosClientes.Name = "ChkUsuariosClientes"
         ChkUsuariosClientes.Size = New Size(118, 19)
         ChkUsuariosClientes.TabIndex = 13
@@ -161,7 +161,7 @@ Partial Class FrmReporte
         ' 
         ChkUsuariosTareas.AutoSize = True
         ChkUsuariosTareas.Enabled = False
-        ChkUsuariosTareas.Location = New Point(278, 586)
+        ChkUsuariosTareas.Location = New Point(278, 606)
         ChkUsuariosTareas.Name = "ChkUsuariosTareas"
         ChkUsuariosTareas.Size = New Size(108, 19)
         ChkUsuariosTareas.TabIndex = 14
@@ -172,7 +172,7 @@ Partial Class FrmReporte
         ' 
         ChkClientesUsuarios.AutoSize = True
         ChkClientesUsuarios.Enabled = False
-        ChkClientesUsuarios.Location = New Point(402, 586)
+        ChkClientesUsuarios.Location = New Point(402, 606)
         ChkClientesUsuarios.Name = "ChkClientesUsuarios"
         ChkClientesUsuarios.Size = New Size(118, 19)
         ChkClientesUsuarios.TabIndex = 15
@@ -183,7 +183,7 @@ Partial Class FrmReporte
         ' 
         ChkClientesProyectos.AutoSize = True
         ChkClientesProyectos.Enabled = False
-        ChkClientesProyectos.Location = New Point(402, 539)
+        ChkClientesProyectos.Location = New Point(402, 559)
         ChkClientesProyectos.Name = "ChkClientesProyectos"
         ChkClientesProyectos.Size = New Size(125, 19)
         ChkClientesProyectos.TabIndex = 16
@@ -194,7 +194,7 @@ Partial Class FrmReporte
         ' 
         ChkCuadroNinja.AutoSize = True
         ChkCuadroNinja.Enabled = False
-        ChkCuadroNinja.Location = New Point(533, 586)
+        ChkCuadroNinja.Location = New Point(533, 606)
         ChkCuadroNinja.Name = "ChkCuadroNinja"
         ChkCuadroNinja.Size = New Size(96, 19)
         ChkCuadroNinja.TabIndex = 18

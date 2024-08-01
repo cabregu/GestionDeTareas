@@ -23,6 +23,8 @@ Public Class FrmReporte
         ChkUsuariosClientes.Enabled = True
         ChkUsuarioshoras.Enabled = True
         ChkUsuariosTareas.Enabled = True
+        CHKEstatusdetareas.CheckState = CheckState.Checked
+
 
     End Sub
 
@@ -46,12 +48,55 @@ Public Class FrmReporte
             dataTables.Add("Usuario horas", DtUsuH)
         End If
 
+        If ChkClienteshoras.Checked = True Then
+            Dim DtCliH As New DataTable
+            DtCliH = ClientesHoras(Dt)
+            dataTables.Add("Clientes horas", DtCliH)
+
+        End If
+
+        If ChkTareashoras.Checked = True Then
+            Dim DtTareaH As New DataTable
+            DtTareaH = TareasHoras(Dt)
+            dataTables.Add("Tareas horas", DtTareaH)
+        End If
+
+        If ChkUsuariosClientes.Checked = True Then
+            Dim DtUsuCliH As New DataTable
+            DtUsuCliH = UsuarioClienteHoras(Dt)
+            dataTables.Add("Usuarios-Clientes", DtUsuCliH)
+        End If
+
+        If ChkUsuariosTareas.Checked = True Then
+            Dim DtUsuTareasHora As New DataTable
+            DtUsuTareasHora = UsuarioTareaHoras(Dt)
+            dataTables.Add("Usuarios-Tareas", DtUsuTareasHora)
+        End If
+
+        If ChkClientesProyectos.Checked = True Then
+            Dim DtCliPro As New DataTable
+            DtCliPro = ClienteProyectoHoras(Dt)
+            dataTables.Add("Clientes-Proyectos", DtCliPro)
+        End If
+
+        If ChkClientesUsuarios.Checked = True Then
+            Dim DtCliUsuH As New DataTable
+            DtCliUsuH = ClienteUsuarioHoras(Dt)
+            dataTables.Add("Clientes-Usuarios", DtCliUsuH)
+
+        End If
 
 
+        If ChkCuadroNinja.Checked = True Then
+
+            Dim DtCuenta As New DataTable
+            DtCuenta = ContarEstados(Dt)
+
+            dataTables.Add("Cuadro Ninja", DtCuenta)
+
+        End If
 
         CrearReporte(dataTables)
-
-
 
 
     End Sub
@@ -121,6 +166,9 @@ Public Class FrmReporte
         End If
     End Sub
 
+
+
+
     Private Shared Function UsuariosHoras(ByVal DTable As DataTable) As DataTable
 
         Dim DtUsuHoras As New DataTable()
@@ -144,7 +192,6 @@ Public Class FrmReporte
             End If
         Next
 
-
         Dim totalGlobal As New TimeSpan()
         For Each kvp In userTimeTotals
             DtUsuHoras.Rows.Add(kvp.Key, kvp.Value.ToString())
@@ -156,8 +203,359 @@ Public Class FrmReporte
 
     End Function
 
+    Private Shared Function ClientesHoras(ByVal DTable As DataTable) As DataTable
+        Dim DtCliHoras As New DataTable()
+        DtCliHoras.Columns.Add("CLIENTE", GetType(String))
+        DtCliHoras.Columns.Add("HORAS", GetType(String))
+
+        Dim clientTimeTotals As New Dictionary(Of String, TimeSpan)()
+
+        For Each row As DataRow In DTable.Rows
+            Dim client As String = row("cliente").ToString()
+            Dim timeStr As String = row("tiempo").ToString()
+
+            Dim timeSpent As TimeSpan
+            If TimeSpan.TryParse(timeStr, timeSpent) Then
+                If clientTimeTotals.ContainsKey(client) Then
+                    clientTimeTotals(client) = clientTimeTotals(client).Add(timeSpent)
+                Else
+                    clientTimeTotals(client) = timeSpent
+                End If
+            End If
+        Next
+
+        Dim totalGlobal As New TimeSpan()
+        For Each kvp In clientTimeTotals
+            DtCliHoras.Rows.Add(kvp.Key, kvp.Value.ToString())
+            totalGlobal = totalGlobal.Add(kvp.Value)
+        Next
+
+        DtCliHoras.Rows.Add("TOTAL", totalGlobal.ToString())
+        Return DtCliHoras
+    End Function
+
+    Private Shared Function TareasHoras(ByVal DTable As DataTable) As DataTable
+        Dim DtTareasHoras As New DataTable()
+        DtTareasHoras.Columns.Add("TAREA", GetType(String))
+        DtTareasHoras.Columns.Add("HORAS", GetType(String))
+
+        Dim taskTimeTotals As New Dictionary(Of String, TimeSpan)()
+
+        For Each row As DataRow In DTable.Rows
+            Dim task As String = row("tarea").ToString()
+            Dim timeStr As String = row("tiempo").ToString()
+
+            Dim timeSpent As TimeSpan
+            If TimeSpan.TryParse(timeStr, timeSpent) Then
+                If taskTimeTotals.ContainsKey(task) Then
+                    taskTimeTotals(task) = taskTimeTotals(task).Add(timeSpent)
+                Else
+                    taskTimeTotals(task) = timeSpent
+                End If
+            End If
+        Next
+
+        Dim totalGlobal As New TimeSpan()
+        For Each kvp In taskTimeTotals
+            DtTareasHoras.Rows.Add(kvp.Key, kvp.Value.ToString())
+            totalGlobal = totalGlobal.Add(kvp.Value)
+        Next
+
+        DtTareasHoras.Rows.Add("TOTAL", totalGlobal.ToString())
+        Return DtTareasHoras
+    End Function
+
+    Private Shared Function UsuarioClienteHoras(ByVal DTable As DataTable) As DataTable
+        Dim DtUsuCliHoras As New DataTable()
+        DtUsuCliHoras.Columns.Add("USUARIO", GetType(String))
+        DtUsuCliHoras.Columns.Add("CLIENTE", GetType(String))
+        DtUsuCliHoras.Columns.Add("HORAS", GetType(String))
+
+        Dim userClientTimeTotals As New Dictionary(Of String, Dictionary(Of String, TimeSpan))()
+
+        For Each row As DataRow In DTable.Rows
+            Dim user As String = row("usuario").ToString()
+            Dim client As String = row("cliente").ToString()
+            Dim timeStr As String = row("tiempo").ToString()
+
+            Dim timeSpent As TimeSpan
+            If TimeSpan.TryParse(timeStr, timeSpent) Then
+                If Not userClientTimeTotals.ContainsKey(user) Then
+                    userClientTimeTotals(user) = New Dictionary(Of String, TimeSpan)()
+                End If
+
+                If userClientTimeTotals(user).ContainsKey(client) Then
+                    userClientTimeTotals(user)(client) = userClientTimeTotals(user)(client).Add(timeSpent)
+                Else
+                    userClientTimeTotals(user)(client) = timeSpent
+                End If
+            End If
+        Next
+
+        For Each userKvp In userClientTimeTotals
+            Dim totalUser As New TimeSpan()
+            For Each clientKvp In userKvp.Value
+                DtUsuCliHoras.Rows.Add(userKvp.Key, clientKvp.Key, clientKvp.Value.ToString())
+                totalUser = totalUser.Add(clientKvp.Value)
+            Next
+            DtUsuCliHoras.Rows.Add(userKvp.Key, "TOTAL", totalUser.ToString())
+        Next
+
+        Return DtUsuCliHoras
+    End Function
+
+    Private Shared Function UsuarioTareaHoras(ByVal DTable As DataTable) As DataTable
+        Dim DtUsuTareaHoras As New DataTable()
+        DtUsuTareaHoras.Columns.Add("USUARIO", GetType(String))
+        DtUsuTareaHoras.Columns.Add("TAREA", GetType(String))
+        DtUsuTareaHoras.Columns.Add("HORAS", GetType(String))
+
+        Dim userTaskTimeTotals As New Dictionary(Of String, Dictionary(Of String, TimeSpan))()
+
+        For Each row As DataRow In DTable.Rows
+            Dim user As String = row("usuario").ToString()
+            Dim task As String = row("tarea").ToString()
+            Dim timeStr As String = row("tiempo").ToString()
+
+            Dim timeSpent As TimeSpan
+            If TimeSpan.TryParse(timeStr, timeSpent) Then
+                If Not userTaskTimeTotals.ContainsKey(user) Then
+                    userTaskTimeTotals(user) = New Dictionary(Of String, TimeSpan)()
+                End If
+
+                If userTaskTimeTotals(user).ContainsKey(task) Then
+                    userTaskTimeTotals(user)(task) = userTaskTimeTotals(user)(task).Add(timeSpent)
+                Else
+                    userTaskTimeTotals(user)(task) = timeSpent
+                End If
+            End If
+        Next
+
+        For Each userKvp In userTaskTimeTotals
+            Dim totalUser As New TimeSpan()
+            For Each taskKvp In userKvp.Value
+                DtUsuTareaHoras.Rows.Add(userKvp.Key, taskKvp.Key, taskKvp.Value.ToString())
+                totalUser = totalUser.Add(taskKvp.Value)
+            Next
+            DtUsuTareaHoras.Rows.Add(userKvp.Key, "TOTAL", totalUser.ToString())
+        Next
+
+        Return DtUsuTareaHoras
+    End Function
+
+    Private Shared Function ClienteProyectoHoras(ByVal DTable As DataTable) As DataTable
+        Dim DtCliProyHoras As New DataTable()
+        DtCliProyHoras.Columns.Add("CLIENTE", GetType(String))
+        DtCliProyHoras.Columns.Add("PROYECTO", GetType(String))
+        DtCliProyHoras.Columns.Add("HORAS", GetType(String))
+
+        Dim clientProjectTimeTotals As New Dictionary(Of String, Dictionary(Of String, TimeSpan))()
+
+        For Each row As DataRow In DTable.Rows
+            Dim client As String = row("cliente").ToString()
+            Dim project As String = row("proyecto").ToString()
+            Dim timeStr As String = row("tiempo").ToString()
+
+            Dim timeSpent As TimeSpan
+            If TimeSpan.TryParse(timeStr, timeSpent) Then
+                If Not clientProjectTimeTotals.ContainsKey(client) Then
+                    clientProjectTimeTotals(client) = New Dictionary(Of String, TimeSpan)()
+                End If
+
+                If clientProjectTimeTotals(client).ContainsKey(project) Then
+                    clientProjectTimeTotals(client)(project) = clientProjectTimeTotals(client)(project).Add(timeSpent)
+                Else
+                    clientProjectTimeTotals(client)(project) = timeSpent
+                End If
+            End If
+        Next
+
+        For Each clientKvp In clientProjectTimeTotals
+            Dim totalClient As New TimeSpan()
+            For Each projectKvp In clientKvp.Value
+                DtCliProyHoras.Rows.Add(clientKvp.Key, projectKvp.Key, projectKvp.Value.ToString())
+                totalClient = totalClient.Add(projectKvp.Value)
+            Next
+            DtCliProyHoras.Rows.Add(clientKvp.Key, "TOTAL", totalClient.ToString())
+        Next
+
+        Return DtCliProyHoras
+    End Function
+
+    Private Shared Function ClienteUsuarioHoras(ByVal DTable As DataTable) As DataTable
+        Dim DtCliUsuHoras As New DataTable()
+        DtCliUsuHoras.Columns.Add("CLIENTE", GetType(String))
+        DtCliUsuHoras.Columns.Add("USUARIO", GetType(String))
+        DtCliUsuHoras.Columns.Add("HORAS", GetType(String))
+
+        Dim clientUserTimeTotals As New Dictionary(Of String, Dictionary(Of String, TimeSpan))()
+
+        For Each row As DataRow In DTable.Rows
+            Dim client As String = row("cliente").ToString()
+            Dim user As String = row("usuario").ToString()
+            Dim timeStr As String = row("tiempo").ToString()
+
+            Dim timeSpent As TimeSpan
+            If TimeSpan.TryParse(timeStr, timeSpent) Then
+                If Not clientUserTimeTotals.ContainsKey(client) Then
+                    clientUserTimeTotals(client) = New Dictionary(Of String, TimeSpan)()
+                End If
+
+                If clientUserTimeTotals(client).ContainsKey(user) Then
+                    clientUserTimeTotals(client)(user) = clientUserTimeTotals(client)(user).Add(timeSpent)
+                Else
+                    clientUserTimeTotals(client)(user) = timeSpent
+                End If
+            End If
+        Next
+
+        For Each clientKvp In clientUserTimeTotals
+            Dim totalClient As New TimeSpan()
+            For Each userKvp In clientKvp.Value
+                DtCliUsuHoras.Rows.Add(clientKvp.Key, userKvp.Key, userKvp.Value.ToString())
+                totalClient = totalClient.Add(userKvp.Value)
+            Next
+            DtCliUsuHoras.Rows.Add(clientKvp.Key, "TOTAL", totalClient.ToString())
+        Next
+
+        Return DtCliUsuHoras
+    End Function
 
 
+
+
+
+    Private Shared Function ContarEstados(ByVal DTable As DataTable) As DataTable
+        Dim DtEstados As New DataTable()
+        DtEstados.Columns.Add("Estado", GetType(String))
+        DtEstados.Columns.Add("Cantidad", GetType(Integer))
+
+        Dim estadoContador As New Dictionary(Of String, Integer) From {
+        {"Finalizada", 0},
+        {"Asignada", 0},
+        {"Pausada", 0},
+        {"Ejecutando", 0}
+    }
+
+        For Each row As DataRow In DTable.Rows
+            Dim estado As String = row("estado").ToString()
+
+            If estadoContador.ContainsKey(estado) Then
+                estadoContador(estado) += 1
+            End If
+        Next
+
+        For Each kvp In estadoContador
+            DtEstados.Rows.Add(kvp.Key, kvp.Value)
+        Next
+
+        Return DtEstados
+    End Function
+
+
+
+
+    Private Sub CHKEstatusdetareas_CheckedChanged(sender As Object, e As EventArgs) Handles CHKEstatusdetareas.CheckedChanged
+        If CHKEstatusdetareas.Checked Then
+            DgvDatos.DataSource = Nothing
+            DgvDatos.DataSource = Dt
+        ElseIf Not AnyOtherCheckboxChecked() Then
+            DgvDatos.DataSource = Nothing
+        End If
+    End Sub
+
+    Private Sub ChkUsuarioshoras_CheckedChanged(sender As Object, e As EventArgs) Handles ChkUsuarioshoras.CheckedChanged
+        If ChkUsuarioshoras.Checked Then
+            Dim DtUsuH As DataTable = UsuariosHoras(Dt)
+            DgvDatos.DataSource = Nothing
+            DgvDatos.DataSource = DtUsuH
+        ElseIf Not AnyOtherCheckboxChecked() Then
+            DgvDatos.DataSource = Nothing
+        End If
+    End Sub
+
+    Private Sub ChkClienteshoras_CheckedChanged(sender As Object, e As EventArgs) Handles ChkClienteshoras.CheckedChanged
+        If ChkClienteshoras.Checked Then
+            Dim DtCliH As DataTable = ClientesHoras(Dt)
+            DgvDatos.DataSource = Nothing
+            DgvDatos.DataSource = DtCliH
+        ElseIf Not AnyOtherCheckboxChecked() Then
+            DgvDatos.DataSource = Nothing
+        End If
+    End Sub
+
+    Private Sub ChkTareashoras_CheckedChanged(sender As Object, e As EventArgs) Handles ChkTareashoras.CheckedChanged
+        If ChkTareashoras.Checked Then
+            Dim DtTareaH As DataTable = TareasHoras(Dt)
+            DgvDatos.DataSource = Nothing
+            DgvDatos.DataSource = DtTareaH
+        ElseIf Not AnyOtherCheckboxChecked() Then
+            DgvDatos.DataSource = Nothing
+        End If
+    End Sub
+
+    Private Sub ChkUsuariosClientes_CheckedChanged(sender As Object, e As EventArgs) Handles ChkUsuariosClientes.CheckedChanged
+        If ChkUsuariosClientes.Checked Then
+            Dim DtUsuCliH As DataTable = UsuarioClienteHoras(Dt)
+            DgvDatos.DataSource = Nothing
+            DgvDatos.DataSource = DtUsuCliH
+        ElseIf Not AnyOtherCheckboxChecked() Then
+            DgvDatos.DataSource = Nothing
+        End If
+    End Sub
+
+    Private Sub ChkUsuariosTareas_CheckedChanged(sender As Object, e As EventArgs) Handles ChkUsuariosTareas.CheckedChanged
+        If ChkUsuariosTareas.Checked Then
+            Dim DtUsuTareasHora As DataTable = UsuarioTareaHoras(Dt)
+            DgvDatos.DataSource = Nothing
+            DgvDatos.DataSource = DtUsuTareasHora
+        ElseIf Not AnyOtherCheckboxChecked() Then
+            DgvDatos.DataSource = Nothing
+        End If
+    End Sub
+
+    Private Sub ChkClientesProyectos_CheckedChanged(sender As Object, e As EventArgs) Handles ChkClientesProyectos.CheckedChanged
+        If ChkClientesProyectos.Checked Then
+            Dim DtCliPro As DataTable = ClienteProyectoHoras(Dt)
+            DgvDatos.DataSource = Nothing
+            DgvDatos.DataSource = DtCliPro
+        ElseIf Not AnyOtherCheckboxChecked() Then
+            DgvDatos.DataSource = Nothing
+        End If
+    End Sub
+
+    Private Sub ChkClientesUsuarios_CheckedChanged(sender As Object, e As EventArgs) Handles ChkClientesUsuarios.CheckedChanged
+        If ChkClientesUsuarios.Checked Then
+            Dim DtCliUsuH As DataTable = ClienteUsuarioHoras(Dt)
+            DgvDatos.DataSource = Nothing
+            DgvDatos.DataSource = DtCliUsuH
+        ElseIf Not AnyOtherCheckboxChecked() Then
+            DgvDatos.DataSource = Nothing
+        End If
+    End Sub
+
+    Private Sub ChkCuadroNinja_CheckedChanged(sender As Object, e As EventArgs) Handles ChkCuadroNinja.CheckedChanged
+        If ChkCuadroNinja.Checked Then
+            Dim DtCuenta As DataTable = ContarEstados(Dt)
+            DgvDatos.DataSource = Nothing
+            DgvDatos.DataSource = DtCuenta
+        ElseIf Not AnyOtherCheckboxChecked() Then
+            DgvDatos.DataSource = Nothing
+        End If
+    End Sub
+
+    Private Function AnyOtherCheckboxChecked() As Boolean
+        ' Verifica si algún otro CheckBox está marcado
+        Return CHKEstatusdetareas.Checked OrElse
+               ChkUsuarioshoras.Checked OrElse
+               ChkClienteshoras.Checked OrElse
+               ChkTareashoras.Checked OrElse
+               ChkUsuariosClientes.Checked OrElse
+               ChkUsuariosTareas.Checked OrElse
+               ChkClientesProyectos.Checked OrElse
+               ChkClientesUsuarios.Checked OrElse
+               ChkCuadroNinja.Checked
+    End Function
 
 
 End Class
