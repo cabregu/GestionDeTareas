@@ -205,6 +205,11 @@ Public Class FrmPpal
     Private Sub FrmPpal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
+        LblHoraUltimaTareaAsignada.Text = Conexion.ObtenerUltimaTarea(Cadenadeconexion, LblUsuario.Text)
+
+        TmrChekTareas.Start()
+
+
         If LblCargo.Text = "Creador de Contenido" Then
             BtnCrearProyecto.Enabled = False
             BtnCrearCliente.Enabled = False
@@ -223,10 +228,20 @@ Public Class FrmPpal
             BtnCrearUsuario.Enabled = False
             BtnReporte.Enabled = False
 
+        End If
 
+    End Sub
 
+    Private Sub TmrChekTareas_Tick(sender As Object, e As EventArgs) Handles TmrChekTareas.Tick
+
+        Dim UltimaTarea As Integer = Conexion.ObtenerUltimaTarea(Cadenadeconexion, LblUsuario.Text)
+
+        If LblHoraUltimaTareaAsignada.Text < UltimaTarea Then
+            MsgBox("Tiene Nuevas tareas si tiene el formulario de tareas abierto cierrelo y vuelva a abrirlo para que se carguen")
+            LblHoraUltimaTareaAsignada.Text = UltimaTarea
 
         End If
+
 
     End Sub
 End Class

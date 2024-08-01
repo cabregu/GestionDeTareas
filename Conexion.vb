@@ -496,6 +496,31 @@ Public Class Conexion
         Return dt
     End Function
 
+    Public Shared Function ObtenerUltimaTarea(ByVal CadenaConexion As String, ByVal Usuario As String) As String
+        Dim ultimaTarea As String = String.Empty
+
+        ' La consulta SQL para obtener la última tarea del usuario
+        ' Suponiendo que el código de la tarea está en el campo 'codigo'
+        Dim sql As String = "SELECT codigo FROM Kanbas WHERE usuario = @usuario ORDER BY fechacreacion DESC LIMIT 1"
+
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                ' Añadir el parámetro para la consulta SQL
+                cmd.Parameters.AddWithValue("@usuario", Usuario)
+
+                cn.Open()
+                Using reader As MySqlDataReader = cmd.ExecuteReader()
+                    If reader.Read() Then
+                        ' Suponiendo que 'codigo' es un campo de tipo String
+                        ultimaTarea = reader("codigo").ToString()
+                    End If
+                End Using
+            End Using
+        End Using
+
+        Return ultimaTarea
+    End Function
+
 
 
 

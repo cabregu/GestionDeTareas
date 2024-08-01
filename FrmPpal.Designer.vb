@@ -22,6 +22,7 @@ Partial Class FrmPpal
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
         LblNombre = New Label()
         LblUsuario = New Label()
         LblTipoCargo = New Label()
@@ -39,6 +40,8 @@ Partial Class FrmPpal
         GpbReportes = New GroupBox()
         BtnReporte = New Button()
         BtnSalir = New Button()
+        LblHoraUltimaTareaAsignada = New Label()
+        TmrChekTareas = New Timer(components)
         GpbTareas.SuspendLayout()
         GpbDatos.SuspendLayout()
         GpbReportes.SuspendLayout()
@@ -65,7 +68,7 @@ Partial Class FrmPpal
         ' LblTipoCargo
         ' 
         LblTipoCargo.AutoSize = True
-        LblTipoCargo.Location = New Point(255, 9)
+        LblTipoCargo.Location = New Point(183, 9)
         LblTipoCargo.Name = "LblTipoCargo"
         LblTipoCargo.Size = New Size(42, 15)
         LblTipoCargo.TabIndex = 2
@@ -74,7 +77,7 @@ Partial Class FrmPpal
         ' LblCargo
         ' 
         LblCargo.AutoSize = True
-        LblCargo.Location = New Point(317, 9)
+        LblCargo.Location = New Point(245, 9)
         LblCargo.Name = "LblCargo"
         LblCargo.Size = New Size(30, 15)
         LblCargo.TabIndex = 3
@@ -210,12 +213,26 @@ Partial Class FrmPpal
         BtnSalir.Text = "Salir"
         BtnSalir.UseVisualStyleBackColor = True
         ' 
+        ' LblHoraUltimaTareaAsignada
+        ' 
+        LblHoraUltimaTareaAsignada.AutoSize = True
+        LblHoraUltimaTareaAsignada.Location = New Point(327, 9)
+        LblHoraUltimaTareaAsignada.Name = "LblHoraUltimaTareaAsignada"
+        LblHoraUltimaTareaAsignada.Size = New Size(118, 15)
+        LblHoraUltimaTareaAsignada.TabIndex = 7
+        LblHoraUltimaTareaAsignada.Text = "UltimaTareaAsignada"
+        ' 
+        ' TmrChekTareas
+        ' 
+        TmrChekTareas.Interval = 12000
+        ' 
         ' FrmPpal
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlLight
         ClientSize = New Size(457, 535)
+        Controls.Add(LblHoraUltimaTareaAsignada)
         Controls.Add(GpbReportes)
         Controls.Add(GpbDatos)
         Controls.Add(BtnSalir)
@@ -251,5 +268,7 @@ Partial Class FrmPpal
     Friend WithEvents GpbReportes As GroupBox
     Friend WithEvents BtnReporte As Button
     Friend WithEvents BtnSalir As Button
+    Friend WithEvents LblHoraUltimaTareaAsignada As Label
+    Friend WithEvents TmrChekTareas As Timer
 
 End Class
