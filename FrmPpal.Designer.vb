@@ -39,7 +39,6 @@ Partial Class FrmPpal
         GpbReportes = New GroupBox()
         BtnReporte = New Button()
         BtnSalir = New Button()
-        BtnConfiguracion = New Button()
         GpbTareas.SuspendLayout()
         GpbDatos.SuspendLayout()
         GpbReportes.SuspendLayout()
@@ -90,7 +89,7 @@ Partial Class FrmPpal
         GpbTareas.Controls.Add(BtnCrearTarea)
         GpbTareas.Location = New Point(7, 62)
         GpbTareas.Name = "GpbTareas"
-        GpbTareas.Size = New Size(472, 119)
+        GpbTareas.Size = New Size(438, 119)
         GpbTareas.TabIndex = 4
         GpbTareas.TabStop = False
         GpbTareas.Text = "Tareas Activas"
@@ -140,7 +139,7 @@ Partial Class FrmPpal
         GpbDatos.Controls.Add(BtnCrearUsuario)
         GpbDatos.Location = New Point(7, 223)
         GpbDatos.Name = "GpbDatos"
-        GpbDatos.Size = New Size(472, 119)
+        GpbDatos.Size = New Size(438, 119)
         GpbDatos.TabIndex = 5
         GpbDatos.TabStop = False
         GpbDatos.Text = "Datos"
@@ -187,7 +186,7 @@ Partial Class FrmPpal
         GpbReportes.Controls.Add(BtnReporte)
         GpbReportes.Location = New Point(7, 361)
         GpbReportes.Name = "GpbReportes"
-        GpbReportes.Size = New Size(472, 119)
+        GpbReportes.Size = New Size(430, 119)
         GpbReportes.TabIndex = 6
         GpbReportes.TabStop = False
         GpbReportes.Text = "Reportes"
@@ -204,31 +203,20 @@ Partial Class FrmPpal
         ' BtnSalir
         ' 
         BtnSalir.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        BtnSalir.Location = New Point(329, 507)
+        BtnSalir.Location = New Point(287, 493)
         BtnSalir.Name = "BtnSalir"
         BtnSalir.Size = New Size(150, 30)
         BtnSalir.TabIndex = 0
         BtnSalir.Text = "Salir"
         BtnSalir.UseVisualStyleBackColor = True
         ' 
-        ' BtnConfiguracion
-        ' 
-        BtnConfiguracion.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        BtnConfiguracion.Location = New Point(173, 507)
-        BtnConfiguracion.Name = "BtnConfiguracion"
-        BtnConfiguracion.Size = New Size(150, 30)
-        BtnConfiguracion.TabIndex = 1
-        BtnConfiguracion.Text = "Configuracion"
-        BtnConfiguracion.UseVisualStyleBackColor = True
-        ' 
         ' FrmPpal
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlLight
-        ClientSize = New Size(498, 549)
+        ClientSize = New Size(457, 535)
         Controls.Add(GpbReportes)
-        Controls.Add(BtnConfiguracion)
         Controls.Add(GpbDatos)
         Controls.Add(BtnSalir)
         Controls.Add(GpbTareas)
@@ -262,7 +250,6 @@ Partial Class FrmPpal
     Friend WithEvents BtnCrearUsuario As Button
     Friend WithEvents GpbReportes As GroupBox
     Friend WithEvents BtnReporte As Button
-    Friend WithEvents BtnConfiguracion As Button
     Friend WithEvents BtnSalir As Button
 
 End Class

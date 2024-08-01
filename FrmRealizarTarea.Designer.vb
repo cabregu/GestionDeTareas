@@ -22,6 +22,7 @@ Partial Class FrmRealizarTarea
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
         LblDescUsuario = New Label()
         CmbCodigo = New ComboBox()
         LblCodigo = New Label()
@@ -48,6 +49,7 @@ Partial Class FrmRealizarTarea
         BtnRetomar = New Button()
         BtnFinalizar = New Button()
         LblUsuario = New Label()
+        TmrChequear = New Timer(components)
         SuspendLayout()
         ' 
         ' LblDescUsuario
@@ -224,6 +226,7 @@ Partial Class FrmRealizarTarea
         ' 
         ' TxtEstado
         ' 
+        TxtEstado.Enabled = False
         TxtEstado.Location = New Point(173, 520)
         TxtEstado.Name = "TxtEstado"
         TxtEstado.Size = New Size(180, 23)
@@ -281,6 +284,10 @@ Partial Class FrmRealizarTarea
         LblUsuario.Size = New Size(47, 15)
         LblUsuario.TabIndex = 26
         LblUsuario.Text = "Usuario"
+        ' 
+        ' TmrChequear
+        ' 
+        TmrChequear.Interval = 18000
         ' 
         ' FrmRealizarTarea
         ' 
@@ -348,4 +355,5 @@ Partial Class FrmRealizarTarea
     Friend WithEvents BtnRetomar As Button
     Friend WithEvents BtnFinalizar As Button
     Friend WithEvents LblUsuario As Label
+    Friend WithEvents TmrChequear As Timer
 End Class

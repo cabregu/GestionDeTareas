@@ -56,11 +56,43 @@ Public Class FrmPpal
     End Sub
 
     Private Sub BtnCrearUsuario_Click(sender As Object, e As EventArgs) Handles BtnCrearUsuario.Click
+
         Dim formulario As New FrmUsuario()
         formulario.CadenaDeConexion = Cadenadeconexion
+
+
+        Select Case LblCargo.Text
+            Case "Administrador"
+
+                formulario.CmbCrearComo.Items.Clear()
+                formulario.CmbCrearComo.Items.Add("Administrador")
+                formulario.CmbCrearComo.Items.Add("Creador de Contenido")
+                formulario.CmbCrearComo.Items.Add("Usuario")
+
+            Case "Creador de Contenido"
+
+                formulario.CmbCrearComo.Items.Clear()
+                formulario.CmbCrearComo.Items.Add("Creador de Contenido")
+                formulario.CmbCrearComo.Items.Add("Usuario")
+
+            Case "Usuario"
+
+                formulario.CmbCrearComo.Items.Clear()
+
+                formulario.CmbCrearComo.Enabled = False
+
+                MessageBox.Show("No tienes permisos para crear usuarios.", "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+            Case Else
+
+                formulario.CmbCrearComo.Items.Clear()
+                formulario.CmbCrearComo.Enabled = False
+        End Select
+
         formulario.Show()
         Me.Hide()
     End Sub
+
 
     Private Sub BtnCrearCliente_Click(sender As Object, e As EventArgs) Handles BtnCrearCliente.Click
         Dim formulario As New FrmCrearCliente()
@@ -90,11 +122,11 @@ Public Class FrmPpal
         Me.Hide()
     End Sub
 
-    Private Sub BtnConfiguracion_Click(sender As Object, e As EventArgs) Handles BtnConfiguracion.Click
+    Private Sub BtnConfiguracion_Click(sender As Object, e As EventArgs)
 
         Dim formulario As New FrmConfiguracion
         formulario.Show()
-        Me.Hide()
+        Hide()
     End Sub
 
     Private Sub BtnSalir_Click(sender As Object, e As EventArgs) Handles BtnSalir.Click
@@ -145,7 +177,7 @@ Public Class FrmPpal
 
     Private Sub PausarTareas()
         Dim FechaHoraServer As DateTime = Conexion.ObtenerFechaHoraServidor(Cadenadeconexion)
-        Dim tareasPendientes As String() = Conexion.ObtenertareasejecutandoPorUsuario(Cadenadeconexion, LblUsuario.Text)
+        Dim tareasPendientes As String() = Conexion.ObtenertareasEjecutandoPorUsuario(Cadenadeconexion, LblUsuario.Text)
 
         If tareasPendientes.Length = 0 Then
             'MessageBox.Show("No hay tareas pendientes.")
@@ -173,6 +205,29 @@ Public Class FrmPpal
     Private Sub FrmPpal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
+        If LblCargo.Text = "Creador de Contenido" Then
+            BtnCrearProyecto.Enabled = False
+            BtnCrearCliente.Enabled = False
+            BtnModificarDatos.Enabled = False
+
+        ElseIf LblCargo.Text = "Usuario" Then
+
+            BtnCrearProyecto.Enabled = False
+            BtnCrearCliente.Enabled = False
+            BtnModificarDatos.Enabled = False
+            BtnCrearTarea.Enabled = False
+            BtnModificarDatos.Enabled = False
+            BtnAsignarTarea.Enabled = False
+            BtnModificarTarea.Enabled = False
+            BtnCrearCliente.Enabled = False
+            BtnCrearUsuario.Enabled = False
+            BtnReporte.Enabled = False
+
+
+
+
+        End If
+
     End Sub
 End Class
 
