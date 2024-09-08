@@ -8,12 +8,16 @@
     End Sub
 
     Private Sub FrmCrearTareasPendientes_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+
         CargarClientes()
         CargarProyecto()
         CargarUsuarios()
 
         Dim Codigo As Integer = Conexion.ObtenerCodigo(CadenaDeConexion)
         LblCodigo.Text = Codigo
+
+
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
 

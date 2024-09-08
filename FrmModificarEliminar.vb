@@ -93,7 +93,11 @@ Public Class FrmModificarEliminar
                 Dim columnName As String = DgvDatos.Columns(e.ColumnIndex).Name
                 Dim columnIndex As Integer = e.ColumnIndex
 
-                LblIden.Text = rowIndex + 1
+                ' Obtener el valor de la primera columna
+                Dim firstColumnValue As String = DgvDatos.Rows(rowIndex).Cells(0).Value.ToString()
+
+                ' Actualizar los controles con los valores obtenidos
+                LblIden.Text = firstColumnValue
                 LblCampo.Text = columnName
                 TxtValorAModificar.Text = cellValue
                 TxtValorNuevo.Text = cellValue
@@ -102,6 +106,7 @@ Public Class FrmModificarEliminar
             End If
         End If
     End Sub
+
 
     Private Sub BtnCancelar_Click(sender As Object, e As EventArgs) Handles BtnCancelar.Click
         Me.Close()

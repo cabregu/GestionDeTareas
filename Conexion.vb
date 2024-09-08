@@ -130,7 +130,7 @@ Public Class Conexion
 
     Public Shared Function ObtenertareasPendientes(ByVal CadenaConexion As String) As String()
         Dim tareas As New List(Of String)()
-        Dim sql As String = "SELECT * FROM Kanbas WHERE Estado='Pendiente'"
+        Dim sql As String = "SELECT * FROM kanbas WHERE Estado='Pendiente'"
 
         Using cn As New MySqlConnection(CadenaConexion)
             Using cmd As New MySqlCommand(sql, cn)
@@ -168,7 +168,7 @@ Public Class Conexion
 
     Public Shared Function ObtenertareasPendientes(ByVal CadenaConexion As String, ByVal codigo As String) As List(Of Tarea)
         Dim tareas As New List(Of Tarea)()
-        Dim sql As String = "SELECT * FROM Kanbas WHERE Estado='Pendiente' AND codigo = @codigo"
+        Dim sql As String = "SELECT * FROM kanbas WHERE Estado='Pendiente' AND codigo = @codigo"
 
         Using cn As New MySqlConnection(CadenaConexion)
             Using cmd As New MySqlCommand(sql, cn)
@@ -193,7 +193,7 @@ Public Class Conexion
 
     Public Shared Function ObtenertareasPendientesdeUsuario(ByVal CadenaConexion As String, ByVal codigo As String) As List(Of Tarea)
         Dim tareas As New List(Of Tarea)()
-        Dim sql As String = "SELECT * FROM Kanbas WHERE codigo = @codigo"
+        Dim sql As String = "SELECT * FROM kanbas WHERE codigo = @codigo"
 
         Using cn As New MySqlConnection(CadenaConexion)
             Using cmd As New MySqlCommand(sql, cn)
@@ -227,7 +227,7 @@ Public Class Conexion
 
     Public Shared Function ObtenertareasEjecutandoPorUsuario(ByVal CadenaConexion As String, ByVal Usuario As String) As String()
         Dim tareas As New List(Of String)()
-        Dim sql As String = "SELECT * FROM Kanbas WHERE Estado='Ejecutando' And Usuario = '" & Usuario & "'"
+        Dim sql As String = "SELECT * FROM kanbas WHERE Estado='Ejecutando' And Usuario = '" & Usuario & "'"
 
         Using cn As New MySqlConnection(CadenaConexion)
             Using cmd As New MySqlCommand(sql, cn)
@@ -308,7 +308,7 @@ Public Class Conexion
 
     Public Shared Function ObtenerTiempo(ByVal CadenaConexion As String, ByVal codigo As String) As String
         Dim tiempo As String = "00:00:00"
-        Dim sql As String = "SELECT Tiempo FROM Kanbas WHERE codigo = @codigo"
+        Dim sql As String = "SELECT Tiempo FROM kanbas WHERE codigo = @codigo"
 
         Using cn As New MySqlConnection(CadenaConexion)
             Using cmd As New MySqlCommand(sql, cn)
@@ -335,7 +335,7 @@ Public Class Conexion
     Public Shared Function ObtenerTareasNoFinalizadas(ByVal CadenaConexion As String) As DataTable
         Dim dtTareas As New DataTable()
 
-        Dim sql As String = "SELECT * FROM Kanbas WHERE estado <> 'Finalizada'"
+        Dim sql As String = "SELECT * FROM kanbas WHERE estado <> 'Finalizada'"
 
         Using cn As New MySqlConnection(CadenaConexion)
             Using cmd As New MySqlCommand(sql, cn)
@@ -351,7 +351,7 @@ Public Class Conexion
 
     Public Shared Function ObtenertareasUnaTareaPorCodigo(ByVal CadenaConexion As String, ByVal codigo As String) As List(Of Tarea)
         Dim tareas As New List(Of Tarea)()
-        Dim sql As String = "SELECT * FROM Kanbas WHERE codigo = @codigo"
+        Dim sql As String = "SELECT * FROM kanbas WHERE codigo = @codigo"
 
         Using cn As New MySqlConnection(CadenaConexion)
             Using cmd As New MySqlCommand(sql, cn)
@@ -400,7 +400,7 @@ Public Class Conexion
         Dim fechaFinFormateada As String = fechaFin.ToString("yyyy-MM-dd HH:mm:ss")
 
         ' La consulta SQL ahora incluye un rango de fechas para el campo "fechadeinicio"
-        Dim sql As String = "SELECT * FROM Kanbas WHERE fechadeinicio BETWEEN @fechaInicio AND @fechaFin"
+        Dim sql As String = "SELECT * FROM kanbas WHERE fechadeinicio BETWEEN @fechaInicio AND @fechaFin"
 
         Using cn As New MySqlConnection(CadenaConexion)
             Using cmd As New MySqlCommand(sql, cn)
@@ -499,19 +499,16 @@ Public Class Conexion
     Public Shared Function ObtenerUltimaTarea(ByVal CadenaConexion As String, ByVal Usuario As String) As String
         Dim ultimaTarea As String = String.Empty
 
-        ' La consulta SQL para obtener la última tarea del usuario
-        ' Suponiendo que el código de la tarea está en el campo 'codigo'
-        Dim sql As String = "SELECT codigo FROM Kanbas WHERE usuario = @usuario ORDER BY fechacreacion DESC LIMIT 1"
-
+        Dim sql As String = "SELECT codigo FROM kanbas WHERE usuario = @usuario ORDER BY fechacreacion DESC LIMIT 1"
         Using cn As New MySqlConnection(CadenaConexion)
             Using cmd As New MySqlCommand(sql, cn)
-                ' Añadir el parámetro para la consulta SQL
+
                 cmd.Parameters.AddWithValue("@usuario", Usuario)
 
                 cn.Open()
                 Using reader As MySqlDataReader = cmd.ExecuteReader()
                     If reader.Read() Then
-                        ' Suponiendo que 'codigo' es un campo de tipo String
+
                         ultimaTarea = reader("codigo").ToString()
                     End If
                 End Using

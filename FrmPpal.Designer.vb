@@ -221,6 +221,7 @@ Partial Class FrmPpal
         LblHoraUltimaTareaAsignada.Size = New Size(118, 15)
         LblHoraUltimaTareaAsignada.TabIndex = 7
         LblHoraUltimaTareaAsignada.Text = "UltimaTareaAsignada"
+        LblHoraUltimaTareaAsignada.Visible = False
         ' 
         ' TmrChekTareas
         ' 
