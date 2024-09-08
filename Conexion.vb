@@ -264,6 +264,23 @@ Public Class Conexion
         Return codigousuario.ToArray()
     End Function
 
+    Public Shared Function ObtenerCodigoClienteTareaPorUsuario(ByVal CadenaConexion As String, ByVal Usuario As String) As DataTable
+        Dim dt As New DataTable()
+
+        Dim sql As String = "SELECT codigo, cliente, tarea FROM kanbas WHERE usuario=@usuario And estado <> 'Finalizada'"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cmd.Parameters.AddWithValue("@usuario", Usuario)
+                cn.Open()
+                Using reader As MySqlDataReader = cmd.ExecuteReader()
+                    dt.Load(reader)
+                End Using
+            End Using
+        End Using
+
+        Return dt
+    End Function
+
     Public Shared Function ObtenerFechaHoraServidor(ByVal CadenaConexion As String) As DateTime
         Dim sql As String = "SELECT NOW()"
         Using cn As New MySqlConnection(CadenaConexion)

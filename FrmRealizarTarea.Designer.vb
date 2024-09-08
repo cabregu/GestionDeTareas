@@ -63,6 +63,7 @@ Partial Class FrmRealizarTarea
         ' 
         ' CmbCodigo
         ' 
+        CmbCodigo.DropDownStyle = ComboBoxStyle.DropDownList
         CmbCodigo.FormattingEnabled = True
         CmbCodigo.Location = New Point(307, 38)
         CmbCodigo.Name = "CmbCodigo"

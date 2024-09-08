@@ -9,22 +9,75 @@
         LlenarConCodigos(CadenaDeConexion, LblUsuario.Text)
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
+
+        TxtCliente.Text = ""
+        TxtProyecto.Text = ""
+        TxtTarea.Text = ""
+        TxtNiveldePrioridad.Text = ""
+        TxtFechaLimite.Text = ""
+        TxtComentario.Text = ""
+        TxtEstado.Text = ""
+        TxtFechaInicio.Text = ""
+
+
+
     End Sub
 
     Private Sub CmbCodigo_SelectedValueChanged(sender As Object, e As EventArgs) Handles CmbCodigo.SelectedValueChanged
-        CargarTareasPorCodigo()
+        If CmbCodigo.SelectedIndex <> -1 Then
+            CargarTareasPorCodigo()
+        End If
+
     End Sub
 
 
 
 
     Public Sub LlenarConCodigos(ByVal CadenaConexion As String, ByVal Usuario As String)
-        Dim codigos() As String = Conexion.ObtenerCodigoPorUsuario(CadenaConexion, Usuario)
-        CmbCodigo.Items.Clear()
-        For Each codigo As String In codigos
-            CmbCodigo.Items.Add(codigo)
-        Next
+        Dim dt As New DataTable
+        dt = Conexion.ObtenerCodigoClienteTareaPorUsuario(CadenaConexion, Usuario)
+        CargarComboBox(CmbCodigo, dt)
     End Sub
+
+
+    Public Sub CargarComboBox(ByVal comboBox As ComboBox, ByVal dt As DataTable)
+        comboBox.DisplayMember = "DisplayText"
+        comboBox.ValueMember = "codigo"
+
+        Dim dtDisplay As New DataTable()
+        dtDisplay.Columns.Add("codigo", GetType(String))
+        dtDisplay.Columns.Add("DisplayText", GetType(String))
+
+        For Each row As DataRow In dt.Rows
+            ' Ajustar la cantidad de espacios entre los campos
+            Dim displayText As String = $"{row("codigo")}  {row("cliente")}   {row("tarea")}"
+            dtDisplay.Rows.Add(row("codigo"), displayText)
+        Next
+
+        comboBox.DataSource = dtDisplay
+
+        ' Ajustar el ancho del ComboBox para que se ajuste al texto más largo
+        AjustarAnchoComboBox(comboBox)
+
+        comboBox.SelectedIndex = -1
+
+    End Sub
+
+    Private Sub AjustarAnchoComboBox(ByVal comboBox As ComboBox)
+        ' Medir el texto más largo del ComboBox
+        Dim maxWidth As Integer = 0
+
+        For Each item As Object In comboBox.Items
+            Dim text As String = DirectCast(DirectCast(item, DataRowView)("DisplayText"), String)
+            Dim textSize As Size = TextRenderer.MeasureText(comboBox.CreateGraphics(), text, comboBox.Font)
+            If textSize.Width > maxWidth Then
+                maxWidth = textSize.Width
+            End If
+        Next
+
+        comboBox.DropDownWidth = maxWidth + 20
+    End Sub
+
     Private Sub CargarTareasPorCodigo()
 
         Dim codigoSeleccionado As String = CmbCodigo.Text
