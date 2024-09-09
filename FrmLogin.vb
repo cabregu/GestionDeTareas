@@ -21,19 +21,29 @@ Public Class FrmLogin
     End Sub
 
     Private Sub ingresar()
-        Dim Cadena As String = Conexion.ObtenerBaseDeDatosDeAccess()
+        Try
+            Dim Cadena As String = Conexion.ObtenerBaseDeDatosDeAccess()
 
-        Dim Cargo As String = Conexion.ValidarUsuario(TxtUsuario.Text, TxtContraseña.Text, Cadena)
+            Dim Cargo As String = Conexion.ValidarUsuario(TxtUsuario.Text, TxtContraseña.Text, Cadena)
 
-        If Cargo <> "" Then
-            FrmPpal.LblUsuario.Text = TxtUsuario.Text
-            FrmPpal.LblCargo.Text = Cargo
-            FrmPpal.Cadenadeconexion = Cadena
-            FrmPpal.Show()
-            Me.Hide()
-        Else
-            MsgBox("Verifique su usuario o contraseña")
-        End If
+            If Cargo <> "" Then
+                FrmPpal.LblUsuario.Text = TxtUsuario.Text
+                FrmPpal.LblCargo.Text = Cargo
+                FrmPpal.Cadenadeconexion = Cadena
+                FrmPpal.Show()
+                Me.Hide()
+            Else
+                MsgBox("Verifique su usuario o contraseña")
+            End If
+
+
+        Catch ex As Exception
+
+        End Try
+
+
+
+
     End Sub
 
     Private Sub TxtUsuario_KeyDown(sender As Object, e As KeyEventArgs) Handles TxtUsuario.KeyDown

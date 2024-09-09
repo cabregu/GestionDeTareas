@@ -651,7 +651,63 @@ Public Class FrmReporte
         Return DtCliUsuHoras
     End Function
 
+    Private Sub ExportDataGridViewToExcel(ByVal dgv As DataGridView, ByVal sheetName As String)
+        If dgv IsNot Nothing AndAlso dgv.Rows.Count > 0 Then
+            Using workbook As New XLWorkbook()
+                ' Crear una hoja con el nombre especificado
+                Dim worksheet = workbook.Worksheets.Add(sheetName)
 
+                ' Agregar encabezados
+                For i As Integer = 0 To dgv.Columns.Count - 1
+                    Dim cell = worksheet.Cell(1, i + 1)
+                    cell.Value = dgv.Columns(i).HeaderText
+                    cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center ' Justificar encabezados
+                Next
+
+                ' Agregar filas
+                For i As Integer = 0 To dgv.Rows.Count - 1
+                    For j As Integer = 0 To dgv.Columns.Count - 1
+                        Dim cellValue As Object = dgv.Rows(i).Cells(j).Value
+                        Dim cell = worksheet.Cell(i + 2, j + 1)
+                        cell.Value = If(cellValue Is Nothing, String.Empty, cellValue.ToString())
+                        cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Left ' Justificar texto
+                    Next
+                Next
+
+                ' Ajustar tamaño de las columnas automáticamente
+                worksheet.Columns().AdjustToContents()
+
+                ' Aplicar formato especial si el campo "Status" está presente
+                If dgv.Columns.Cast(Of DataGridViewColumn)().Any(Function(c) c.HeaderText = "Status") Then
+                    For i As Integer = 0 To dgv.Rows.Count - 1
+                        Dim statusValue As String = If(dgv.Rows(i).Cells("Status").Value IsNot Nothing, dgv.Rows(i).Cells("Status").Value.ToString(), String.Empty)
+                        If statusValue = "CON RETRASO" Then
+                            Dim row = worksheet.Row(i + 2)
+                            row.Style.Font.FontColor = XLColor.Red
+                            row.Style.Font.Bold = True
+                        Else
+                            Dim row = worksheet.Row(i + 2)
+                            row.Style.Font.FontColor = XLColor.Green
+                            row.Style.Font.Bold = True
+                        End If
+                    Next
+                End If
+
+                ' Mostrar el cuadro de diálogo para guardar el archivo
+                Dim saveFileDialog As New SaveFileDialog()
+                saveFileDialog.Filter = "Excel Files|*.xlsx"
+                saveFileDialog.Title = "Guardar Reporte en Excel"
+                saveFileDialog.FileName = "Reporte_" & DateTime.Now.ToString("yyyyMMdd_HHmmss") & ".xlsx"
+
+                If saveFileDialog.ShowDialog() = DialogResult.OK Then
+                    workbook.SaveAs(saveFileDialog.FileName)
+                    MessageBox.Show("Reporte guardado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                End If
+            End Using
+        Else
+            MessageBox.Show("No hay datos para exportar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+    End Sub
 
 
 
@@ -767,14 +823,21 @@ Public Class FrmReporte
     End Sub
 
     Private Sub ChkCuadroNinja_CheckedChanged(sender As Object, e As EventArgs) Handles ChkCuadroNinja.CheckedChanged
+
         If ChkCuadroNinja.Checked Then
             Dim DtCuenta As DataTable = ContarEstados(Dt)
             DgvDatos.DataSource = Nothing
             DgvDatos.DataSource = DtCuenta
+            ' Deshabilitar la edición del DataGridView
+            DgvDatos.ReadOnly = True
         ElseIf Not AnyOtherCheckboxChecked() Then
             DgvDatos.DataSource = Nothing
+            ' Hacer que el DataGridView sea editable de nuevo si no hay otros CheckBox seleccionados
+            DgvDatos.ReadOnly = False
         End If
+
     End Sub
+
 
     Private Function AnyOtherCheckboxChecked() As Boolean
         ' Verifica si algún otro CheckBox está marcado
@@ -789,5 +852,33 @@ Public Class FrmReporte
                ChkCuadroNinja.Checked
     End Function
 
+    Private Sub DgvDatos_DoubleClick(sender As Object, e As EventArgs) Handles DgvDatos.DoubleClick
+        If ChkCuadroNinja.Checked Then
+            If DgvDatos.CurrentCell IsNot Nothing Then
+                Dim rowIndex As Integer = DgvDatos.CurrentCell.RowIndex
+                Dim estadoValue As String = DgvDatos.Rows(rowIndex).Cells("Estado").Value.ToString()
 
+                Dim filteredDt As DataTable = FilterDataTableByEstado(Dt, estadoValue)
+                DgvDatos.DataSource = Nothing
+                DgvDatos.DataSource = filteredDt
+
+
+                CHKEstatusdetareas.Checked = False
+            End If
+        End If
+    End Sub
+
+    Private Function FilterDataTableByEstado(originalDt As DataTable, estado As String) As DataTable
+        Dim filteredDt As DataTable = originalDt.Clone()
+        Dim rows As DataRow() = originalDt.Select("Estado = '" & estado.Replace("'", "''") & "'")
+        For Each row As DataRow In rows
+            filteredDt.ImportRow(row)
+        Next
+
+        Return filteredDt
+    End Function
+
+    Private Sub BtnXlssoloEstosDatos_Click(sender As Object, e As EventArgs) Handles BtnXlssoloEstosDatos.Click
+        ExportDataGridViewToExcel(DgvDatos, "Por Estado")
+    End Sub
 End Class

@@ -38,6 +38,7 @@ Partial Class FrmReporte
         ChkClientesUsuarios = New CheckBox()
         ChkClientesProyectos = New CheckBox()
         ChkCuadroNinja = New CheckBox()
+        BtnXlssoloEstosDatos = New Button()
         CType(DgvDatos, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -86,11 +87,11 @@ Partial Class FrmReporte
         ' 
         ' BtnExcel
         ' 
-        BtnExcel.Location = New Point(940, 586)
+        BtnExcel.Location = New Point(656, 603)
         BtnExcel.Name = "BtnExcel"
-        BtnExcel.Size = New Size(75, 23)
+        BtnExcel.Size = New Size(166, 23)
         BtnExcel.TabIndex = 7
-        BtnExcel.Text = "Xls"
+        BtnExcel.Text = "Xls Reporte Tildados"
         BtnExcel.UseVisualStyleBackColor = True
         ' 
         ' BtnConsultar
@@ -201,12 +202,22 @@ Partial Class FrmReporte
         ChkCuadroNinja.Text = "Cuadro Ninja"
         ChkCuadroNinja.UseVisualStyleBackColor = True
         ' 
+        ' BtnXlssoloEstosDatos
+        ' 
+        BtnXlssoloEstosDatos.Location = New Point(849, 515)
+        BtnXlssoloEstosDatos.Name = "BtnXlssoloEstosDatos"
+        BtnXlssoloEstosDatos.Size = New Size(166, 23)
+        BtnXlssoloEstosDatos.TabIndex = 19
+        BtnXlssoloEstosDatos.Text = "Xls Solo Estos Datos"
+        BtnXlssoloEstosDatos.UseVisualStyleBackColor = True
+        ' 
         ' FrmReporte
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlLight
         ClientSize = New Size(1027, 646)
+        Controls.Add(BtnXlssoloEstosDatos)
         Controls.Add(ChkCuadroNinja)
         Controls.Add(ChkClientesProyectos)
         Controls.Add(ChkClientesUsuarios)
@@ -247,4 +258,5 @@ Partial Class FrmReporte
     Friend WithEvents ChkClientesUsuarios As CheckBox
     Friend WithEvents ChkClientesProyectos As CheckBox
     Friend WithEvents ChkCuadroNinja As CheckBox
+    Friend WithEvents BtnXlssoloEstosDatos As Button
 End Class
