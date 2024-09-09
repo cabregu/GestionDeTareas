@@ -104,17 +104,22 @@
     End Sub
 
     Private Sub BtnIniciar_Click(sender As Object, e As EventArgs) Handles BtnIniciar.Click
-
         Dim FechaHoraServer As DateTime = Conexion.ObtenerFechaHoraServidor(CadenaDeConexion)
-        If Conexion.ActualizarFechaInicioYCalcularPorCodigo(CadenaDeConexion, CmbCodigo.Text, FechaHoraServer) = True Then
-            CargarTareasPorCodigo()
+        If CmbCodigo.SelectedValue IsNot Nothing Then
+            Dim codigoSeleccionado As String = CType(CmbCodigo.SelectedValue, String)
+            If Conexion.ActualizarFechaInicioYCalcularPorCodigo(CadenaDeConexion, codigoSeleccionado, FechaHoraServer) = True Then
+                CargarTareasPorCodigo()
+            End If
+        Else
+            MessageBox.Show("Por favor, seleccione un código.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End If
-
     End Sub
+
 
     Private Sub BtnRetomar_Click(sender As Object, e As EventArgs) Handles BtnRetomar.Click
         Dim FechaHoraServer As DateTime = Conexion.ObtenerFechaHoraServidor(CadenaDeConexion)
-        Conexion.ActualizarFechaYEstado(CadenaDeConexion, CmbCodigo.Text, FechaHoraServer, "Ejecutando")
+        Dim codigoSeleccionado As String = CType(CmbCodigo.SelectedValue, String)
+        Conexion.ActualizarFechaYEstado(CadenaDeConexion, codigoSeleccionado, FechaHoraServer, "Ejecutando")
         CargarTareasPorCodigo()
 
     End Sub
@@ -156,13 +161,13 @@
     Private Sub PausarTareas()
 
         Dim FechaHoraServer As DateTime = Conexion.ObtenerFechaHoraServidor(CadenaDeConexion)
-
+        Dim codigoSeleccionado As String = CType(CmbCodigo.SelectedValue, String)
         'Tiempo que figura actualmente en tabla kanbas para sumarlo a lo que le pase mas adelante
-        Dim TiempoObtenido As String = Conexion.ObtenerTiempo(CadenaDeConexion, CmbCodigo.Text)
+        Dim TiempoObtenido As String = Conexion.ObtenerTiempo(CadenaDeConexion, codigoSeleccionado)
 
         'tiempo que paso en el server desde que obtube la fechaparacalcular de la tabla kanbas
         'y la fechayhora del servidor que estoy pasando por parametro ahora mismo
-        Dim TiempoTranscurridoDesdeFechaParaCalcular As String = Conexion.ObtenerYCalcularTiempoTranscurrido(CadenaDeConexion, CmbCodigo.Text, FechaHoraServer)
+        Dim TiempoTranscurridoDesdeFechaParaCalcular As String = Conexion.ObtenerYCalcularTiempoTranscurrido(CadenaDeConexion, codigoSeleccionado, FechaHoraServer)
 
         'Sumar ambos tiempos para obtener el tiempo neto de trabajo
         'entre lo que ya esta en kanbas y lo que se sumo al momento de dar pausa
@@ -174,9 +179,9 @@
         'actualizacion de fecha y estado no sirve la fecha pero es para no crear otra funcion ya que
         'al retomar la tarea vuelve a actulizar ese tiempo para que calcule desde que retome la tarea y no desde que coloque
         'la pausa lo que va controlar el doble clic es la anulacion de los botones segun su estado
-        Conexion.ActualizarTiempo(CadenaDeConexion, CmbCodigo.Text, NuevoTiempo)
+        Conexion.ActualizarTiempo(CadenaDeConexion, codigoSeleccionado, NuevoTiempo)
 
-        Conexion.ActualizarFechaYEstado(CadenaDeConexion, CmbCodigo.Text, FechaHoraServer, "Pausada")
+        Conexion.ActualizarFechaYEstado(CadenaDeConexion, codigoSeleccionado, FechaHoraServer, "Pausada")
 
     End Sub
 
@@ -190,13 +195,13 @@
 
 
             Dim FechaHoraServer As DateTime = Conexion.ObtenerFechaHoraServidor(CadenaDeConexion)
-
+            Dim codigoSeleccionado As String = CType(CmbCodigo.SelectedValue, String)
             'Tiempo que figura actualmente en tabla kanbas para sumarlo a lo que le pase mas adelante
-            Dim TiempoObtenido As String = Conexion.ObtenerTiempo(CadenaDeConexion, CmbCodigo.Text)
+            Dim TiempoObtenido As String = Conexion.ObtenerTiempo(CadenaDeConexion, codigoSeleccionado)
 
             'tiempo que paso en el server desde que obtube la fechaparacalcular de la tabla kanbas
             'y la fechayhora del servidor que estoy pasando por parametro ahora mismo
-            Dim TiempoTranscurridoDesdeFechaParaCalcular As String = Conexion.ObtenerYCalcularTiempoTranscurrido(CadenaDeConexion, CmbCodigo.Text, FechaHoraServer)
+            Dim TiempoTranscurridoDesdeFechaParaCalcular As String = Conexion.ObtenerYCalcularTiempoTranscurrido(CadenaDeConexion, codigoSeleccionado, FechaHoraServer)
 
             'Sumar ambos tiempos para obtener el tiempo neto de trabajo
             'entre lo que ya esta en kanbas y lo que se sumo al momento de dar pausa
@@ -208,11 +213,11 @@
             'actualizacion de fecha y estado no sirve la fecha pero es para no crear otra funcion ya que
             'al retomar la tarea vuelve a actulizar ese tiempo para que calcule desde que retome la tarea y no desde que coloque
             'la pausa lo que va controlar el doble clic es la anulacion de los botones segun su estado
-            Conexion.ActualizarTiempo(CadenaDeConexion, CmbCodigo.Text, NuevoTiempo)
+            Conexion.ActualizarTiempo(CadenaDeConexion, codigoSeleccionado, NuevoTiempo)
 
 
 
-            If Conexion.ActualizarEstadoKanbasFinalizada(CadenaDeConexion, CmbCodigo.Text, "Finalizada", TxtComentarioFinal.Text, FechaHoraServer) = True Then
+            If Conexion.ActualizarEstadoKanbasFinalizada(CadenaDeConexion, codigoSeleccionado, "Finalizada", TxtComentarioFinal.Text, FechaHoraServer) = True Then
 
                 CmbCodigo.Text = ""
                 TxtCliente.Text = ""
