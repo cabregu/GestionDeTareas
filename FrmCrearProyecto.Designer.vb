@@ -60,6 +60,7 @@ Partial Class FrmCrearProyecto
         ' 
         ' CmbProyectoExistente
         ' 
+        CmbProyectoExistente.DropDownStyle = ComboBoxStyle.DropDownList
         CmbProyectoExistente.FormattingEnabled = True
         CmbProyectoExistente.Location = New Point(34, 50)
         CmbProyectoExistente.Name = "CmbProyectoExistente"

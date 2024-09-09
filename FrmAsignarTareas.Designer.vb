@@ -44,6 +44,7 @@ Partial Class FrmAsignarTareas
         ' 
         ' CmbCodigo
         ' 
+        CmbCodigo.DropDownStyle = ComboBoxStyle.DropDownList
         CmbCodigo.FormattingEnabled = True
         CmbCodigo.Location = New Point(12, 33)
         CmbCodigo.Name = "CmbCodigo"
@@ -167,6 +168,8 @@ Partial Class FrmAsignarTareas
         ' 
         ' CmbAsignar
         ' 
+        CmbAsignar.BackColor = Color.White
+        CmbAsignar.DropDownStyle = ComboBoxStyle.DropDownList
         CmbAsignar.FormattingEnabled = True
         CmbAsignar.Location = New Point(100, 375)
         CmbAsignar.Name = "CmbAsignar"

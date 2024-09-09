@@ -45,6 +45,7 @@ Partial Class FrmCrearTareasPendientes
         ' 
         ' CmbCliente
         ' 
+        CmbCliente.DropDownStyle = ComboBoxStyle.DropDownList
         CmbCliente.FormattingEnabled = True
         CmbCliente.Location = New Point(269, 32)
         CmbCliente.Name = "CmbCliente"
@@ -71,6 +72,7 @@ Partial Class FrmCrearTareasPendientes
         ' 
         ' CmbProyecto
         ' 
+        CmbProyecto.DropDownStyle = ComboBoxStyle.DropDownList
         CmbProyecto.FormattingEnabled = True
         CmbProyecto.Location = New Point(269, 96)
         CmbProyecto.Name = "CmbProyecto"
@@ -88,6 +90,7 @@ Partial Class FrmCrearTareasPendientes
         ' 
         ' CmbTareas
         ' 
+        CmbTareas.DropDownStyle = ComboBoxStyle.DropDownList
         CmbTareas.FormattingEnabled = True
         CmbTareas.Location = New Point(269, 157)
         CmbTareas.Name = "CmbTareas"
@@ -105,6 +108,7 @@ Partial Class FrmCrearTareasPendientes
         ' 
         ' CmbPrioridad
         ' 
+        CmbPrioridad.DropDownStyle = ComboBoxStyle.DropDownList
         CmbPrioridad.FormattingEnabled = True
         CmbPrioridad.Items.AddRange(New Object() {"Bajo", "Medio", "Alto", "Inmediato"})
         CmbPrioridad.Location = New Point(23, 157)
@@ -148,6 +152,7 @@ Partial Class FrmCrearTareasPendientes
         ' 
         ' CmbAsignar
         ' 
+        CmbAsignar.DropDownStyle = ComboBoxStyle.DropDownList
         CmbAsignar.FormattingEnabled = True
         CmbAsignar.Location = New Point(23, 363)
         CmbAsignar.Name = "CmbAsignar"
