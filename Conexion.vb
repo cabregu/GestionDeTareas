@@ -45,6 +45,30 @@ Public Class Conexion
 
     End Function
 
+    Public Shared Function ActualizarDatoBaseDeDatosDeAccess(nuevoDato As String) As Boolean
+        Try
+            Dim carpeta As String = "Externos"
+            Dim nombreBaseDatos As String = "Conexion.accdb"
+            Dim rutaBaseDatos As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, carpeta, nombreBaseDatos)
+            Dim cadenaConexion As String = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={rutaBaseDatos};Jet OLEDB:Database Password=Gmt@2022;"
+
+            Using conexion As New OleDbConnection(cadenaConexion)
+                conexion.Open()
+                Dim comando As New OleDbCommand("UPDATE datos SET dato = ? WHERE tipo = 'Basededatos'", conexion)
+                comando.Parameters.AddWithValue("?", nuevoDato)
+
+                Dim filasAfectadas As Integer = comando.ExecuteNonQuery()
+
+                ' Retorna True si se actualizó al menos una fila, de lo contrario, False
+                Return filasAfectadas > 0
+            End Using
+        Catch ex As Exception
+            MsgBox($"Error al actualizar el dato: {ex.Message}")
+            Return False
+        End Try
+    End Function
+
+
     Public Shared Function ValidarUsuario(ByVal Usuario As String, ByVal Contraseña As String, ByVal Cadenaconexion As String) As String
 
         Dim Sql As String = "Select rango from usuarios Where nick='" & Usuario & "' and contraseña='" & Contraseña & "'"
@@ -520,25 +544,33 @@ Public Class Conexion
     End Function
 
     Public Shared Function ObtenerUltimaTarea(ByVal CadenaConexion As String, ByVal Usuario As String) As String
-        Dim ultimaTarea As String = String.Empty
 
-        Dim sql As String = "SELECT codigo FROM kanbas WHERE usuario = @usuario ORDER BY fechacreacion DESC LIMIT 1"
-        Using cn As New MySqlConnection(CadenaConexion)
-            Using cmd As New MySqlCommand(sql, cn)
+        Try
+            Dim ultimaTarea As String = String.Empty
 
-                cmd.Parameters.AddWithValue("@usuario", Usuario)
+            Dim sql As String = "SELECT codigo FROM kanbas WHERE usuario = @usuario ORDER BY fechacreacion DESC LIMIT 1"
+            Using cn As New MySqlConnection(CadenaConexion)
+                Using cmd As New MySqlCommand(sql, cn)
 
-                cn.Open()
-                Using reader As MySqlDataReader = cmd.ExecuteReader()
-                    If reader.Read() Then
+                    cmd.Parameters.AddWithValue("@usuario", Usuario)
 
-                        ultimaTarea = reader("codigo").ToString()
-                    End If
+                    cn.Open()
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        If reader.Read() Then
+
+                            ultimaTarea = reader("codigo").ToString()
+                        End If
+                    End Using
                 End Using
             End Using
-        End Using
 
-        Return ultimaTarea
+            Return ultimaTarea
+        Catch ex As Exception
+
+        End Try
+
+
+
     End Function
 
 

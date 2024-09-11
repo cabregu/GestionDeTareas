@@ -28,6 +28,7 @@ Partial Class FrmLogin
         BtnSalir = New Button()
         LblUsuario = New Label()
         LblContraseña = New Label()
+        Button1 = New Button()
         SuspendLayout()
         ' 
         ' TxtUsuario
@@ -81,12 +82,22 @@ Partial Class FrmLogin
         LblContraseña.TabIndex = 5
         LblContraseña.Text = "Contraseña:"
         ' 
+        ' Button1
+        ' 
+        Button1.Image = My.Resources.Resources.Database_32x32
+        Button1.Location = New Point(258, 224)
+        Button1.Name = "Button1"
+        Button1.Size = New Size(34, 34)
+        Button1.TabIndex = 6
+        Button1.UseVisualStyleBackColor = True
+        ' 
         ' FrmLogin
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlLight
-        ClientSize = New Size(304, 277)
+        ClientSize = New Size(304, 270)
+        Controls.Add(Button1)
         Controls.Add(LblContraseña)
         Controls.Add(LblUsuario)
         Controls.Add(BtnSalir)
@@ -106,4 +117,5 @@ Partial Class FrmLogin
     Friend WithEvents BtnSalir As Button
     Friend WithEvents LblUsuario As Label
     Friend WithEvents LblContraseña As Label
+    Friend WithEvents Button1 As Button
 End Class
