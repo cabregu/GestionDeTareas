@@ -205,8 +205,6 @@ Public Class FrmPpal
     Private Sub FrmPpal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
-        LblHoraUltimaTareaAsignada.Text = Conexion.ObtenerUltimaTarea(Cadenadeconexion, LblUsuario.Text)
-
         TmrChekTareas.Start()
 
 
@@ -214,6 +212,9 @@ Public Class FrmPpal
             BtnCrearProyecto.Enabled = False
             BtnCrearCliente.Enabled = False
             BtnModificarDatos.Enabled = False
+            BtnModificarTarea.Enabled = False
+            BtnCrearUsuario.Enabled = False
+            BtnReporte.Enabled = False
 
         ElseIf LblCargo.Text = "Usuario" Then
 
@@ -232,18 +233,41 @@ Public Class FrmPpal
 
     End Sub
 
+
+    Private mensajeMostrado As Boolean = False
+
     Private Sub TmrChekTareas_Tick(sender As Object, e As EventArgs) Handles TmrChekTareas.Tick
+        Try
+            Dim mensajes As String = String.Empty
 
-        Dim UltimaTarea As Integer = Conexion.ObtenerUltimaTarea(Cadenadeconexion, LblUsuario.Text)
+            Dim hayPausadas As Boolean = Conexion.HayTareaPorestado(Cadenadeconexion, LblUsuario.Text, "Pausada")
+            Dim hayAsignadas As Boolean = Conexion.HayTareaPorestado(Cadenadeconexion, LblUsuario.Text, "Asignada")
 
-        If LblHoraUltimaTareaAsignada.Text < UltimaTarea Then
-            MsgBox("Tiene Nuevas tareas si tiene el formulario de tareas abierto cierrelo y vuelva a abrirlo para que se carguen")
-            LblHoraUltimaTareaAsignada.Text = UltimaTarea
+            If hayPausadas Then
+                mensajes &= "Tiene tareas Pausadas." & vbCrLf
+            End If
 
-        End If
+            If hayAsignadas Then
+                mensajes &= "Tiene tareas Asignadas." & vbCrLf
+            End If
 
+            If mensajes <> String.Empty AndAlso Not mensajeMostrado Then
+                mensajeMostrado = True
+                TmrChekTareas.Stop() ' Detiene el timer al mostrar el mensaje
+                MessageBox.Show(mensajes.Trim(), "Aviso", MessageBoxButtons.OK)
 
+                ' Reinicia el timer después de que el usuario presione Aceptar
+                mensajeMostrado = False ' Reinicia la variable
+                TmrChekTareas.Start() ' Reinicia el timer
+            End If
+
+        Catch ex As Exception
+            ' Manejo de excepciones, puedes registrar el error si es necesario
+        End Try
     End Sub
+
+
+
 End Class
 
 

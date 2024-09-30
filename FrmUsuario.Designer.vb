@@ -66,6 +66,7 @@ Partial Class FrmUsuario
         ' 
         ' CmbCrearComo
         ' 
+        CmbCrearComo.DropDownStyle = ComboBoxStyle.DropDownList
         CmbCrearComo.FormattingEnabled = True
         CmbCrearComo.Location = New Point(41, 140)
         CmbCrearComo.Name = "CmbCrearComo"

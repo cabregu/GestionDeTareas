@@ -7,39 +7,38 @@
         CargarClientes()
         CargarProyecto()
         CargarUsuarios()
-        CargarTareasPorCodigo()
         CargarTareas(CmbProyecto.Text)
+
+        CargarTareasPorCodigo()
+
+
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
     End Sub
 
-
-
     Private Sub CargarTareasPorCodigo()
-
         Dim codigoSeleccionado As String = codigo
 
-
         If Not String.IsNullOrEmpty(codigoSeleccionado) Then
-
             Dim tareas As List(Of Tarea) = Conexion.ObtenertareasUnaTareaPorCodigo(CadenaDeConexion, codigoSeleccionado)
-
 
             If tareas.Count > 0 Then
                 Dim tarea As Tarea = tareas(0)
                 CmbCliente.Text = tarea.cliente
                 CmbProyecto.Text = tarea.proyecto
-                CmbTarea.Text = tarea.tarea
+                CmbTarea.Text = tarea.tarea ' Verifica si este campo tiene un valor
                 CmbPrioridad.Text = tarea.niveldeprioridad
                 DtpFechaLimite.Text = tarea.fechalimite
                 TxtComentario.Text = tarea.comentario
                 TxtEstadoActual.Text = tarea.estado
                 CmbUsuario.Text = tarea.usuario
+            Else
+                MsgBox("No se encontraron tareas para el código seleccionado.")
             End If
-        Else
-
         End If
     End Sub
+
+
     Private Sub CargarProyecto()
         Dim proyectos As String() = Conexion.ObtenerProyectos(CadenaDeConexion)
         CmbProyecto.Items.Clear()
@@ -54,13 +53,23 @@
             CmbCliente.Items.Add(cliente)
         Next
     End Sub
+
     Private Sub CargarTareas(ByVal Proyecto As String)
         Dim tareas As String() = Conexion.ObtenertareasPorProyecto(Proyecto, CadenaDeConexion)
         CmbTarea.Items.Clear()
+
         For Each tarea As String In tareas
             CmbTarea.Items.Add(tarea)
         Next
     End Sub
+
+    Private Sub CmbProyecto_SelectedValueChanged(sender As Object, e As EventArgs) Handles CmbProyecto.SelectedValueChanged
+        CmbTarea.Text = ""
+        If Not String.IsNullOrEmpty(CmbProyecto.Text) Then
+            CargarTareas(CmbProyecto.Text)
+        End If
+    End Sub
+
     Private Sub CargarUsuarios()
         Dim usuarios As String() = Conexion.ObtenerUsuarios(CadenaDeConexion)
         CmbUsuario.Items.Clear()
@@ -69,10 +78,6 @@
         Next
     End Sub
 
-    Private Sub CmbProyecto_SelectedValueChanged(sender As Object, e As EventArgs) Handles CmbProyecto.SelectedValueChanged
-        CmbTarea.Text = ""
-        CargarTareas(CmbProyecto.Text)
-    End Sub
 
     Private Sub BtnModifica_Click(sender As Object, e As EventArgs) Handles BtnModifica.Click
         If Conexion.ActualizarKanbasPorCodigo(CadenaDeConexion, codigo, CmbCliente.Text, CmbProyecto.Text, CmbTarea.Text, CmbPrioridad.Text, CmbUsuario.Text, DtpFechaLimite.Value, TxtComentario.Text) = True Then

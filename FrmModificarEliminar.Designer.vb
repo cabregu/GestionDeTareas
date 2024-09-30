@@ -61,7 +61,7 @@ Partial Class FrmModificarEliminar
         ' BtnModificar
         ' 
         BtnModificar.Enabled = False
-        BtnModificar.Location = New Point(327, 427)
+        BtnModificar.Location = New Point(327, 452)
         BtnModificar.Name = "BtnModificar"
         BtnModificar.Size = New Size(100, 30)
         BtnModificar.TabIndex = 2

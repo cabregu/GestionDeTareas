@@ -86,12 +86,12 @@ Public Class FrmModificarEliminar
 
     Private Sub DgvDatos_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvDatos.CellClick
         If DgvDatos.RowCount > 0 AndAlso e.RowIndex >= 0 AndAlso e.ColumnIndex >= 0 Then
-            ' Verificar si la columna seleccionada no es la primera columna
-            If e.ColumnIndex > 0 Then
+            Dim columnName As String = DgvDatos.Columns(e.ColumnIndex).Name
+
+            ' Verificar si la columna seleccionada no es la primera columna y no es "rango"
+            If e.ColumnIndex > 0 AndAlso Not columnName.Equals("rango", StringComparison.OrdinalIgnoreCase) Then
                 Dim rowIndex As Integer = e.RowIndex
                 Dim cellValue As String = DgvDatos.Rows(rowIndex).Cells(e.ColumnIndex).Value.ToString()
-                Dim columnName As String = DgvDatos.Columns(e.ColumnIndex).Name
-                Dim columnIndex As Integer = e.ColumnIndex
 
                 ' Obtener el valor de la primera columna
                 Dim firstColumnValue As String = DgvDatos.Rows(rowIndex).Cells(0).Value.ToString()
@@ -101,11 +101,14 @@ Public Class FrmModificarEliminar
                 LblCampo.Text = columnName
                 TxtValorAModificar.Text = cellValue
                 TxtValorNuevo.Text = cellValue
-            Else
-                MsgBox("No se puede seleccionar el Identificador")
+            ElseIf e.ColumnIndex = 0 Then
+                MsgBox("No se puede seleccionar el Identificador.")
+            ElseIf columnName.Equals("rango", StringComparison.OrdinalIgnoreCase) Then
+                MsgBox("No se puede modificar la columna 'rango'.")
             End If
         End If
     End Sub
+
 
 
     Private Sub BtnCancelar_Click(sender As Object, e As EventArgs) Handles BtnCancelar.Click

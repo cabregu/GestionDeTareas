@@ -74,6 +74,7 @@ Partial Class FrmConfiguracion
         ' 
         TxtPass.Location = New Point(125, 99)
         TxtPass.Name = "TxtPass"
+        TxtPass.PasswordChar = "*"c
         TxtPass.Size = New Size(84, 23)
         TxtPass.TabIndex = 5
         ' 

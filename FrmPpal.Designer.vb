@@ -40,7 +40,6 @@ Partial Class FrmPpal
         GpbReportes = New GroupBox()
         BtnReporte = New Button()
         BtnSalir = New Button()
-        LblHoraUltimaTareaAsignada = New Label()
         TmrChekTareas = New Timer(components)
         GpbTareas.SuspendLayout()
         GpbDatos.SuspendLayout()
@@ -213,16 +212,6 @@ Partial Class FrmPpal
         BtnSalir.Text = "Salir"
         BtnSalir.UseVisualStyleBackColor = True
         ' 
-        ' LblHoraUltimaTareaAsignada
-        ' 
-        LblHoraUltimaTareaAsignada.AutoSize = True
-        LblHoraUltimaTareaAsignada.Location = New Point(327, 9)
-        LblHoraUltimaTareaAsignada.Name = "LblHoraUltimaTareaAsignada"
-        LblHoraUltimaTareaAsignada.Size = New Size(118, 15)
-        LblHoraUltimaTareaAsignada.TabIndex = 7
-        LblHoraUltimaTareaAsignada.Text = "UltimaTareaAsignada"
-        LblHoraUltimaTareaAsignada.Visible = False
-        ' 
         ' TmrChekTareas
         ' 
         TmrChekTareas.Interval = 12000
@@ -233,7 +222,6 @@ Partial Class FrmPpal
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlLight
         ClientSize = New Size(457, 535)
-        Controls.Add(LblHoraUltimaTareaAsignada)
         Controls.Add(GpbReportes)
         Controls.Add(GpbDatos)
         Controls.Add(BtnSalir)
@@ -269,7 +257,6 @@ Partial Class FrmPpal
     Friend WithEvents GpbReportes As GroupBox
     Friend WithEvents BtnReporte As Button
     Friend WithEvents BtnSalir As Button
-    Friend WithEvents LblHoraUltimaTareaAsignada As Label
     Friend WithEvents TmrChekTareas As Timer
 
 End Class

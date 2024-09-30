@@ -543,35 +543,27 @@ Public Class Conexion
         Return dt
     End Function
 
-    Public Shared Function ObtenerUltimaTarea(ByVal CadenaConexion As String, ByVal Usuario As String) As String
-
+    Public Shared Function HayTareaPorestado(ByVal CadenaConexion As String, ByVal Usuario As String, ByVal Estado As String) As Boolean
         Try
-            Dim ultimaTarea As String = String.Empty
-
-            Dim sql As String = "SELECT codigo FROM kanbas WHERE usuario = @usuario ORDER BY fechacreacion DESC LIMIT 1"
+            Dim sql As String = "SELECT COUNT(*) FROM kanbas WHERE usuario = @usuario AND estado = @estado"
             Using cn As New MySqlConnection(CadenaConexion)
                 Using cmd As New MySqlCommand(sql, cn)
 
                     cmd.Parameters.AddWithValue("@usuario", Usuario)
+                    cmd.Parameters.AddWithValue("@estado", Estado)
 
                     cn.Open()
-                    Using reader As MySqlDataReader = cmd.ExecuteReader()
-                        If reader.Read() Then
-
-                            ultimaTarea = reader("codigo").ToString()
-                        End If
-                    End Using
+                    Dim resultado As Integer = Convert.ToInt32(cmd.ExecuteScalar())
+                    Return resultado > 0
                 End Using
             End Using
-
-            Return ultimaTarea
         Catch ex As Exception
 
+            Return False
         End Try
-
-
-
     End Function
+
+
 
 
 

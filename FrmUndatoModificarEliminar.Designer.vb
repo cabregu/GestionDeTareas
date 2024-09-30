@@ -80,6 +80,7 @@ Partial Class FrmUndatoModificarEliminar
         ' 
         ' CmbPrioridad
         ' 
+        CmbPrioridad.DropDownStyle = ComboBoxStyle.DropDownList
         CmbPrioridad.FormattingEnabled = True
         CmbPrioridad.Items.AddRange(New Object() {"Bajo", "Medio", "Alto", "Inmediato"})
         CmbPrioridad.Location = New Point(12, 131)
@@ -89,6 +90,7 @@ Partial Class FrmUndatoModificarEliminar
         ' 
         ' CmbTarea
         ' 
+        CmbTarea.DropDownStyle = ComboBoxStyle.DropDownList
         CmbTarea.FormattingEnabled = True
         CmbTarea.Location = New Point(186, 131)
         CmbTarea.Name = "CmbTarea"
@@ -97,6 +99,7 @@ Partial Class FrmUndatoModificarEliminar
         ' 
         ' CmbProyecto
         ' 
+        CmbProyecto.DropDownStyle = ComboBoxStyle.DropDownList
         CmbProyecto.FormattingEnabled = True
         CmbProyecto.Location = New Point(186, 80)
         CmbProyecto.Name = "CmbProyecto"
@@ -105,6 +108,7 @@ Partial Class FrmUndatoModificarEliminar
         ' 
         ' CmbCliente
         ' 
+        CmbCliente.DropDownStyle = ComboBoxStyle.DropDownList
         CmbCliente.FormattingEnabled = True
         CmbCliente.Location = New Point(186, 27)
         CmbCliente.Name = "CmbCliente"
@@ -139,6 +143,7 @@ Partial Class FrmUndatoModificarEliminar
         ' 
         ' CmbUsuario
         ' 
+        CmbUsuario.DropDownStyle = ComboBoxStyle.DropDownList
         CmbUsuario.FormattingEnabled = True
         CmbUsuario.Location = New Point(186, 186)
         CmbUsuario.Name = "CmbUsuario"
