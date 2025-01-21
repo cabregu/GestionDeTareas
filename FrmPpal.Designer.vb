@@ -23,6 +23,7 @@ Partial Class FrmPpal
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         components = New ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FrmPpal))
         LblNombre = New Label()
         LblUsuario = New Label()
         LblTipoCargo = New Label()
@@ -41,6 +42,8 @@ Partial Class FrmPpal
         BtnReporte = New Button()
         BtnSalir = New Button()
         TmrChekTareas = New Timer(components)
+        TmrColores = New Timer(components)
+        NtfIcon = New NotifyIcon(components)
         GpbTareas.SuspendLayout()
         GpbDatos.SuspendLayout()
         GpbReportes.SuspendLayout()
@@ -67,7 +70,7 @@ Partial Class FrmPpal
         ' LblTipoCargo
         ' 
         LblTipoCargo.AutoSize = True
-        LblTipoCargo.Location = New Point(183, 9)
+        LblTipoCargo.Location = New Point(163, 9)
         LblTipoCargo.Name = "LblTipoCargo"
         LblTipoCargo.Size = New Size(42, 15)
         LblTipoCargo.TabIndex = 2
@@ -76,7 +79,7 @@ Partial Class FrmPpal
         ' LblCargo
         ' 
         LblCargo.AutoSize = True
-        LblCargo.Location = New Point(245, 9)
+        LblCargo.Location = New Point(287, 9)
         LblCargo.Name = "LblCargo"
         LblCargo.Size = New Size(30, 15)
         LblCargo.TabIndex = 3
@@ -89,7 +92,7 @@ Partial Class FrmPpal
         GpbTareas.Controls.Add(BtnAsignarTarea)
         GpbTareas.Controls.Add(BtnRealizarTarea)
         GpbTareas.Controls.Add(BtnCrearTarea)
-        GpbTareas.Location = New Point(7, 62)
+        GpbTareas.Location = New Point(7, 68)
         GpbTareas.Name = "GpbTareas"
         GpbTareas.Size = New Size(438, 119)
         GpbTareas.TabIndex = 4
@@ -214,7 +217,20 @@ Partial Class FrmPpal
         ' 
         ' TmrChekTareas
         ' 
-        TmrChekTareas.Interval = 12000
+        TmrChekTareas.Interval = 30000
+        ' 
+        ' TmrColores
+        ' 
+        TmrColores.Interval = 1000
+        ' 
+        ' NtfIcon
+        ' 
+        NtfIcon.BalloonTipIcon = ToolTipIcon.Info
+        NtfIcon.BalloonTipText = "Gestion de tareas"
+        NtfIcon.BalloonTipTitle = "Hola Estoy aqui"
+        NtfIcon.Icon = CType(resources.GetObject("NtfIcon.Icon"), Icon)
+        NtfIcon.Text = "Gestion De Tareas"
+        NtfIcon.Visible = True
         ' 
         ' FrmPpal
         ' 
@@ -258,5 +274,7 @@ Partial Class FrmPpal
     Friend WithEvents BtnReporte As Button
     Friend WithEvents BtnSalir As Button
     Friend WithEvents TmrChekTareas As Timer
+    Friend WithEvents TmrColores As Timer
+    Friend WithEvents NtfIcon As NotifyIcon
 
 End Class

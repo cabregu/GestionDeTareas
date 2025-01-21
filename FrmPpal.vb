@@ -206,7 +206,7 @@ Public Class FrmPpal
         Me.FormBorderStyle = FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         TmrChekTareas.Start()
-
+        TmrColores.Start()
 
         If LblCargo.Text = "Creador de Contenido" Then
             BtnCrearProyecto.Enabled = False
@@ -236,10 +236,12 @@ Public Class FrmPpal
 
     Private mensajeMostrado As Boolean = False
 
+
     Private Sub TmrChekTareas_Tick(sender As Object, e As EventArgs) Handles TmrChekTareas.Tick
         Try
             Dim mensajes As String = String.Empty
 
+            ' Verifica las tareas pausadas y asignadas
             Dim hayPausadas As Boolean = Conexion.HayTareaPorestado(Cadenadeconexion, LblUsuario.Text, "Pausada")
             Dim hayAsignadas As Boolean = Conexion.HayTareaPorestado(Cadenadeconexion, LblUsuario.Text, "Asignada")
 
@@ -253,21 +255,38 @@ Public Class FrmPpal
 
             If mensajes <> String.Empty AndAlso Not mensajeMostrado Then
                 mensajeMostrado = True
-                TmrChekTareas.Stop() ' Detiene el timer al mostrar el mensaje
-                MessageBox.Show(mensajes.Trim(), "Aviso", MessageBoxButtons.OK)
+                TmrChekTareas.Stop()
 
-                ' Reinicia el timer después de que el usuario presione Aceptar
-                mensajeMostrado = False ' Reinicia la variable
-                TmrChekTareas.Start() ' Reinicia el timer
+                NtfIcon.BalloonTipTitle = "Notificación de Tareas"
+                NtfIcon.BalloonTipText = mensajes.Trim()
+                NtfIcon.BalloonTipIcon = ToolTipIcon.Info
+                NtfIcon.ShowBalloonTip(5000)
+
+                mensajeMostrado = False
+                TmrChekTareas.Start()
+                TmrColores.Start()
             End If
 
         Catch ex As Exception
-            ' Manejo de excepciones, puedes registrar el error si es necesario
+            ' Manejo de excepciones
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 
 
+    Private Sub NtfIcon_BalloonTipClicked(sender As Object, e As EventArgs) Handles NtfIcon.BalloonTipClicked
 
+        Dim formulario As New FrmRealizarTarea()
+        formulario.CadenaDeConexion = Cadenadeconexion
+        formulario.LblUsuario.Text = LblUsuario.Text
+        formulario.Show()
+        Me.Hide()
+
+    End Sub
+
+    Private Sub TmrColores_Tick(sender As Object, e As EventArgs) Handles TmrColores.Tick
+
+    End Sub
 End Class
 
 

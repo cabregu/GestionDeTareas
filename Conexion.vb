@@ -11,9 +11,10 @@ Public Class Conexion
     Public Shared Function ObtenerBaseDeDatosDeAccess() As String
         Try
             Dim resultado As String = String.Empty
-            Dim carpeta As String = "Externos"
+            ' Especificamos la ruta completa a la carpeta "Externos" en el disco C:
+            Dim carpeta As String = "C:\Externos"
             Dim nombreBaseDatos As String = "Conexion.accdb"
-            Dim rutaBaseDatos As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, carpeta, nombreBaseDatos)
+            Dim rutaBaseDatos As String = System.IO.Path.Combine(carpeta, nombreBaseDatos)
             Dim cadenaConexion As String = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={rutaBaseDatos};Jet OLEDB:Database Password=Gmt@2022;"
 
             Try
@@ -39,11 +40,10 @@ Public Class Conexion
 
             Return resultado
         Catch ex As Exception
-
+            MsgBox($"Error: {ex.Message}")
         End Try
-
-
     End Function
+
 
     Public Shared Function ActualizarDatoBaseDeDatosDeAccess(nuevoDato As String) As Boolean
         Try

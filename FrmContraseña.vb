@@ -1,7 +1,7 @@
 ﻿Public Class FrmContraseña
     Public ReadOnly Property ContraseñaCorrecta As Boolean
         Get
-            Return TxtPassword.Text = "Gmt@2022"
+            Return TxtPassword.Text = "123456"
         End Get
     End Property
 
