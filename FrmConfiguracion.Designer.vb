@@ -36,6 +36,8 @@ Partial Class FrmConfiguracion
         LblPersisSecurityInfo = New Label()
         BtnActualizar = New Button()
         BtnProbarConexion = New Button()
+        TxtEmpresa = New TextBox()
+        LblNombre = New Label()
         SuspendLayout()
         ' 
         ' LblServer
@@ -113,7 +115,7 @@ Partial Class FrmConfiguracion
         ' LblPort
         ' 
         LblPort.AutoSize = True
-        LblPort.Location = New Point(14, 160)
+        LblPort.Location = New Point(13, 160)
         LblPort.Name = "LblPort"
         LblPort.Size = New Size(29, 15)
         LblPort.TabIndex = 8
@@ -137,28 +139,47 @@ Partial Class FrmConfiguracion
         ' 
         ' BtnActualizar
         ' 
-        BtnActualizar.Location = New Point(14, 236)
+        BtnActualizar.Enabled = False
+        BtnActualizar.Location = New Point(246, 296)
         BtnActualizar.Name = "BtnActualizar"
-        BtnActualizar.Size = New Size(92, 23)
+        BtnActualizar.Size = New Size(161, 23)
         BtnActualizar.TabIndex = 12
         BtnActualizar.Text = "Actualizar"
         BtnActualizar.UseVisualStyleBackColor = True
         ' 
         ' BtnProbarConexion
         ' 
-        BtnProbarConexion.Location = New Point(278, 236)
+        BtnProbarConexion.Location = New Point(14, 296)
         BtnProbarConexion.Name = "BtnProbarConexion"
-        BtnProbarConexion.Size = New Size(92, 23)
+        BtnProbarConexion.Size = New Size(168, 23)
         BtnProbarConexion.TabIndex = 13
-        BtnProbarConexion.Text = "Conexion"
+        BtnProbarConexion.Text = "Verificar"
         BtnProbarConexion.UseVisualStyleBackColor = True
+        ' 
+        ' TxtEmpresa
+        ' 
+        TxtEmpresa.Location = New Point(125, 222)
+        TxtEmpresa.Name = "TxtEmpresa"
+        TxtEmpresa.Size = New Size(214, 23)
+        TxtEmpresa.TabIndex = 15
+        ' 
+        ' LblNombre
+        ' 
+        LblNombre.AutoSize = True
+        LblNombre.Location = New Point(13, 225)
+        LblNombre.Name = "LblNombre"
+        LblNombre.Size = New Size(99, 15)
+        LblNombre.TabIndex = 14
+        LblNombre.Text = "Nombre Empresa"
         ' 
         ' FrmConfiguracion
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlLight
-        ClientSize = New Size(382, 271)
+        ClientSize = New Size(419, 331)
+        Controls.Add(TxtEmpresa)
+        Controls.Add(LblNombre)
         Controls.Add(BtnProbarConexion)
         Controls.Add(BtnActualizar)
         Controls.Add(TxtSecurityInfo)
@@ -194,4 +215,6 @@ Partial Class FrmConfiguracion
     Friend WithEvents LblPersisSecurityInfo As Label
     Friend WithEvents BtnActualizar As Button
     Friend WithEvents BtnProbarConexion As Button
+    Friend WithEvents TxtEmpresa As TextBox
+    Friend WithEvents LblNombre As Label
 End Class

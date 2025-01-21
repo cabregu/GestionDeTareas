@@ -41,9 +41,15 @@ Partial Class FrmPpal
         GpbReportes = New GroupBox()
         BtnReporte = New Button()
         BtnSalir = New Button()
-        TmrChekTareas = New Timer(components)
+        TmrAsignada = New Timer(components)
         TmrColores = New Timer(components)
         NtfIcon = New NotifyIcon(components)
+        LblAsignada = New Label()
+        LblPausada = New Label()
+        LblPendiente = New Label()
+        TmrPausada = New Timer(components)
+        TmrPendiente = New Timer(components)
+        TmrChekTareas = New Timer(components)
         GpbTareas.SuspendLayout()
         GpbDatos.SuspendLayout()
         GpbReportes.SuspendLayout()
@@ -92,7 +98,7 @@ Partial Class FrmPpal
         GpbTareas.Controls.Add(BtnAsignarTarea)
         GpbTareas.Controls.Add(BtnRealizarTarea)
         GpbTareas.Controls.Add(BtnCrearTarea)
-        GpbTareas.Location = New Point(7, 68)
+        GpbTareas.Location = New Point(7, 92)
         GpbTareas.Name = "GpbTareas"
         GpbTareas.Size = New Size(438, 119)
         GpbTareas.TabIndex = 4
@@ -142,7 +148,7 @@ Partial Class FrmPpal
         GpbDatos.Controls.Add(BtnCrearCliente)
         GpbDatos.Controls.Add(BtnCrearProyecto)
         GpbDatos.Controls.Add(BtnCrearUsuario)
-        GpbDatos.Location = New Point(7, 223)
+        GpbDatos.Location = New Point(7, 253)
         GpbDatos.Name = "GpbDatos"
         GpbDatos.Size = New Size(438, 119)
         GpbDatos.TabIndex = 5
@@ -189,7 +195,7 @@ Partial Class FrmPpal
         ' 
         GpbReportes.BackColor = SystemColors.ControlLight
         GpbReportes.Controls.Add(BtnReporte)
-        GpbReportes.Location = New Point(7, 361)
+        GpbReportes.Location = New Point(7, 400)
         GpbReportes.Name = "GpbReportes"
         GpbReportes.Size = New Size(430, 119)
         GpbReportes.TabIndex = 6
@@ -208,16 +214,16 @@ Partial Class FrmPpal
         ' BtnSalir
         ' 
         BtnSalir.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
-        BtnSalir.Location = New Point(287, 493)
+        BtnSalir.Location = New Point(293, 564)
         BtnSalir.Name = "BtnSalir"
         BtnSalir.Size = New Size(150, 30)
         BtnSalir.TabIndex = 0
         BtnSalir.Text = "Salir"
         BtnSalir.UseVisualStyleBackColor = True
         ' 
-        ' TmrChekTareas
+        ' TmrAsignada
         ' 
-        TmrChekTareas.Interval = 30000
+        TmrAsignada.Interval = 600000
         ' 
         ' TmrColores
         ' 
@@ -232,12 +238,51 @@ Partial Class FrmPpal
         NtfIcon.Text = "Gestion De Tareas"
         NtfIcon.Visible = True
         ' 
+        ' LblAsignada
+        ' 
+        LblAsignada.AutoSize = True
+        LblAsignada.Location = New Point(288, 36)
+        LblAsignada.Name = "LblAsignada"
+        LblAsignada.Size = New Size(0, 15)
+        LblAsignada.TabIndex = 7
+        ' 
+        ' LblPausada
+        ' 
+        LblPausada.AutoSize = True
+        LblPausada.Location = New Point(288, 54)
+        LblPausada.Name = "LblPausada"
+        LblPausada.Size = New Size(0, 15)
+        LblPausada.TabIndex = 8
+        ' 
+        ' LblPendiente
+        ' 
+        LblPendiente.AutoSize = True
+        LblPendiente.Location = New Point(288, 72)
+        LblPendiente.Name = "LblPendiente"
+        LblPendiente.Size = New Size(0, 15)
+        LblPendiente.TabIndex = 9
+        ' 
+        ' TmrPausada
+        ' 
+        TmrPausada.Interval = 3600000
+        ' 
+        ' TmrPendiente
+        ' 
+        TmrPendiente.Interval = 600000
+        ' 
+        ' TmrChekTareas
+        ' 
+        TmrChekTareas.Interval = 6000
+        ' 
         ' FrmPpal
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlLight
-        ClientSize = New Size(457, 535)
+        ClientSize = New Size(463, 606)
+        Controls.Add(LblPendiente)
+        Controls.Add(LblPausada)
+        Controls.Add(LblAsignada)
         Controls.Add(GpbReportes)
         Controls.Add(GpbDatos)
         Controls.Add(BtnSalir)
@@ -273,8 +318,14 @@ Partial Class FrmPpal
     Friend WithEvents GpbReportes As GroupBox
     Friend WithEvents BtnReporte As Button
     Friend WithEvents BtnSalir As Button
-    Friend WithEvents TmrChekTareas As Timer
+    Friend WithEvents TmrAsignada As Timer
     Friend WithEvents TmrColores As Timer
     Friend WithEvents NtfIcon As NotifyIcon
+    Friend WithEvents LblAsignada As Label
+    Friend WithEvents LblPausada As Label
+    Friend WithEvents LblPendiente As Label
+    Friend WithEvents TmrPausada As Timer
+    Friend WithEvents TmrPendiente As Timer
+    Friend WithEvents TmrChekTareas As Timer
 
 End Class

@@ -123,13 +123,33 @@
             CmbProyecto.Items.Add(proyecto)
         Next
     End Sub
+
     Private Sub CargarClientes()
+
         Dim clientes As String() = Conexion.ObtenerClientes(CadenaDeConexion)
+
         CmbCliente.Items.Clear()
+
         For Each cliente As String In clientes
             CmbCliente.Items.Add(cliente)
         Next
+
+
+        CmbCliente.AutoCompleteMode = AutoCompleteMode.SuggestAppend
+        CmbCliente.AutoCompleteSource = AutoCompleteSource.ListItems
     End Sub
+
+
+    'Private Sub CargarClientes()
+    '    Dim clientes As String() = Conexion.ObtenerClientes(CadenaDeConexion)
+    '    CmbCliente.Items.Clear()
+    '    For Each cliente As String In clientes
+    '        CmbCliente.Items.Add(cliente)
+    '    Next
+    'End Sub
+
+
+
     Private Sub CargarTareas(ByVal Proyecto As String)
         Dim tareas As String() = Conexion.ObtenertareasPorProyecto(Proyecto, CadenaDeConexion)
         CmbTareas.Items.Clear()

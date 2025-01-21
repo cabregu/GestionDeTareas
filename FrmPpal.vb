@@ -4,6 +4,8 @@ Imports System.Data.OleDb
 Public Class FrmPpal
 
     Public Cadenadeconexion As String = ""
+    Dim listaCodigos As New List(Of Integer)()
+
 
     Private Sub FrmPpal_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
 
@@ -13,6 +15,96 @@ Public Class FrmPpal
         Application.Exit()
 
     End Sub
+
+    Private Sub FrmPpal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.FormBorderStyle = FormBorderStyle.FixedDialog
+
+        Me.MaximizeBox = False
+        listaCodigos = Conexion.ObtenerCodigosTareasAsignadas(Cadenadeconexion, LblUsuario.Text)
+
+        Dim NombreEmpresa As String = Conexion.ObtenerNombreEmpresa(Cadenadeconexion)
+
+        Me.Text = Me.Text & " " & NombreEmpresa
+
+
+        TmrAsignada.Start()
+        TmrPausada.Start()
+        TmrPendiente.Start()
+        TmrChekTareas.Start()
+
+        TmrColores.Start()
+
+
+
+
+        VerificarTareasYNotificar("Asignada", LblAsignada, "Asignadas", TmrAsignada)
+
+
+        VerificarTareasYNotificar("Pausada", LblPausada, "Pausadas", TmrPausada)
+
+        VerificarTareasYNotificarPendiente("Pendiente", LblPendiente, "Pendientes", TmrPendiente)
+
+
+
+
+        If LblCargo.Text = "Creador de Contenido" Then
+
+            BtnReporte.Enabled = False
+
+        ElseIf LblCargo.Text = "Usuario" Then
+
+            BtnCrearProyecto.Enabled = False
+            BtnCrearCliente.Enabled = False
+            BtnModificarDatos.Enabled = False
+            BtnCrearTarea.Enabled = False
+            BtnModificarDatos.Enabled = False
+            BtnAsignarTarea.Enabled = False
+            BtnModificarTarea.Enabled = False
+            BtnCrearCliente.Enabled = False
+            BtnCrearUsuario.Enabled = False
+            BtnReporte.Enabled = False
+
+        End If
+
+    End Sub
+
+
+    Private Sub VerificarNuevosCodigosTareas()
+        Try
+
+            Dim nuevosCodigos As List(Of Integer) = Conexion.ObtenerCodigosTareasAsignadas(Cadenadeconexion, LblUsuario.Text)
+
+
+            For Each codigo As Integer In nuevosCodigos
+                If Not listaCodigos.Contains(codigo) Then
+
+                    listaCodigos.Add(codigo)
+
+
+                    NtfIcon.BalloonTipTitle = "Nuevo Código de Tarea Asignada"
+                    NtfIcon.BalloonTipText = $"Nuevo código de tarea asignada: {codigo}"
+                    NtfIcon.BalloonTipIcon = ToolTipIcon.Info
+                    NtfIcon.ShowBalloonTip(5000)
+                End If
+            Next
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub TmrChekTareas_Tick(sender As Object, e As EventArgs) Handles TmrChekTareas.Tick
+        VerificarNuevosCodigosTareas()
+    End Sub
+
+
+
+
+
+
+
+
+
+
     Private Sub BtnCrearTarea_Click(sender As Object, e As EventArgs) Handles BtnCrearTarea.Click
         Dim formulario As New FrmCrearTareasPendientes()
         formulario.CadenaDeConexion = Cadenadeconexion
@@ -202,76 +294,7 @@ Public Class FrmPpal
 
     End Sub
 
-    Private Sub FrmPpal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.FormBorderStyle = FormBorderStyle.FixedDialog
-        Me.MaximizeBox = False
-        TmrChekTareas.Start()
-        TmrColores.Start()
 
-        If LblCargo.Text = "Creador de Contenido" Then
-            BtnCrearProyecto.Enabled = False
-            BtnCrearCliente.Enabled = False
-            BtnModificarDatos.Enabled = False
-            BtnModificarTarea.Enabled = False
-            BtnCrearUsuario.Enabled = False
-            BtnReporte.Enabled = False
-
-        ElseIf LblCargo.Text = "Usuario" Then
-
-            BtnCrearProyecto.Enabled = False
-            BtnCrearCliente.Enabled = False
-            BtnModificarDatos.Enabled = False
-            BtnCrearTarea.Enabled = False
-            BtnModificarDatos.Enabled = False
-            BtnAsignarTarea.Enabled = False
-            BtnModificarTarea.Enabled = False
-            BtnCrearCliente.Enabled = False
-            BtnCrearUsuario.Enabled = False
-            BtnReporte.Enabled = False
-
-        End If
-
-    End Sub
-
-
-    Private mensajeMostrado As Boolean = False
-
-
-    Private Sub TmrChekTareas_Tick(sender As Object, e As EventArgs) Handles TmrChekTareas.Tick
-        Try
-            Dim mensajes As String = String.Empty
-
-            ' Verifica las tareas pausadas y asignadas
-            Dim hayPausadas As Boolean = Conexion.HayTareaPorestado(Cadenadeconexion, LblUsuario.Text, "Pausada")
-            Dim hayAsignadas As Boolean = Conexion.HayTareaPorestado(Cadenadeconexion, LblUsuario.Text, "Asignada")
-
-            If hayPausadas Then
-                mensajes &= "Tiene tareas Pausadas." & vbCrLf
-            End If
-
-            If hayAsignadas Then
-                mensajes &= "Tiene tareas Asignadas." & vbCrLf
-            End If
-
-            If mensajes <> String.Empty AndAlso Not mensajeMostrado Then
-                mensajeMostrado = True
-                TmrChekTareas.Stop()
-
-                NtfIcon.BalloonTipTitle = "Notificación de Tareas"
-                NtfIcon.BalloonTipText = mensajes.Trim()
-                NtfIcon.BalloonTipIcon = ToolTipIcon.Info
-                NtfIcon.ShowBalloonTip(5000)
-
-                mensajeMostrado = False
-                TmrChekTareas.Start()
-                TmrColores.Start()
-            End If
-
-        Catch ex As Exception
-            ' Manejo de excepciones
-            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
 
 
     Private Sub NtfIcon_BalloonTipClicked(sender As Object, e As EventArgs) Handles NtfIcon.BalloonTipClicked
@@ -284,9 +307,248 @@ Public Class FrmPpal
 
     End Sub
 
+
+    Private colores() As Color = {Color.Red, Color.Blue, Color.Green, Color.Magenta, Color.Orange, Color.Cyan}
+    Private indiceColor As Integer = 0
+
     Private Sub TmrColores_Tick(sender As Object, e As EventArgs) Handles TmrColores.Tick
 
+        LblAsignada.ForeColor = colores(indiceColor)
+        LblPendiente.ForeColor = colores(indiceColor)
+        LblPausada.ForeColor = colores(indiceColor)
+
+
+        indiceColor += 1
+        If indiceColor >= colores.Length Then
+            indiceColor = 0
+        End If
     End Sub
+
+
+    Private Sub TmrAsignada_Tick(sender As Object, e As EventArgs) Handles TmrAsignada.Tick
+        VerificarTareasYNotificar("Asignada", LblAsignada, "Asignadas", TmrAsignada)
+    End Sub
+
+    Private Sub TmrPendiente_Tick(sender As Object, e As EventArgs) Handles TmrPendiente.Tick
+        VerificarTareasYNotificarPendiente("Pendiente", LblPendiente, "Pendientes", TmrPendiente)
+    End Sub
+
+    Private Sub TmrPausada_Tick(sender As Object, e As EventArgs) Handles TmrPausada.Tick
+        VerificarTareasYNotificar("Pausada", LblPausada, "Pausadas", TmrPausada)
+    End Sub
+
+
+
+    Private mensajeMostrado As Boolean = False
+
+    Private Sub VerificarTareasYNotificar(estado As String, lbl As Label, nombreTarea As String, timer As Timer)
+        Try
+            ' Consultar el estado de las tareas
+            Dim hayTareas As Boolean = Conexion.HayTareaPorestado(Cadenadeconexion, LblUsuario.Text, estado)
+
+            If hayTareas Then
+                lbl.Text = $"Tiene Tareas {nombreTarea}"
+
+                If Not mensajeMostrado Then
+                    mensajeMostrado = True
+                    timer.Stop()
+
+                    ' Mostrar notificación
+                    NtfIcon.BalloonTipTitle = $"Notificación de Tareas {nombreTarea}"
+                    NtfIcon.BalloonTipText = $"Tiene tareas {nombreTarea}."
+                    NtfIcon.BalloonTipIcon = ToolTipIcon.Info
+                    NtfIcon.ShowBalloonTip(5000)
+
+                    mensajeMostrado = False
+                    timer.Start()
+                End If
+            Else
+                lbl.Text = ""
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+
+    Private Sub VerificarTareasYNotificarPendiente(estado As String, lbl As Label, nombreTarea As String, timer As Timer)
+        Try
+            ' Consultar el estado de las tareas
+            Dim hayTareas As Boolean = Conexion.HayTareaPorEstadoSinUsuario(Cadenadeconexion, estado)
+
+            If hayTareas Then
+                lbl.Text = $"Tiene Tareas {nombreTarea}"
+
+                If Not mensajeMostrado Then
+                    mensajeMostrado = True
+                    timer.Stop()
+
+                    ' Mostrar notificación
+                    NtfIcon.BalloonTipTitle = $"Notificación de Tareas {nombreTarea}"
+                    NtfIcon.BalloonTipText = $"Tiene tareas {nombreTarea}."
+                    NtfIcon.BalloonTipIcon = ToolTipIcon.Info
+                    NtfIcon.ShowBalloonTip(5000)
+
+                    mensajeMostrado = False
+                    timer.Start()
+                End If
+            Else
+                lbl.Text = ""
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+
+    'Private mensajeMostrado As Boolean = False
+    'Private Sub TmrAsignada_Tick(sender As Object, e As EventArgs) Handles TmrAsignada.Tick
+    '    Try
+    '        Dim hayAsignadas As Boolean = Conexion.HayTareaPorestado(Cadenadeconexion, LblUsuario.Text, "Asignada")
+
+    '        If hayAsignadas Then
+    '            LblAsignada.Text = "Tiene Tareas Asignadas"
+
+    '            If Not mensajeMostrado Then
+    '                mensajeMostrado = True
+    '                TmrAsignada.Stop()
+
+    '                ' Mostrar notificación
+    '                NtfIcon.BalloonTipTitle = "Notificación de Tareas Asignadas"
+    '                NtfIcon.BalloonTipText = "Tiene tareas Asignadas."
+    '                NtfIcon.BalloonTipIcon = ToolTipIcon.Info
+    '                NtfIcon.ShowBalloonTip(5000)
+
+    '                mensajeMostrado = False
+    '                TmrAsignada.Start()
+    '            End If
+    '        Else
+    '            LblAsignada.Text = ""
+    '        End If
+    '    Catch ex As Exception
+    '        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+    '    End Try
+    'End Sub
+
+
+    'Private Sub TmrPendiente_Tick(sender As Object, e As EventArgs) Handles TmrPendiente.Tick
+    '    Try
+    '        Dim hayPendientes As Boolean = Conexion.HayTareaPorEstadoSinUsuario(Cadenadeconexion, "Pendiente")
+
+    '        If hayPendientes Then
+    '            LblPendiente.Text = "Hay Tareas Pendientes"
+
+    '            If Not mensajeMostrado Then
+    '                mensajeMostrado = True
+    '                TmrPendiente.Stop()
+
+    '                ' Mostrar notificación
+    '                NtfIcon.BalloonTipTitle = "Notificación de Tareas Pendientes"
+    '                NtfIcon.BalloonTipText = "Hay Pendientes Sin Asignar"
+    '                NtfIcon.BalloonTipIcon = ToolTipIcon.Info
+    '                NtfIcon.ShowBalloonTip(5000)
+
+    '                mensajeMostrado = False
+    '                TmrPendiente.Start()
+    '            End If
+    '        Else
+    '            LblPendiente.Text = ""
+    '        End If
+    '    Catch ex As Exception
+    '        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+    '    End Try
+    'End Sub
+
+    'Private Sub TmrPausada_Tick(sender As Object, e As EventArgs) Handles TmrPausada.Tick
+    '    Try
+    '        Dim hayPausadas As Boolean = Conexion.HayTareaPorestado(Cadenadeconexion, LblUsuario.Text, "Pausada")
+
+    '        If hayPausadas Then
+    '            LblPausada.Text = "Tiene Tareas Pausadas"
+
+    '            If Not mensajeMostrado Then
+    '                mensajeMostrado = True
+    '                TmrPausada.Stop()
+
+    '                ' Mostrar notificación
+    '                NtfIcon.BalloonTipTitle = "Notificación de Tareas Pausadas"
+    '                NtfIcon.BalloonTipText = "Tiene tareas Pausadas."
+    '                NtfIcon.BalloonTipIcon = ToolTipIcon.Info
+    '                NtfIcon.ShowBalloonTip(5000)
+
+    '                mensajeMostrado = False
+    '                TmrPausada.Start()
+    '            End If
+    '        Else
+    '            LblPausada.Text = ""
+    '        End If
+    '    Catch ex As Exception
+    '        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+    '    End Try
+    'End Sub
+
+
+
+
+
+
+
+
+
+    'Private mensajeMostrado As Boolean = False
+    'Private Sub TmrChekTareas_Tick(sender As Object, e As EventArgs) Handles TmrChekTareas.Tick
+    '    Try
+    '        Dim mensajes As String = String.Empty
+
+    '        ' Verifica las tareas pausadas, asignadas y pendientes
+    '        Dim hayPausadas As Boolean = Conexion.HayTareaPorestado(Cadenadeconexion, LblUsuario.Text, "Pausada")
+    '        Dim hayAsignadas As Boolean = Conexion.HayTareaPorestado(Cadenadeconexion, LblUsuario.Text, "Asignada")
+    '        Dim hayPendientes As Boolean = Conexion.HayTareaPorestado(Cadenadeconexion, LblUsuario.Text, "Pendiente")
+
+    '        ' Actualizar etiquetas según el estado
+    '        If hayPausadas Then
+    '            LblPausada.Text = "Tiene Tareas Pausadas"
+    '            mensajes &= "Tiene tareas Pausadas." & vbCrLf
+    '        Else
+    '            LblPausada.Text = ""
+    '        End If
+
+    '        If hayAsignadas Then
+    '            LblAsignada.Text = "Tiene Tareas Asignadas"
+    '            mensajes &= "Tiene tareas Asignadas." & vbCrLf
+    '        Else
+    '            LblAsignada.Text = ""
+    '        End If
+
+    '        If hayPendientes Then
+    '            LblPendiente.Text = "Tiene Tareas Pendientes"
+    '            mensajes &= "Tiene tareas Pendientes." & vbCrLf
+    '        Else
+    '            LblPendiente.Text = ""
+    '        End If
+
+    '        ' Mostrar notificación si hay tareas pendientes, pausadas o asignadas
+    '        If mensajes <> String.Empty AndAlso Not mensajeMostrado Then
+    '            mensajeMostrado = True
+    '            TmrChekTareas.Stop()
+
+    '            NtfIcon.BalloonTipTitle = "Notificación de Tareas"
+    '            NtfIcon.BalloonTipText = mensajes.Trim()
+    '            NtfIcon.BalloonTipIcon = ToolTipIcon.Info
+    '            NtfIcon.ShowBalloonTip(5000)
+
+    '            mensajeMostrado = False
+    '            TmrChekTareas.Start()
+    '            TmrColores.Start()
+    '        End If
+
+    '    Catch ex As Exception
+    '        ' Manejo de excepciones
+    '        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+    '    End Try
+    'End Sub
+
+
 End Class
 
 

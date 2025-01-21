@@ -36,7 +36,9 @@ Partial Class FrmModificarEliminar
         LblCampo = New Label()
         TxtValorNuevo = New TextBox()
         LblModificar = New Label()
-        Label2 = New Label()
+        LblPorEsto1 = New Label()
+        LblPorEsto2 = New Label()
+        CmbValorNuevo = New ComboBox()
         CType(DgvDatos, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -61,7 +63,7 @@ Partial Class FrmModificarEliminar
         ' BtnModificar
         ' 
         BtnModificar.Enabled = False
-        BtnModificar.Location = New Point(327, 452)
+        BtnModificar.Location = New Point(209, 541)
         BtnModificar.Name = "BtnModificar"
         BtnModificar.Size = New Size(100, 30)
         BtnModificar.TabIndex = 2
@@ -89,7 +91,7 @@ Partial Class FrmModificarEliminar
         ' 
         ' BtnCancelar
         ' 
-        BtnCancelar.Location = New Point(565, 497)
+        BtnCancelar.Location = New Point(564, 541)
         BtnCancelar.Name = "BtnCancelar"
         BtnCancelar.Size = New Size(100, 30)
         BtnCancelar.TabIndex = 5
@@ -170,22 +172,44 @@ Partial Class FrmModificarEliminar
         LblModificar.TabIndex = 13
         LblModificar.Text = "Modificar esto"
         ' 
-        ' Label2
+        ' LblPorEsto1
         ' 
-        Label2.AutoSize = True
-        Label2.Location = New Point(5, 437)
-        Label2.Name = "Label2"
-        Label2.Size = New Size(50, 15)
-        Label2.TabIndex = 14
-        Label2.Text = "Por esto"
+        LblPorEsto1.AutoSize = True
+        LblPorEsto1.Location = New Point(5, 437)
+        LblPorEsto1.Name = "LblPorEsto1"
+        LblPorEsto1.Size = New Size(50, 15)
+        LblPorEsto1.TabIndex = 14
+        LblPorEsto1.Text = "Por esto"
+        ' 
+        ' LblPorEsto2
+        ' 
+        LblPorEsto2.AutoSize = True
+        LblPorEsto2.Location = New Point(5, 485)
+        LblPorEsto2.Name = "LblPorEsto2"
+        LblPorEsto2.Size = New Size(50, 15)
+        LblPorEsto2.TabIndex = 16
+        LblPorEsto2.Text = "Por esto"
+        ' 
+        ' CmbValorNuevo
+        ' 
+        CmbValorNuevo.DropDownStyle = ComboBoxStyle.DropDownList
+        CmbValorNuevo.Font = New Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point)
+        CmbValorNuevo.FormattingEnabled = True
+        CmbValorNuevo.Location = New Point(5, 503)
+        CmbValorNuevo.Name = "CmbValorNuevo"
+        CmbValorNuevo.Size = New Size(304, 28)
+        CmbValorNuevo.TabIndex = 17
+        CmbValorNuevo.Visible = False
         ' 
         ' FrmModificarEliminar
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         BackColor = SystemColors.ControlLight
-        ClientSize = New Size(674, 540)
-        Controls.Add(Label2)
+        ClientSize = New Size(674, 583)
+        Controls.Add(CmbValorNuevo)
+        Controls.Add(LblPorEsto2)
+        Controls.Add(LblPorEsto1)
         Controls.Add(LblModificar)
         Controls.Add(TxtValorNuevo)
         Controls.Add(LblCampo)
@@ -222,5 +246,7 @@ Partial Class FrmModificarEliminar
     Friend WithEvents LblCampo As Label
     Friend WithEvents TxtValorNuevo As TextBox
     Friend WithEvents LblModificar As Label
-    Friend WithEvents Label2 As Label
+    Friend WithEvents LblPorEsto1 As Label
+    Friend WithEvents LblPorEsto2 As Label
+    Friend WithEvents CmbValorNuevo As ComboBox
 End Class

@@ -45,7 +45,6 @@ Partial Class FrmCrearTareasPendientes
         ' 
         ' CmbCliente
         ' 
-        CmbCliente.DropDownStyle = ComboBoxStyle.DropDownList
         CmbCliente.FormattingEnabled = True
         CmbCliente.Location = New Point(269, 32)
         CmbCliente.Name = "CmbCliente"

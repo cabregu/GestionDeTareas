@@ -47,26 +47,44 @@ Public Class Conexion
 
     Public Shared Function ActualizarDatoBaseDeDatosDeAccess(nuevoDato As String) As Boolean
         Try
-            Dim carpeta As String = "Externos"
+            Dim carpeta As String = "C:\Externos" ' Asegúrate de especificar la ruta completa
             Dim nombreBaseDatos As String = "Conexion.accdb"
-            Dim rutaBaseDatos As String = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, carpeta, nombreBaseDatos)
+            Dim rutaBaseDatos As String = System.IO.Path.Combine(carpeta, nombreBaseDatos)
             Dim cadenaConexion As String = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={rutaBaseDatos};Jet OLEDB:Database Password=Gmt@2022;"
 
             Using conexion As New OleDbConnection(cadenaConexion)
                 conexion.Open()
+
+                ' Verificar que exista el registro antes de actualizarlo
+                Dim comandoVerificacion As New OleDbCommand("SELECT COUNT(*) FROM datos WHERE tipo = 'Basededatos'", conexion)
+                Dim existeRegistro As Integer = Convert.ToInt32(comandoVerificacion.ExecuteScalar())
+
+                If existeRegistro = 0 Then
+                    MsgBox("No se encontró el registro con tipo 'Basededatos'. No se realizará ninguna actualización.")
+                    Return False
+                End If
+
+                ' Actualizar el dato
                 Dim comando As New OleDbCommand("UPDATE datos SET dato = ? WHERE tipo = 'Basededatos'", conexion)
                 comando.Parameters.AddWithValue("?", nuevoDato)
-
                 Dim filasAfectadas As Integer = comando.ExecuteNonQuery()
 
-                ' Retorna True si se actualizó al menos una fila, de lo contrario, False
-                Return filasAfectadas > 0
+                If filasAfectadas > 0 Then
+                    'MsgBox("El dato se actualizó correctamente.")
+                    Return True
+                Else
+                    'MsgBox("No se pudo actualizar el dato, pero no hubo errores.")
+                    Return False
+                End If
             End Using
+
         Catch ex As Exception
             MsgBox($"Error al actualizar el dato: {ex.Message}")
             Return False
         End Try
     End Function
+
+
 
 
     Public Shared Function ValidarUsuario(ByVal Usuario As String, ByVal Contraseña As String, ByVal Cadenaconexion As String) As String
@@ -195,6 +213,68 @@ Public Class Conexion
 
         Return valor
     End Function
+
+    Public Shared Function ObtenerNombreEmpresa(ByVal CadenaConexion As String) As String
+        Dim valor As String = String.Empty
+
+        Dim sql As String = "SELECT valortxt FROM configuracion WHERE descripcion = 'NombreEmpresa'"
+        Using cn As New MySqlConnection(CadenaConexion)
+            Using cmd As New MySqlCommand(sql, cn)
+                cn.Open()
+                Dim reader As MySqlDataReader = cmd.ExecuteReader()
+                If reader.Read() Then
+                    valor = reader.GetString("valortxt")
+                End If
+            End Using
+        End Using
+
+        Return valor
+    End Function
+
+    Public Shared Function GuardarNombreEmpresa(ByVal CadenaConexion As String, ByVal nuevoNombreEmpresa As String) As Boolean
+        Try
+            ' Consulta para verificar si existe un registro con descripcion = 'NombreEmpresa'
+            Dim sqlSelect As String = "SELECT COUNT(*) FROM configuracion WHERE descripcion = 'NombreEmpresa'"
+
+            ' Consulta para actualizar el registro existente
+            Dim sqlUpdate As String = "UPDATE configuracion SET valortxt = @nuevoNombre WHERE descripcion = 'NombreEmpresa'"
+
+            ' Consulta para insertar un nuevo registro si no existe
+            Dim sqlInsert As String = "INSERT INTO configuracion (descripcion, valortxt) VALUES ('NombreEmpresa', @nuevoNombre)"
+
+            Using cn As New MySqlConnection(CadenaConexion)
+                Using cmd As New MySqlCommand(sqlSelect, cn)
+                    cn.Open()
+
+                    ' Verificar si existe el registro
+                    Dim existe As Integer = Convert.ToInt32(cmd.ExecuteScalar())
+
+                    If existe > 0 Then
+                        ' Si el registro existe, actualízalo
+                        cmd.CommandText = sqlUpdate
+                    Else
+                        ' Si el registro no existe, insértalo
+                        cmd.CommandText = sqlInsert
+                    End If
+
+                    ' Asignar el parámetro y ejecutar la consulta correspondiente
+                    cmd.Parameters.AddWithValue("@nuevoNombre", nuevoNombreEmpresa)
+                    Dim filasAfectadas As Integer = cmd.ExecuteNonQuery()
+
+                    Return filasAfectadas > 0
+                End Using
+            End Using
+        Catch ex As MySqlException
+            MessageBox.Show($"Error al guardar el nombre de la empresa: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+        Catch ex As Exception
+            MessageBox.Show($"Error general al guardar el nombre de la empresa: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+        End Try
+    End Function
+
+
+
 
     Public Shared Function ObtenertareasPendientes(ByVal CadenaConexion As String, ByVal codigo As String) As List(Of Tarea)
         Dim tareas As New List(Of Tarea)()
@@ -562,6 +642,54 @@ Public Class Conexion
             Return False
         End Try
     End Function
+
+
+    Public Shared Function ObtenerCodigosTareasAsignadas(ByVal CadenaConexion As String, ByVal Usuario As String) As List(Of Integer)
+        Dim codigosTareas As New List(Of Integer)()
+
+        Try
+            Dim sql As String = "SELECT codigo FROM kanbas WHERE usuario = @usuario AND estado = 'Asignada'"
+
+            Using cn As New MySqlConnection(CadenaConexion)
+                Using cmd As New MySqlCommand(sql, cn)
+                    cmd.Parameters.AddWithValue("@usuario", Usuario)
+
+                    cn.Open()
+
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+                        While reader.Read()
+                            codigosTareas.Add(reader.GetInt32("codigo"))
+                        End While
+                    End Using
+                End Using
+            End Using
+        Catch ex As Exception
+            ' Manejo de excepciones (si es necesario)
+            Return New List(Of Integer)() ' Retorna una lista vacía en caso de error
+        End Try
+
+        Return codigosTareas
+    End Function
+
+
+
+    Public Shared Function HayTareaPorEstadoSinUsuario(ByVal CadenaConexion As String, ByVal Estado As String) As Boolean
+        Try
+            Dim sql As String = "SELECT COUNT(*) FROM kanbas WHERE estado = @estado"
+            Using cn As New MySqlConnection(CadenaConexion)
+                Using cmd As New MySqlCommand(sql, cn)
+                    cmd.Parameters.AddWithValue("@estado", Estado)
+                    cn.Open()
+                    Dim resultado As Integer = Convert.ToInt32(cmd.ExecuteScalar())
+                    Return resultado > 0
+                End Using
+            End Using
+        Catch ex As Exception
+
+            Return False
+        End Try
+    End Function
+
 
 
 
